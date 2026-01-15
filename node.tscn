@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bk08lfcueqr7m"]
+[gd_scene load_steps=30 format=3 uid="uid://bk08lfcueqr7m"]
 
 [ext_resource type="Script" uid="uid://dbrimv525bas6" path="res://main.gd" id="1_sy5k4"]
 [ext_resource type="Texture2D" uid="uid://cfg1btb3xrrqu" path="res://button_help.png" id="2_e2u21"]
@@ -21,6 +21,12 @@
 [ext_resource type="Texture2D" uid="uid://cm1xeikq0148n" path="res://anim/idleanim/idleanim0015.png" id="19_m7n71"]
 [ext_resource type="Texture2D" uid="uid://dc8rnctbhlxwi" path="res://anim/idleanim/idleanim0016.png" id="20_prngn"]
 [ext_resource type="Texture2D" uid="uid://cuhqhkaemvp4f" path="res://anim/idleanim/idleanim0017.png" id="21_hq5fo"]
+[ext_resource type="Texture2D" uid="uid://dx63ka1u35kuk" path="res://anim/focusedanim/focusedanim0021.png" id="22_j31fo"]
+[ext_resource type="Texture2D" uid="uid://b4376frop5gup" path="res://anim/focusedanim/focusedanim0022.png" id="23_o6fs4"]
+[ext_resource type="Texture2D" uid="uid://cswfaxnv8bnsk" path="res://anim/focusedanim/focusedanim0023.png" id="24_twhnx"]
+[ext_resource type="Texture2D" uid="uid://roh0hbwxbx84" path="res://anim/focusedanim/focusedanim0024.png" id="25_1am0g"]
+[ext_resource type="Texture2D" uid="uid://d258vjdxdpf0b" path="res://anim/focusedanim/focusedanim0025.png" id="26_2wy2p"]
+[ext_resource type="Texture2D" uid="uid://cjpxhr2i55wgd" path="res://anim/focusedanim/focusedanim0026.png" id="27_w6pri"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rl2iq"]
 animations = [{
@@ -86,6 +92,32 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_nha2g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_j31fo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_o6fs4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_twhnx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_1am0g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_2wy2p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_w6pri")
+}],
+"loop": true,
+"name": &"focused",
+"speed": 12.0
+}]
+
 [node name="main" type="Node2D"]
 script = ExtResource("1_sy5k4")
 
@@ -108,4 +140,13 @@ position = Vector2(896, 234)
 sprite_frames = SubResource("SpriteFrames_rl2iq")
 animation = &"idle_working"
 autoplay = "idle_working"
-frame_progress = 0.06138146
+frame = 9
+frame_progress = 0.36056846
+
+[node name="anim_focused_office" type="AnimatedSprite2D" parent="."]
+position = Vector2(1452, 261)
+sprite_frames = SubResource("SpriteFrames_nha2g")
+animation = &"focused"
+autoplay = "focused"
+frame = 2
+frame_progress = 0.13055997
