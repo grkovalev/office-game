@@ -1,9 +1,90 @@
-[gd_scene load_steps=5 format=3 uid="uid://bk08lfcueqr7m"]
+[gd_scene load_steps=23 format=3 uid="uid://bk08lfcueqr7m"]
 
 [ext_resource type="Script" uid="uid://dbrimv525bas6" path="res://main.gd" id="1_sy5k4"]
 [ext_resource type="Texture2D" uid="uid://cfg1btb3xrrqu" path="res://button_help.png" id="2_e2u21"]
 [ext_resource type="Texture2D" uid="uid://c3o37vt3pu2bq" path="res://01_idleworkerf.png" id="2_j2q8x"]
 [ext_resource type="Texture2D" uid="uid://dxrsbed55wgcq" path="res://button_pomodorro.png" id="4_bss38"]
+[ext_resource type="Texture2D" uid="uid://bahgdu7leq8yr" path="res://anim/idleanim/10001.png" id="5_ey15c"]
+[ext_resource type="Texture2D" uid="uid://4e8xhl4og3xj" path="res://anim/idleanim/10002.png" id="6_p1837"]
+[ext_resource type="Texture2D" uid="uid://bnemg5vfqv57p" path="res://anim/idleanim/10003.png" id="7_qv2vy"]
+[ext_resource type="Texture2D" uid="uid://dkof0iii4j6sq" path="res://anim/idleanim/10004.png" id="8_8jewq"]
+[ext_resource type="Texture2D" uid="uid://d2ifin23m24go" path="res://anim/idleanim/10005.png" id="9_3xwg0"]
+[ext_resource type="Texture2D" uid="uid://br43eefaydks5" path="res://anim/idleanim/10006.png" id="10_85l3h"]
+[ext_resource type="Texture2D" uid="uid://cmk2rq32wfgyw" path="res://anim/idleanim/10007.png" id="11_j31fo"]
+[ext_resource type="Texture2D" uid="uid://cjqj1abkpaaft" path="res://anim/idleanim/10008.png" id="12_o6fs4"]
+[ext_resource type="Texture2D" uid="uid://vrau0mi4fmhf" path="res://anim/idleanim/10009.png" id="13_twhnx"]
+[ext_resource type="Texture2D" uid="uid://c823qsl7imyqy" path="res://anim/idleanim/10010.png" id="14_1am0g"]
+[ext_resource type="Texture2D" uid="uid://t68ih6mh6ahw" path="res://anim/idleanim/10011.png" id="15_2wy2p"]
+[ext_resource type="Texture2D" uid="uid://bvyqpn7kdbenm" path="res://anim/idleanim/10012.png" id="16_w6pri"]
+[ext_resource type="Texture2D" uid="uid://c2gnmsjvdtmcc" path="res://anim/idleanim/10013.png" id="17_nha2g"]
+[ext_resource type="Texture2D" uid="uid://de8up6gfuwljl" path="res://anim/idleanim/10014.png" id="18_4bn0x"]
+[ext_resource type="Texture2D" uid="uid://cfrclv2k628j3" path="res://anim/idleanim/10015.png" id="19_m7n71"]
+[ext_resource type="Texture2D" uid="uid://bfqnj5ijlk2xy" path="res://anim/idleanim/10016.png" id="20_prngn"]
+[ext_resource type="Texture2D" uid="uid://hrdi8g8ru18c" path="res://anim/idleanim/10017.png" id="21_hq5fo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rl2iq"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ey15c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_p1837")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qv2vy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8jewq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_3xwg0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_85l3h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_j31fo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_o6fs4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_twhnx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_1am0g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_2wy2p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_w6pri")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_nha2g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_4bn0x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_m7n71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_prngn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_hq5fo")
+}],
+"loop": true,
+"name": &"idle_working",
+"speed": 16.0
+}]
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_sy5k4")
@@ -13,9 +94,19 @@ position = Vector2(801, 531)
 texture = ExtResource("2_e2u21")
 
 [node name="Officedesk" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(894, 236)
 texture = ExtResource("2_j2q8x")
 
 [node name="button_pomodorro" type="Sprite2D" parent="."]
 position = Vector2(1058, 531)
 texture = ExtResource("4_bss38")
+
+[node name="anim_idle_office" type="AnimatedSprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(896, 234)
+sprite_frames = SubResource("SpriteFrames_rl2iq")
+animation = &"idle_working"
+autoplay = "idle_working"
+frame = 7
+frame_progress = 0.4649876
