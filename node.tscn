@@ -4,23 +4,23 @@
 [ext_resource type="Texture2D" uid="uid://cfg1btb3xrrqu" path="res://button_help.png" id="2_e2u21"]
 [ext_resource type="Texture2D" uid="uid://c3o37vt3pu2bq" path="res://01_idleworkerf.png" id="2_j2q8x"]
 [ext_resource type="Texture2D" uid="uid://dxrsbed55wgcq" path="res://button_pomodorro.png" id="4_bss38"]
-[ext_resource type="Texture2D" uid="uid://bahgdu7leq8yr" path="res://anim/idleanim/10001.png" id="5_ey15c"]
-[ext_resource type="Texture2D" uid="uid://4e8xhl4og3xj" path="res://anim/idleanim/10002.png" id="6_p1837"]
-[ext_resource type="Texture2D" uid="uid://bnemg5vfqv57p" path="res://anim/idleanim/10003.png" id="7_qv2vy"]
-[ext_resource type="Texture2D" uid="uid://dkof0iii4j6sq" path="res://anim/idleanim/10004.png" id="8_8jewq"]
-[ext_resource type="Texture2D" uid="uid://d2ifin23m24go" path="res://anim/idleanim/10005.png" id="9_3xwg0"]
-[ext_resource type="Texture2D" uid="uid://br43eefaydks5" path="res://anim/idleanim/10006.png" id="10_85l3h"]
-[ext_resource type="Texture2D" uid="uid://cmk2rq32wfgyw" path="res://anim/idleanim/10007.png" id="11_j31fo"]
-[ext_resource type="Texture2D" uid="uid://cjqj1abkpaaft" path="res://anim/idleanim/10008.png" id="12_o6fs4"]
-[ext_resource type="Texture2D" uid="uid://vrau0mi4fmhf" path="res://anim/idleanim/10009.png" id="13_twhnx"]
-[ext_resource type="Texture2D" uid="uid://c823qsl7imyqy" path="res://anim/idleanim/10010.png" id="14_1am0g"]
-[ext_resource type="Texture2D" uid="uid://t68ih6mh6ahw" path="res://anim/idleanim/10011.png" id="15_2wy2p"]
-[ext_resource type="Texture2D" uid="uid://bvyqpn7kdbenm" path="res://anim/idleanim/10012.png" id="16_w6pri"]
-[ext_resource type="Texture2D" uid="uid://c2gnmsjvdtmcc" path="res://anim/idleanim/10013.png" id="17_nha2g"]
-[ext_resource type="Texture2D" uid="uid://de8up6gfuwljl" path="res://anim/idleanim/10014.png" id="18_4bn0x"]
-[ext_resource type="Texture2D" uid="uid://cfrclv2k628j3" path="res://anim/idleanim/10015.png" id="19_m7n71"]
-[ext_resource type="Texture2D" uid="uid://bfqnj5ijlk2xy" path="res://anim/idleanim/10016.png" id="20_prngn"]
-[ext_resource type="Texture2D" uid="uid://hrdi8g8ru18c" path="res://anim/idleanim/10017.png" id="21_hq5fo"]
+[ext_resource type="Texture2D" uid="uid://bjw3hpxn7h05w" path="res://anim/idleanim/idleanim0001.png" id="5_ey15c"]
+[ext_resource type="Texture2D" uid="uid://b4u7y7j0ar3dx" path="res://anim/idleanim/idleanim0002.png" id="6_p1837"]
+[ext_resource type="Texture2D" uid="uid://cpn5c1lktmwe4" path="res://anim/idleanim/idleanim0003.png" id="7_qv2vy"]
+[ext_resource type="Texture2D" uid="uid://bseluacp1n0j6" path="res://anim/idleanim/idleanim0004.png" id="8_8jewq"]
+[ext_resource type="Texture2D" uid="uid://bfgybdgtdawyk" path="res://anim/idleanim/idleanim0005.png" id="9_3xwg0"]
+[ext_resource type="Texture2D" uid="uid://ccad8020l2jcr" path="res://anim/idleanim/idleanim0006.png" id="10_85l3h"]
+[ext_resource type="Texture2D" uid="uid://bea30svtncgay" path="res://anim/idleanim/idleanim0007.png" id="11_j31fo"]
+[ext_resource type="Texture2D" uid="uid://bsp1m3838h8rg" path="res://anim/idleanim/idleanim0008.png" id="12_o6fs4"]
+[ext_resource type="Texture2D" uid="uid://wocunpj0djgv" path="res://anim/idleanim/idleanim0009.png" id="13_twhnx"]
+[ext_resource type="Texture2D" uid="uid://4lpg682cj41x" path="res://anim/idleanim/idleanim0010.png" id="14_1am0g"]
+[ext_resource type="Texture2D" uid="uid://da6v3l74uq48w" path="res://anim/idleanim/idleanim0011.png" id="15_2wy2p"]
+[ext_resource type="Texture2D" uid="uid://crjw16or1knol" path="res://anim/idleanim/idleanim0012.png" id="16_w6pri"]
+[ext_resource type="Texture2D" uid="uid://dmwqquxdi7enr" path="res://anim/idleanim/idleanim0013.png" id="17_nha2g"]
+[ext_resource type="Texture2D" uid="uid://dqar2867ixlah" path="res://anim/idleanim/idleanim0014.png" id="18_4bn0x"]
+[ext_resource type="Texture2D" uid="uid://cm1xeikq0148n" path="res://anim/idleanim/idleanim0015.png" id="19_m7n71"]
+[ext_resource type="Texture2D" uid="uid://dc8rnctbhlxwi" path="res://anim/idleanim/idleanim0016.png" id="20_prngn"]
+[ext_resource type="Texture2D" uid="uid://cuhqhkaemvp4f" path="res://anim/idleanim/idleanim0017.png" id="21_hq5fo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rl2iq"]
 animations = [{
@@ -83,7 +83,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle_working",
-"speed": 16.0
+"speed": 12.0
 }]
 
 [node name="main" type="Node2D"]
@@ -108,5 +108,4 @@ position = Vector2(896, 234)
 sprite_frames = SubResource("SpriteFrames_rl2iq")
 animation = &"idle_working"
 autoplay = "idle_working"
-frame = 7
-frame_progress = 0.4649876
+frame_progress = 0.06138146
