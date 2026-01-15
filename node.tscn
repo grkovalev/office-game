@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://q43nflnucft1" path="res://anim/idleanim/idleanim0011.png" id="15_2wy2p"]
 [ext_resource type="Texture2D" uid="uid://c1qdmw6wmc1vp" path="res://anim/idleanim/idleanim0012.png" id="16_w6pri"]
 [ext_resource type="Texture2D" uid="uid://dx63ka1u35kuk" path="res://anim/focusedanim/focusedanim0021.png" id="22_j31fo"]
-[ext_resource type="Script" uid="uid://csf60u4dchx6y" path="res://btn_help_toggle.gd" id="22_qv2vy"]
+[ext_resource type="Script" uid="uid://csf60u4dchx6y" path="res://btn_tomat_toggle.gd" id="22_qv2vy"]
 [ext_resource type="Texture2D" uid="uid://b4376frop5gup" path="res://anim/focusedanim/focusedanim0022.png" id="23_o6fs4"]
 [ext_resource type="Texture2D" uid="uid://cswfaxnv8bnsk" path="res://anim/focusedanim/focusedanim0023.png" id="24_twhnx"]
 [ext_resource type="Texture2D" uid="uid://roh0hbwxbx84" path="res://anim/focusedanim/focusedanim0024.png" id="25_1am0g"]
