@@ -98,7 +98,6 @@ position = Vector2(801, 531)
 texture = ExtResource("2_e2u21")
 
 [node name="Officedesk" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(894, 236)
 texture = ExtResource("2_j2q8x")
 
@@ -108,7 +107,7 @@ texture = ExtResource("4_bss38")
 
 [node name="anim_idlescreen" type="AnimatedSprite2D" parent="."]
 texture_repeat = 2
-position = Vector2(896, 234)
+position = Vector2(1589, 273)
 sprite_frames = SubResource("SpriteFrames_rl2iq")
 animation = &"anim_idle_default"
 autoplay = "anim_idle_default"
