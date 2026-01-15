@@ -1,26 +1,21 @@
-[gd_scene load_steps=30 format=3 uid="uid://bk08lfcueqr7m"]
+[gd_scene load_steps=24 format=3 uid="uid://bk08lfcueqr7m"]
 
 [ext_resource type="Script" uid="uid://dbrimv525bas6" path="res://main.gd" id="1_sy5k4"]
 [ext_resource type="Texture2D" uid="uid://cfg1btb3xrrqu" path="res://button_help.png" id="2_e2u21"]
 [ext_resource type="Texture2D" uid="uid://c3o37vt3pu2bq" path="res://01_idleworkerf.png" id="2_j2q8x"]
 [ext_resource type="Texture2D" uid="uid://dxrsbed55wgcq" path="res://button_pomodorro.png" id="4_bss38"]
-[ext_resource type="Texture2D" uid="uid://bjw3hpxn7h05w" path="res://anim/idleanim/idleanim0001.png" id="5_ey15c"]
-[ext_resource type="Texture2D" uid="uid://b4u7y7j0ar3dx" path="res://anim/idleanim/idleanim0002.png" id="6_p1837"]
-[ext_resource type="Texture2D" uid="uid://cpn5c1lktmwe4" path="res://anim/idleanim/idleanim0003.png" id="7_qv2vy"]
-[ext_resource type="Texture2D" uid="uid://bseluacp1n0j6" path="res://anim/idleanim/idleanim0004.png" id="8_8jewq"]
-[ext_resource type="Texture2D" uid="uid://bfgybdgtdawyk" path="res://anim/idleanim/idleanim0005.png" id="9_3xwg0"]
-[ext_resource type="Texture2D" uid="uid://ccad8020l2jcr" path="res://anim/idleanim/idleanim0006.png" id="10_85l3h"]
-[ext_resource type="Texture2D" uid="uid://bea30svtncgay" path="res://anim/idleanim/idleanim0007.png" id="11_j31fo"]
-[ext_resource type="Texture2D" uid="uid://bsp1m3838h8rg" path="res://anim/idleanim/idleanim0008.png" id="12_o6fs4"]
-[ext_resource type="Texture2D" uid="uid://wocunpj0djgv" path="res://anim/idleanim/idleanim0009.png" id="13_twhnx"]
-[ext_resource type="Texture2D" uid="uid://4lpg682cj41x" path="res://anim/idleanim/idleanim0010.png" id="14_1am0g"]
-[ext_resource type="Texture2D" uid="uid://da6v3l74uq48w" path="res://anim/idleanim/idleanim0011.png" id="15_2wy2p"]
-[ext_resource type="Texture2D" uid="uid://crjw16or1knol" path="res://anim/idleanim/idleanim0012.png" id="16_w6pri"]
-[ext_resource type="Texture2D" uid="uid://dmwqquxdi7enr" path="res://anim/idleanim/idleanim0013.png" id="17_nha2g"]
-[ext_resource type="Texture2D" uid="uid://dqar2867ixlah" path="res://anim/idleanim/idleanim0014.png" id="18_4bn0x"]
-[ext_resource type="Texture2D" uid="uid://cm1xeikq0148n" path="res://anim/idleanim/idleanim0015.png" id="19_m7n71"]
-[ext_resource type="Texture2D" uid="uid://dc8rnctbhlxwi" path="res://anim/idleanim/idleanim0016.png" id="20_prngn"]
-[ext_resource type="Texture2D" uid="uid://cuhqhkaemvp4f" path="res://anim/idleanim/idleanim0017.png" id="21_hq5fo"]
+[ext_resource type="Texture2D" uid="uid://c780belr0npox" path="res://anim/idleanim/idleanim0001.png" id="5_ey15c"]
+[ext_resource type="Texture2D" uid="uid://1v4fh2xccpn5" path="res://anim/idleanim/idleanim0002.png" id="6_p1837"]
+[ext_resource type="Texture2D" uid="uid://bk732a3mpw6xj" path="res://anim/idleanim/idleanim0003.png" id="7_qv2vy"]
+[ext_resource type="Texture2D" uid="uid://benhcems2ifqy" path="res://anim/idleanim/idleanim0004.png" id="8_8jewq"]
+[ext_resource type="Texture2D" uid="uid://c7wbu3cwlg4wq" path="res://anim/idleanim/idleanim0005.png" id="9_3xwg0"]
+[ext_resource type="Texture2D" uid="uid://bygk5aekoq7po" path="res://anim/idleanim/idleanim0006.png" id="10_85l3h"]
+[ext_resource type="Texture2D" uid="uid://m4pnaiqlh3sb" path="res://anim/idleanim/idleanim0007.png" id="11_j31fo"]
+[ext_resource type="Texture2D" uid="uid://c38o1jl1eu7r1" path="res://anim/idleanim/idleanim0008.png" id="12_o6fs4"]
+[ext_resource type="Texture2D" uid="uid://co5gtsb8hd86g" path="res://anim/idleanim/idleanim0009.png" id="13_twhnx"]
+[ext_resource type="Texture2D" uid="uid://cj45c2xt7gxgu" path="res://anim/idleanim/idleanim0010.png" id="14_1am0g"]
+[ext_resource type="Texture2D" uid="uid://q43nflnucft1" path="res://anim/idleanim/idleanim0011.png" id="15_2wy2p"]
+[ext_resource type="Texture2D" uid="uid://c1qdmw6wmc1vp" path="res://anim/idleanim/idleanim0012.png" id="16_w6pri"]
 [ext_resource type="Texture2D" uid="uid://dx63ka1u35kuk" path="res://anim/focusedanim/focusedanim0021.png" id="22_j31fo"]
 [ext_resource type="Texture2D" uid="uid://b4376frop5gup" path="res://anim/focusedanim/focusedanim0022.png" id="23_o6fs4"]
 [ext_resource type="Texture2D" uid="uid://cswfaxnv8bnsk" path="res://anim/focusedanim/focusedanim0023.png" id="24_twhnx"]
@@ -30,10 +25,28 @@
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rl2iq"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_j31fo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_o6fs4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_twhnx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_1am0g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_2wy2p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_w6pri")
+}],
 "loop": true,
-"name": &"default",
-"speed": 5.0
+"name": &"anim_focused",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -71,50 +84,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("16_w6pri")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_nha2g")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18_4bn0x")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_m7n71")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_prngn")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_hq5fo")
 }],
 "loop": true,
-"name": &"idle_working",
-"speed": 12.0
-}]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_nha2g"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("22_j31fo")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_o6fs4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24_twhnx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_1am0g")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_2wy2p")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_w6pri")
-}],
-"loop": true,
-"name": &"focused",
+"name": &"anim_idle_default",
 "speed": 12.0
 }]
 
@@ -134,19 +106,11 @@ texture = ExtResource("2_j2q8x")
 position = Vector2(1058, 531)
 texture = ExtResource("4_bss38")
 
-[node name="anim_idle_office" type="AnimatedSprite2D" parent="."]
+[node name="anim_idlescreen" type="AnimatedSprite2D" parent="."]
 texture_repeat = 2
 position = Vector2(896, 234)
 sprite_frames = SubResource("SpriteFrames_rl2iq")
-animation = &"idle_working"
-autoplay = "idle_working"
-frame = 9
-frame_progress = 0.36056846
-
-[node name="anim_focused_office" type="AnimatedSprite2D" parent="."]
-position = Vector2(1452, 261)
-sprite_frames = SubResource("SpriteFrames_nha2g")
-animation = &"focused"
-autoplay = "focused"
-frame = 2
-frame_progress = 0.13055997
+animation = &"anim_idle_default"
+autoplay = "anim_idle_default"
+frame = 1
+frame_progress = 0.99821854
