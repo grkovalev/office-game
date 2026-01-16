@@ -117,4 +117,4 @@ position = Vector2(1066, 254)
 sprite_frames = SubResource("SpriteFrames_nlm7j")
 animation = &"def_center"
 
-[node name="calblock" type="Node2D" parent="Window"]
+[node name="calblock" type="Sprite2D" parent="Window"]
