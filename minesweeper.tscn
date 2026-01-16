@@ -1,14 +1,19 @@
-[gd_scene load_steps=12 format=3 uid="uid://6brnunq6a06k"]
+[gd_scene load_steps=19 format=3 uid="uid://6brnunq6a06k"]
 
 [ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="1_7nxku"]
+[ext_resource type="Texture2D" uid="uid://qkyky4hs4p2f" path="res://ui_buttons/minesweeper/ui_circle.png" id="1_a5xdw"]
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_xrf8k"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_xrf8k"]
 [ext_resource type="Texture2D" uid="uid://dcq5exfvf4gei" path="res://avatars/slack/avatar_f_concerned_center.png" id="4_nlm7j"]
+[ext_resource type="Script" uid="uid://c7p5uheulg5l6" path="res://number_calblocks.gd" id="5_cf5gv"]
 [ext_resource type="Texture2D" uid="uid://0xe7l6uwgage" path="res://avatars/slack/avatar_f_concerned_left.png" id="5_h640s"]
 [ext_resource type="Texture2D" uid="uid://cqvgmawoan8hx" path="res://avatars/slack/avatar_f_concerned_right.png" id="6_m1acp"]
 [ext_resource type="Texture2D" uid="uid://5b6gndoionh1" path="res://avatars/slack/avatar_f_gameover.png" id="7_ro3ru"]
 [ext_resource type="Texture2D" uid="uid://dd6gwavrqnkat" path="res://avatars/slack/avatar_f_fail.png" id="8_1xtce"]
 [ext_resource type="Texture2D" uid="uid://m08vxqw1a5kk" path="res://avatars/slack/avatar_f_succes.png" id="9_a5xdw"]
+[ext_resource type="Texture2D" uid="uid://7rlixdrpsxs8" path="res://ui_buttons/minesweeper/minesweep_block.png" id="10_m1acp"]
+[ext_resource type="Texture2D" uid="uid://dnxjexqnou3bj" path="res://ui_buttons/minesweeper/minesweeper_atlas.png" id="11_1xtce"]
+[ext_resource type="Script" uid="uid://bkphwlfihcy35" path="res://tilebutton.gd" id="12_1xtce"]
 
 [sub_resource type="Environment" id="Environment_ql2jn"]
 background_mode = 1
@@ -65,6 +70,14 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_8neyo"]
+atlas = ExtResource("11_1xtce")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5xdw"]
+atlas = ExtResource("11_1xtce")
+region = Rect2(0, 0, 50, 50)
+
 [node name="main_minesweeper" type="Node2D"]
 
 [node name="Window" type="Window" parent="."]
@@ -75,46 +88,83 @@ size = Vector2i(1200, 1500)
 [node name="bg_color" type="WorldEnvironment" parent="Window"]
 environment = SubResource("Environment_ql2jn")
 
+[node name="ui_circle" type="Sprite2D" parent="Window"]
+position = Vector2(64, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_a5xdw")
+
+[node name="ui_circle2" type="Sprite2D" parent="Window"]
+position = Vector2(128, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_a5xdw")
+
+[node name="ui_circle3" type="Sprite2D" parent="Window"]
+position = Vector2(192, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_a5xdw")
+
 [node name="title" type="Label" parent="Window"]
-offset_left = 49.0
-offset_top = 73.0
-offset_right = 700.0
-offset_bottom = 124.0
+offset_left = 64.0
+offset_top = 168.0
+offset_right = 858.0
+offset_bottom = 229.0
 theme_override_fonts/font = ExtResource("1_xrf8k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 60
 text = "WORK CHATS NAVIGATION"
 
 [node name="subtitle" type="Label" parent="Window"]
-offset_left = 742.0
-offset_top = 57.0
-offset_right = 1153.0
-offset_bottom = 162.0
+offset_left = 64.0
+offset_top = 240.0
+offset_right = 821.0
+offset_bottom = 291.0
 theme_override_fonts/font = ExtResource("2_xrf8k")
-theme_override_font_sizes/font_size = 40
-text = "escape extra workload
-at all costs"
+theme_override_font_sizes/font_size = 50
+text = "escape extra workload at all costs"
 
 [node name="calendar blocks left" type="Label" parent="Window"]
-offset_left = 73.0
-offset_top = 271.0
-offset_right = 434.0
-offset_bottom = 320.0
+offset_left = 118.0
+offset_top = 359.5
+offset_right = 479.0
+offset_bottom = 408.5
 theme_override_fonts/font = ExtResource("1_7nxku")
 theme_override_font_sizes/font_size = 40
 text = "calendar blocks left:"
 
 [node name="number_calblocks" type="Label" parent="Window"]
-offset_left = 449.0
-offset_top = 271.0
-offset_right = 511.0
-offset_bottom = 320.0
+offset_left = 494.0
+offset_top = 359.5
+offset_right = 556.0
+offset_bottom = 408.5
 theme_override_fonts/font = ExtResource("1_7nxku")
 theme_override_font_sizes/font_size = 40
 text = "10"
+script = ExtResource("5_cf5gv")
 
 [node name="avatar_slack" type="AnimatedSprite2D" parent="Window"]
-position = Vector2(1066, 254)
+position = Vector2(1016, 232)
 sprite_frames = SubResource("SpriteFrames_nlm7j")
 animation = &"def_center"
 
 [node name="calblock" type="Sprite2D" parent="Window"]
+position = Vector2(85, 377.5)
+texture = ExtResource("10_m1acp")
+
+[node name="tiles_minesweeper" type="CanvasLayer" parent="Window"]
+
+[node name="grid9x9" type="GridContainer" parent="Window/tiles_minesweeper"]
+offset_left = 67.0
+offset_top = 452.46
+offset_right = 225.0
+offset_bottom = 502.46
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 9
+
+[node name="tile" type="TextureButton" parent="Window/tiles_minesweeper/grid9x9"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_8neyo")
+texture_pressed = SubResource("AtlasTexture_a5xdw")
+script = ExtResource("12_1xtce")
+
+[connection signal="flag_changed" from="Window/tiles_minesweeper/grid9x9/tile" to="Window/number_calblocks" method="_on_tile_flag_changed"]
