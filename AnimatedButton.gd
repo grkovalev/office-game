@@ -22,13 +22,21 @@ func animate_to(target_scale: Vector2):
 	_tween.set_ease(Tween.EASE_OUT)
 
 func _on_hover():
+	if toggle_mode and button_pressed:
+		return
 	animate_to(hover_scale)
 
 func _on_exit():
+	if toggle_mode and button_pressed:
+		return
 	animate_to(Vector2.ONE)
 
 func _on_pressed():
 	animate_to(pressed_scale)
 
 func _on_release():
-	animate_to(hover_scale)
+	if toggle_mode:
+		var target_scale = pressed_scale if button_pressed else Vector2.ONE
+		animate_to(target_scale)
+	else:
+		animate_to(hover_scale)
