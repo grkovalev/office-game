@@ -4,7 +4,27 @@ extends TextureButton
 @export var pressed_scale := Vector2(0.95, 0.95)
 @export var tween_time := 0.15
 
+@export var cooldown_seconds := 900 
+@export var cooldown_texture: Texture2D  
+
+@onready var label: Label = $Label
+
 var _tween: Tween
+var time_left := 0
+var timer_running := false
+var timer_paused := false
+var original_texture: Texture2D
+var _accumulator := 0.0
+
+func _process(delta):
+	if timer_running and not timer_paused:
+		_accumulator += delta
+		if _accumulator >= 1.0:
+			_accumulator -= 1.0
+			time_left -= 1
+			if time_left <= 0:
+				reset_button()
+			update_label()
 
 func _ready() -> void:
 	pivot_offset = size / 2
@@ -12,6 +32,7 @@ func _ready() -> void:
 	mouse_exited.connect(_on_exit)
 	button_down.connect(_on_pressed)
 	button_up.connect(_on_release)
+	original_texture = texture_normal
 
 func animate_to(target_scale: Vector2):
 	if _tween:
@@ -21,17 +42,24 @@ func animate_to(target_scale: Vector2):
 	_tween.set_trans(Tween.TRANS_BACK)
 	_tween.set_ease(Tween.EASE_OUT)
 
+# Hover & press animations
 func _on_hover():
 	if toggle_mode and button_pressed:
+		return
+	if timer_running:
 		return
 	animate_to(hover_scale)
 
 func _on_exit():
 	if toggle_mode and button_pressed:
 		return
+	if timer_running:
+		return
 	animate_to(Vector2.ONE)
 
 func _on_pressed():
+	if timer_running:
+		return
 	animate_to(pressed_scale)
 
 func _on_release():
@@ -40,3 +68,47 @@ func _on_release():
 		animate_to(target_scale)
 	else:
 		animate_to(hover_scale)
+
+	# Handle cooldown logic
+	handle_timer_click()
+
+func handle_timer_click():
+	if not timer_running:
+		# First click → start timer
+		start_cooldown()
+	elif timer_running and not timer_paused:
+		# First click while running → pause
+		timer_paused = true
+	elif timer_running and timer_paused:
+		# Second click while paused → cancel
+		reset_button()
+
+func start_cooldown():
+	timer_running = true
+	timer_paused = false
+	time_left = cooldown_seconds
+
+	# Switch button texture
+	if cooldown_texture:
+		self.texture_normal = cooldown_texture
+
+	label.visible = true
+	update_label()
+
+func reset_button():
+	timer_running = false
+	timer_paused = false
+	time_left = 0
+
+	# Restore original texture
+	if original_texture:
+		texture_normal = original_texture
+
+	label.text = ""
+	label.visible = false
+	animate_to(Vector2.ONE)
+
+func update_label():
+	var minutes := int(time_left) / 60
+	var seconds := int(time_left) % 60
+	label.text = "%02d:%02d" % [minutes, seconds]

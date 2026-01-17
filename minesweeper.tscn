@@ -166,5 +166,3 @@ toggle_mode = true
 texture_normal = SubResource("AtlasTexture_8neyo")
 texture_pressed = SubResource("AtlasTexture_a5xdw")
 script = ExtResource("12_1xtce")
-
-[connection signal="flag_changed" from="Window/tiles_minesweeper/grid9x9/tile" to="Window/number_calblocks" method="_on_tile_flag_changed"]
