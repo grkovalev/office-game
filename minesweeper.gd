@@ -36,7 +36,13 @@ func _on_button_gui_input(event: InputEvent, btn: TileTemplateButton) -> void:
 				_on_left_click(btn)
 			MOUSE_BUTTON_RIGHT:
 				print("Right click:", btn.row_index, btn.column_index)
-
+				_on_right_click(btn)
+func _on_right_click(btn: TileTemplateButton) -> void:
+	var state = board._get_cell_state(btn.column_index, btn.row_index)
+	if state.open:
+		return
+	btn.set_tile(6)
+	
 func _on_left_click(btn: TileTemplateButton) -> void:
 	var state = board._get_cell_state(btn.column_index, btn.row_index)
 	if state.open:

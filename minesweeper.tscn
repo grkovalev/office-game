@@ -6,7 +6,7 @@
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_xrf8k"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_xrf8k"]
 [ext_resource type="Texture2D" uid="uid://dcq5exfvf4gei" path="res://avatars/slack/avatar_f_concerned_center.png" id="4_nlm7j"]
-[ext_resource type="Script" path="res://number_calblocks.gd" id="5_cf5gv"]
+[ext_resource type="Script" uid="uid://c7p5uheulg5l6" path="res://number_calblocks.gd" id="5_cf5gv"]
 [ext_resource type="Texture2D" uid="uid://0xe7l6uwgage" path="res://avatars/slack/avatar_f_concerned_left.png" id="5_h640s"]
 [ext_resource type="Texture2D" uid="uid://cqvgmawoan8hx" path="res://avatars/slack/avatar_f_concerned_right.png" id="6_m1acp"]
 [ext_resource type="Texture2D" uid="uid://5b6gndoionh1" path="res://avatars/slack/avatar_f_gameover.png" id="7_ro3ru"]
