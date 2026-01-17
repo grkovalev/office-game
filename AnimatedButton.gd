@@ -3,9 +3,9 @@ extends TextureButton
 @export var hover_scale := Vector2(1.1, 1.1)
 @export var pressed_scale := Vector2(0.95, 0.95)
 @export var tween_time := 0.15
-
-@export var cooldown_seconds := 900 
-@export var cooldown_texture: Texture2D  
+@export var cooldown_seconds := 900  # 15 minutes
+@export var cooldown_texture: Texture2D
+@export var anim_sprite: AnimatedSprite2D  # assign in Inspector
 
 @onready var label: Label = $Label
 
@@ -17,6 +17,7 @@ var original_texture: Texture2D
 var _accumulator := 0.0
 
 func _process(delta):
+	# Timer countdown
 	if timer_running and not timer_paused:
 		_accumulator += delta
 		if _accumulator >= 1.0:
@@ -25,6 +26,8 @@ func _process(delta):
 			if time_left <= 0:
 				reset_button()
 			update_label()
+	# Update animation each frame
+	update_animation_state()
 
 func _ready() -> void:
 	pivot_offset = size / 2
@@ -42,7 +45,6 @@ func animate_to(target_scale: Vector2):
 	_tween.set_trans(Tween.TRANS_BACK)
 	_tween.set_ease(Tween.EASE_OUT)
 
-# Hover & press animations
 func _on_hover():
 	if toggle_mode and button_pressed:
 		return
@@ -69,18 +71,17 @@ func _on_release():
 	else:
 		animate_to(hover_scale)
 
-	# Handle cooldown logic
 	handle_timer_click()
 
+# ------------------------
+# Timer / cooldown logic
+# ------------------------
 func handle_timer_click():
 	if not timer_running:
-		# First click → start timer
 		start_cooldown()
 	elif timer_running and not timer_paused:
-		# First click while running → pause
 		timer_paused = true
 	elif timer_running and timer_paused:
-		# Second click while paused → cancel
 		reset_button()
 
 func start_cooldown():
@@ -88,9 +89,9 @@ func start_cooldown():
 	timer_paused = false
 	time_left = cooldown_seconds
 
-	# Switch button texture
+	# Swap texture
 	if cooldown_texture:
-		self.texture_normal = cooldown_texture
+		texture_normal = cooldown_texture
 
 	label.visible = true
 	update_label()
@@ -100,7 +101,6 @@ func reset_button():
 	timer_paused = false
 	time_left = 0
 
-	# Restore original texture
 	if original_texture:
 		texture_normal = original_texture
 
@@ -109,6 +109,22 @@ func reset_button():
 	animate_to(Vector2.ONE)
 
 func update_label():
-	var minutes := int(time_left) / 60
-	var seconds := int(time_left) % 60
+	var minutes := time_left / 60
+	var seconds := time_left % 60
 	label.text = "%02d:%02d" % [minutes, seconds]
+
+# ------------------------
+# External AnimatedSprite2D control
+# ------------------------
+func update_animation_state():
+	if not anim_sprite:
+		return
+
+	if timer_running:
+		if anim_sprite.animation != "anim_focused":
+			anim_sprite.animation = "anim_focused"
+			anim_sprite.play()
+	else:
+		if anim_sprite.animation != "anim_idle_default":
+			anim_sprite.animation = "anim_idle_default"
+			anim_sprite.play()

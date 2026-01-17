@@ -111,7 +111,7 @@ offset_bottom = 578.0
 texture_normal = ExtResource("2_e2u21")
 script = ExtResource("28_o6fs4")
 
-[node name="btn_tomat" type="TextureButton" parent="."]
+[node name="btn_tomat" type="TextureButton" parent="." node_paths=PackedStringArray("anim_sprite")]
 offset_left = 970.0
 offset_top = 484.0
 offset_right = 1149.0
@@ -120,6 +120,7 @@ toggle_mode = true
 texture_normal = ExtResource("4_bss38")
 script = ExtResource("28_o6fs4")
 cooldown_texture = ExtResource("23_8jewq")
+anim_sprite = NodePath("../anim_idlescreen")
 
 [node name="btn_tomat_toggle" type="Node" parent="btn_tomat"]
 script = ExtResource("22_qv2vy")
