@@ -1,11 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://6brnunq6a06k"]
+[gd_scene load_steps=20 format=3 uid="uid://6brnunq6a06k"]
 
 [ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="1_7nxku"]
 [ext_resource type="Texture2D" uid="uid://qkyky4hs4p2f" path="res://ui_buttons/minesweeper/ui_circle.png" id="1_a5xdw"]
+[ext_resource type="Script" uid="uid://iixic5s2ny1f" path="res://minesweeper.gd" id="1_k6kum"]
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_xrf8k"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_xrf8k"]
 [ext_resource type="Texture2D" uid="uid://dcq5exfvf4gei" path="res://avatars/slack/avatar_f_concerned_center.png" id="4_nlm7j"]
-[ext_resource type="Script" uid="uid://c7p5uheulg5l6" path="res://number_calblocks.gd" id="5_cf5gv"]
+[ext_resource type="Script" path="res://number_calblocks.gd" id="5_cf5gv"]
 [ext_resource type="Texture2D" uid="uid://0xe7l6uwgage" path="res://avatars/slack/avatar_f_concerned_left.png" id="5_h640s"]
 [ext_resource type="Texture2D" uid="uid://cqvgmawoan8hx" path="res://avatars/slack/avatar_f_concerned_right.png" id="6_m1acp"]
 [ext_resource type="Texture2D" uid="uid://5b6gndoionh1" path="res://avatars/slack/avatar_f_gameover.png" id="7_ro3ru"]
@@ -70,15 +71,16 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6kum"]
+atlas = ExtResource("11_1xtce")
+region = Rect2(0, 0, 50, 50)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_8neyo"]
 atlas = ExtResource("11_1xtce")
 region = Rect2(0, 0, 50, 50)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a5xdw"]
-atlas = ExtResource("11_1xtce")
-region = Rect2(0, 0, 50, 50)
-
 [node name="main_minesweeper" type="Node2D"]
+script = ExtResource("1_k6kum")
 
 [node name="Window" type="Window" parent="."]
 oversampling_override = 1.0
@@ -162,9 +164,6 @@ columns = 9
 
 [node name="tile" type="TextureButton" parent="Window/tiles_minesweeper/grid9x9"]
 layout_mode = 2
-toggle_mode = true
-texture_normal = SubResource("AtlasTexture_8neyo")
-texture_pressed = SubResource("AtlasTexture_a5xdw")
+texture_normal = SubResource("AtlasTexture_k6kum")
+texture_pressed = SubResource("AtlasTexture_8neyo")
 script = ExtResource("12_1xtce")
-
-[connection signal="flag_changed" from="Window/tiles_minesweeper/grid9x9/tile" to="Window/number_calblocks" method="_on_tile_flag_changed"]
