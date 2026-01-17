@@ -11,6 +11,4 @@ func on_flag_changed(_delta: int) -> void:
 	current_value +=_delta
 	text = str(current_value)
 
-
-func _on_tile_flag_changed(_delta: int) -> void:
 	pass # Replace with function body.
