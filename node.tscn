@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bk08lfcueqr7m"]
+[gd_scene load_steps=27 format=3 uid="uid://bk08lfcueqr7m"]
 
 [ext_resource type="Script" uid="uid://dbrimv525bas6" path="res://main.gd" id="1_sy5k4"]
 [ext_resource type="Texture2D" uid="uid://cfg1btb3xrrqu" path="res://button_help.png" id="2_e2u21"]
@@ -17,9 +17,11 @@
 [ext_resource type="Texture2D" uid="uid://c1qdmw6wmc1vp" path="res://anim/idleanim/idleanim0012.png" id="16_w6pri"]
 [ext_resource type="Texture2D" uid="uid://dx63ka1u35kuk" path="res://anim/focusedanim/focusedanim0021.png" id="22_j31fo"]
 [ext_resource type="Script" uid="uid://csf60u4dchx6y" path="res://btn_tomat_toggle.gd" id="22_qv2vy"]
+[ext_resource type="Texture2D" uid="uid://w7kidvkwr7h4" path="res://button_pomodorrotimer.png" id="23_8jewq"]
 [ext_resource type="Texture2D" uid="uid://b4376frop5gup" path="res://anim/focusedanim/focusedanim0022.png" id="23_o6fs4"]
 [ext_resource type="Texture2D" uid="uid://cswfaxnv8bnsk" path="res://anim/focusedanim/focusedanim0023.png" id="24_twhnx"]
 [ext_resource type="Texture2D" uid="uid://roh0hbwxbx84" path="res://anim/focusedanim/focusedanim0024.png" id="25_1am0g"]
+[ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="25_3xwg0"]
 [ext_resource type="Texture2D" uid="uid://d258vjdxdpf0b" path="res://anim/focusedanim/focusedanim0025.png" id="26_2wy2p"]
 [ext_resource type="Texture2D" uid="uid://cjpxhr2i55wgd" path="res://anim/focusedanim/focusedanim0026.png" id="27_w6pri"]
 [ext_resource type="Script" uid="uid://olniyl52tw4r" path="res://AnimatedButton.gd" id="28_o6fs4"]
@@ -117,6 +119,18 @@ offset_bottom = 580.0
 toggle_mode = true
 texture_normal = ExtResource("4_bss38")
 script = ExtResource("28_o6fs4")
+cooldown_texture = ExtResource("23_8jewq")
 
 [node name="btn_tomat_toggle" type="Node" parent="btn_tomat"]
 script = ExtResource("22_qv2vy")
+
+[node name="Label" type="Label" parent="btn_tomat"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 23.0
+offset_right = 176.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("25_3xwg0")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
