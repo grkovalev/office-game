@@ -3,10 +3,13 @@ extends Node2D
 @onready var tiles = $Window/tiles_minesweeper/grid9x9
 @onready var tile: TileTemplateButton = $Window/tiles_minesweeper/grid9x9/tile
 @onready var avaAnim: AnimatedSprite2D = $Window/avatar_slack
+@onready var number_calblocks: Label = $Window/number_calblocks
+
 
 var board:Board
 var buttons:={}
 var gg:bool = false
+var max_flags:int = 10
 
 func _ready() -> void:
 	if tiles == null:
@@ -62,28 +65,43 @@ func _on_button_gui_input(event: InputEvent, btn: TileTemplateButton) -> void:
 					_new_game()
 					return
 func _on_right_click(btn: TileTemplateButton) -> void:
+	if gg:
+		return
 	var state = board._get_cell_state(btn.column_index, btn.row_index)
 	if state.open:
 		return
 	if state.has_flag:
 		state.has_flag = false
+		board.flags = board.flags - 1
 		btn.set_tile(0)
-		return
-	state.has_flag = true
-	btn.set_tile(6)
+	else:
+		if max_flags - board.flags <=0:
+			return
+		state.has_flag = true
+		board.flags = board.flags + 1
+		btn.set_tile(6)
+	number_calblocks.text = str(max_flags - board.flags)
 	
 func _on_left_click(btn: TileTemplateButton) -> void:
 	var state:CellState= board._get_cell_state(btn.column_index, btn.row_index)
 	if state.open:
 		return
+	if state.has_flag:
+		print("Has flag ", board.flags)
+		state.has_flag = false
+		board.flags = board.flags - 1
+		print("Flag removed ", board.flags)
+		number_calblocks.text = str(max_flags - board.flags)
 	state.open = true
 	if state.has_mine:
 		btn.set_tile(7)
 		_game_over()
+		number_calblocks.text = str(max_flags - board.flags)
 		return
 	var danger_level = board._get_danger_level(btn.column_index, btn.row_index)
 	if danger_level > 0:
 		btn.set_tile(danger_level + 1)
+		number_calblocks.text = str(max_flags - board.flags)
 		return
 
 	var opened = board.open_adjacent_cells(btn.column_index, btn.row_index)
@@ -138,6 +156,7 @@ class Board:
 	var mines_count:int = 10
 	var cells_count: int = 0
 	var cells:Array[CellState]
+	var flags: int = 0
 
 	func _init() -> void:
 		self.cells_count = self.columns * self.rows
@@ -220,6 +239,9 @@ class Board:
 	func _visit(column_index:int, row_index:int) -> void:
 		var cell_state = _get_cell_state(column_index, row_index)
 		cell_state.open = true
+		if cell_state.has_flag:
+			cell_state.has_flag = false
+			self.flags = self.flags - 1
 
 	func _set_danger_level(column_index:int, row_index:int, danger_level:int) -> void:
 		var cell_state = _get_cell_state(column_index, row_index)
