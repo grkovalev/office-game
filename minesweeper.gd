@@ -35,6 +35,8 @@ func _ready() -> void:
 	tiles.remove_child(tile)
 
 func _on_button_hover(btn: TileTemplateButton):
+	if gg:
+		return
 	var column = btn.column_index
 	var anim_idx = int((column + 1) / 3)
 	if anim_idx == 1:
@@ -101,7 +103,7 @@ func _game_over():
 				continue
 			var btn = buttons[Vector2i(c,r)]
 			if cell.has_mine:
-				btn.set_tile(8)
+				btn.set_tile(7)
 				continue
 			var danger_level = board._get_danger_level(c,r)
 			btn.set_tile(danger_level + 1)
