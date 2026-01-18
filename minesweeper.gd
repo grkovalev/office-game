@@ -41,26 +41,31 @@ func _on_right_click(btn: TileTemplateButton) -> void:
 	var state = board._get_cell_state(btn.column_index, btn.row_index)
 	if state.open:
 		return
+	if state.has_flag:
+		btn.set_tile(0)
+		return
+	state.has_flag = true
 	btn.set_tile(6)
 	
 func _on_left_click(btn: TileTemplateButton) -> void:
 	var state = board._get_cell_state(btn.column_index, btn.row_index)
 	if state.open:
 		return
+	state.open = true
 	if state.has_mine:
-		print("BAM!")
 		btn.set_tile(7)
 		return
-	print("Open tile")
 	btn.set_tile(1)
 
 class CellState:
 	var has_mine: bool
 	var open: bool
+	var has_flag: bool
 
 	func _init(mine: bool) -> void:
 		self.has_mine = mine
 		self.open = false
+		self.has_flag = false
 
 
 class Board:
