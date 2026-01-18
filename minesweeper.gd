@@ -4,6 +4,7 @@ extends Node2D
 @onready var tile: TileTemplateButton = $Window/tiles_minesweeper/grid9x9/tile
 
 var board:Board
+var buttons:={}
 
 func _ready() -> void:
 	if tiles == null:
@@ -15,8 +16,8 @@ func _ready() -> void:
 
 	board = Board.new()
 	for i in range(board.cells_count):
-		var row := i / board.columns
-		var column := i % board.columns
+		var row := int(i / board.columns)
+		var column := int(i % board.columns)
 		var tile_copy = tile.duplicate()
 		tile_copy.row_index = row
 		tile_copy.column_index = column
@@ -25,6 +26,7 @@ func _ready() -> void:
 				_on_button_gui_input(event, tile_copy)
 				)
 		tiles.add_child(tile_copy)
+		buttons[Vector2i(column, row)] = tile_copy
 	tiles.remove_child(tile)
 
 		
@@ -58,16 +60,26 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 		return
 	var danger_level = board._get_danger_level(btn.column_index, btn.row_index)
 	print("Danger level:", danger_level)
-	if danger_level == 0:
-		btn.set_tile(1)
+	if danger_level > 0:
+		btn.set_tile(danger_level + 1)
 		return
-	btn.set_tile(danger_level + 1)
+
+	var opened = board.open_adjacent_cells(btn.column_index, btn.row_index)
+	print("Opened:", opened)
+	for v in opened:
+		var cell = buttons[v]
+		var c_danger_level = board._get_danger_level(v.x, v.y)
+		if c_danger_level == 0:
+			cell.set_tile(1)
+			continue
+		cell.set_tile(c_danger_level + 1)
 
 
 class CellState:
 	var has_mine: bool
 	var open: bool
 	var has_flag: bool
+	var adjacent_mines:int
 
 	func _init(mine: bool) -> void:
 		self.has_mine = mine
@@ -115,30 +127,91 @@ class Board:
 		return self.cells[position]
 
 	func _get_danger_level(column_index: int, row_index:int)->int:
-		var cell_state: CellState
 		var row_has_mines: bool = (
 			_get_cell_state(column_index, max(row_index - 1, 0)).has_mine or
 			_get_cell_state(column_index, min(row_index + 1, self.rows - 1)).has_mine
 		)
 
-		# Check column
 		var column_has_mines: bool = (
 			_get_cell_state(max(column_index - 1, 0), row_index).has_mine or
 			_get_cell_state(min(column_index + 1, self.columns - 1), row_index).has_mine
 		)
 
-		# Check diagonal 1 (top-left ↘ bottom-right)
 		var diag1_has_mines: bool = (
 			_get_cell_state(max(column_index - 1, 0), max(row_index - 1, 0)).has_mine or
 			_get_cell_state(min(column_index + 1, self.columns - 1), min(row_index + 1, self.rows - 1)).has_mine
 		)
 
-		# Check diagonal 2 (top-right ↘ bottom-left)
 		var diag2_has_mines: bool = (
 			_get_cell_state(min(column_index + 1, self.columns - 1), max(row_index - 1, 0)).has_mine or
 			_get_cell_state(max(column_index - 1, 0), min(row_index + 1, self.rows - 1)).has_mine
 		)
 		return int(row_has_mines) + int(column_has_mines) + int(diag1_has_mines) + int(diag2_has_mines)
+
+	func _is_outside_board(column_index: int, row_index:int) -> bool:
+		return (
+			column_index < 0 or
+			column_index >= self.columns or
+			row_index < 0 or row_index >= self.rows)
+	
+	func _is_visited(column_index:int, row_index:int) -> bool:
+		var cell_state = _get_cell_state(column_index, row_index)
+		return cell_state.open
+
+	func _is_bobm(column_index:int, row_index:int) -> bool:
+		var cell_state = _get_cell_state(column_index, row_index)
+		return cell_state.has_mine
+
+
+
+	func _visit(column_index:int, row_index:int) -> void:
+		var cell_state = _get_cell_state(column_index, row_index)
+		cell_state.open = true
+
+	func _set_danger_level(column_index:int, row_index:int, danger_level:int) -> void:
+		var cell_state = _get_cell_state(column_index, row_index)
+		cell_state.adjacent_mines = danger_level
+
+
+	func open_adjacent_cells(column_index: int, row_index: int) -> Array[Vector2i]:
+		var queue = [Vector2i(column_index, row_index)]
+		var result:Array[Vector2i] = []
+		var visited_self = false
+		_visit(column_index, row_index)
+		result.append(Vector2i(column_index, row_index))
+		while queue.size() > 0:
+			var current_cell = queue.pop_front()
+			var c_column_index = current_cell.x
+			var c_row_index = current_cell.y
+			if _is_outside_board(c_column_index, c_row_index):
+				continue
+			if _is_visited(c_column_index, c_row_index):
+				var is_self = c_column_index == column_index and c_row_index == row_index
+				if is_self && visited_self:
+					continue
+				if is_self:
+					visited_self = true
+			else:
+				_visit(c_column_index, c_row_index)
+				result.append(Vector2i(c_column_index, c_row_index))
+
+			var danger_level = _get_danger_level(c_column_index, c_row_index)
+			_set_danger_level(c_column_index, c_row_index, danger_level)
+
+			if danger_level == 0:
+				for delta_column in [-1, 0, 1]:
+					for delta_row in [-1, 0, 1]:
+						var n_column_index = c_column_index + delta_column
+						var n_row_index = c_row_index + delta_row
+						if _is_outside_board(n_column_index, n_row_index):
+							continue
+						if _is_visited(n_column_index, n_row_index):
+							continue
+						if _is_bobm(n_column_index, n_row_index):
+							continue
+						queue.append(Vector2i(n_column_index, n_row_index))
+		return result
+
 
 	func open_cell(column_index:int, row_index:int):
 		var cell_state = self._get_cell_state(column_index, row_index)
