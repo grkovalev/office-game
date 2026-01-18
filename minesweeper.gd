@@ -116,38 +116,28 @@ class Board:
 
 	func _get_danger_level(column_index: int, row_index:int)->int:
 		var cell_state: CellState
-		var row_has_mines:bool = false
-		for i in range(self.rows):
-			cell_state = _get_cell_state(column_index, i)
-			row_has_mines = true
-			if row_has_mines:
-				break
-		var column_has_mines:bool
-		for i in range(self.columns):
-			cell_state = _get_cell_state(i, row_index)
-			column_has_mines = cell_state.has_mine
-			if column_has_mines:
-				break
-		var diff = row_index - column_index
-		var diag1_has_mines: bool = false
-		for r in range(rows):
-			var c = r - diff
-			if c >= 0 and c < columns:
-				cell_state = _get_cell_state(c, r)
-				diag1_has_mines = cell_state.has_mine
-				if diag1_has_mines:
-					break
-		
-		# Check / diagonal (top-right to bottom-left)
-		var sum_rc = row_index + column_index
-		var diag2_has_mines: bool = false
-		for r in range(rows):
-			var c = sum_rc - r
-			if c >= 0 and c < columns:
-				cell_state = _get_cell_state(c, r)
-				diag2_has_mines = cell_state.has_mine
-				if diag2_has_mines:
-					break
+		var row_has_mines: bool = (
+			_get_cell_state(column_index, max(row_index - 1, 0)).has_mine or
+			_get_cell_state(column_index, min(row_index + 1, self.rows - 1)).has_mine
+		)
+
+		# Check column
+		var column_has_mines: bool = (
+			_get_cell_state(max(column_index - 1, 0), row_index).has_mine or
+			_get_cell_state(min(column_index + 1, self.columns - 1), row_index).has_mine
+		)
+
+		# Check diagonal 1 (top-left ↘ bottom-right)
+		var diag1_has_mines: bool = (
+			_get_cell_state(max(column_index - 1, 0), max(row_index - 1, 0)).has_mine or
+			_get_cell_state(min(column_index + 1, self.columns - 1), min(row_index + 1, self.rows - 1)).has_mine
+		)
+
+		# Check diagonal 2 (top-right ↘ bottom-left)
+		var diag2_has_mines: bool = (
+			_get_cell_state(min(column_index + 1, self.columns - 1), max(row_index - 1, 0)).has_mine or
+			_get_cell_state(max(column_index - 1, 0), min(row_index + 1, self.rows - 1)).has_mine
+		)
 		return int(row_has_mines) + int(column_has_mines) + int(diag1_has_mines) + int(diag2_has_mines)
 
 	func open_cell(column_index:int, row_index:int):
