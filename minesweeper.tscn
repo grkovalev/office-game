@@ -13,8 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://dd6gwavrqnkat" path="res://avatars/slack/avatar_f_fail.png" id="8_1xtce"]
 [ext_resource type="Texture2D" uid="uid://m08vxqw1a5kk" path="res://avatars/slack/avatar_f_succes.png" id="9_a5xdw"]
 [ext_resource type="Texture2D" uid="uid://7rlixdrpsxs8" path="res://ui_buttons/minesweeper/minesweep_block.png" id="10_m1acp"]
-[ext_resource type="Texture2D" uid="uid://dnxjexqnou3bj" path="res://ui_buttons/minesweeper/minesweeper_atlas.png" id="11_1xtce"]
 [ext_resource type="Script" uid="uid://bkphwlfihcy35" path="res://tilebutton.gd" id="12_1xtce"]
+[ext_resource type="Texture2D" uid="uid://8wn1ier2rei" path="res://minesweeper_atlas.png" id="15_8neyo"]
 
 [sub_resource type="Environment" id="Environment_ql2jn"]
 background_mode = 1
@@ -72,11 +72,11 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k6kum"]
-atlas = ExtResource("11_1xtce")
+atlas = ExtResource("15_8neyo")
 region = Rect2(0, 0, 50, 50)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8neyo"]
-atlas = ExtResource("11_1xtce")
+atlas = ExtResource("15_8neyo")
 region = Rect2(0, 0, 50, 50)
 
 [node name="main_minesweeper" type="Node2D"]
