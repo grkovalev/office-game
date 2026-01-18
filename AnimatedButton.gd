@@ -25,7 +25,6 @@ func _process(delta):
 			if time_left <= 0:
 				reset_button()
 			update_label()
-
 	update_animation_state()
 
 func _ready() -> void:
@@ -88,12 +87,32 @@ func _on_release():
 		animate_to(target_scale)
 	else:
 		animate_to(hover_scale)
+		
+func handle_right_click():
+	if timer_running and timer_paused:
+		reset_button()
+		
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
+			handle_left_click()
+		elif event.button_index == MouseButton.MOUSE_BUTTON_RIGHT:
+			handle_right_click()
+
+func handle_left_click():
+	if not timer_running:
+		start_cooldown()
+	elif timer_running and not timer_paused:
+		timer_paused = true
+	elif timer_running and timer_paused:
+		timer_paused = false
+
 
 func start_cooldown():
 	timer_running = true
 	timer_paused = false
 	time_left = cooldown_seconds
-
+	
 	if cooldown_texture:
 		texture_normal = cooldown_texture
 
@@ -117,15 +136,20 @@ func update_label():
 	var seconds := time_left % 60
 	label.text = "%02d:%02d" % [minutes, seconds]
 
+
 func update_animation_state():
 	if not anim_sprite:
 		return
 
-	if timer_running:
-		if anim_sprite.animation != "anim_focused":
-			anim_sprite.animation = "anim_focused"
-			anim_sprite.play()
+	var target_animation := ""
+
+	if timer_running and not timer_paused:
+		target_animation = "anim_focused"
+	elif timer_running and timer_paused:
+		target_animation = "nonanim_pause"
 	else:
-		if anim_sprite.animation != "anim_idle_default":
-			anim_sprite.animation = "anim_idle_default"
-			anim_sprite.play()
+		target_animation = "anim_idle_default"
+
+	if anim_sprite.animation != target_animation:
+		anim_sprite.animation = target_animation
+		anim_sprite.play()
