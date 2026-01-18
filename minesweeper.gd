@@ -42,6 +42,7 @@ func _on_right_click(btn: TileTemplateButton) -> void:
 	if state.open:
 		return
 	if state.has_flag:
+		state.has_flag = false
 		btn.set_tile(0)
 		return
 	state.has_flag = true
