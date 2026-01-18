@@ -87,26 +87,6 @@ func _on_release():
 		animate_to(target_scale)
 	else:
 		animate_to(hover_scale)
-		
-func handle_right_click():
-	if timer_running and timer_paused:
-		reset_button()
-		
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
-			handle_left_click()
-		elif event.button_index == MouseButton.MOUSE_BUTTON_RIGHT:
-			handle_right_click()
-
-func handle_left_click():
-	if not timer_running:
-		start_cooldown()
-	elif timer_running and not timer_paused:
-		timer_paused = true
-	elif timer_running and timer_paused:
-		timer_paused = false
-
 
 func start_cooldown():
 	timer_running = true
