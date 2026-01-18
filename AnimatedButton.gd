@@ -3,9 +3,9 @@ extends TextureButton
 @export var hover_scale := Vector2(1.1, 1.1)
 @export var pressed_scale := Vector2(0.95, 0.95)
 @export var tween_time := 0.15
-@export var cooldown_seconds := 900  # 15 minutes
+@export var cooldown_seconds := 900 
 @export var cooldown_texture: Texture2D
-@export var anim_sprite: AnimatedSprite2D  # assign in Inspector
+@export var anim_sprite: AnimatedSprite2D
 
 @onready var label: Label = $Label
 
@@ -17,7 +17,6 @@ var original_texture: Texture2D
 var _accumulator := 0.0
 
 func _process(delta):
-	# Timer countdown
 	if timer_running and not timer_paused:
 		_accumulator += delta
 		if _accumulator >= 1.0:
@@ -26,7 +25,6 @@ func _process(delta):
 			if time_left <= 0:
 				reset_button()
 			update_label()
-	# Update animation each frame
 	update_animation_state()
 
 func _ready() -> void:
@@ -70,26 +68,32 @@ func _on_release():
 		animate_to(target_scale)
 	else:
 		animate_to(hover_scale)
+		
+func handle_right_click():
+	if timer_running and timer_paused:
+		reset_button()
+		
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
+			handle_left_click()
+		elif event.button_index == MouseButton.MOUSE_BUTTON_RIGHT:
+			handle_right_click()
 
-	handle_timer_click()
-
-# ------------------------
-# Timer / cooldown logic
-# ------------------------
-func handle_timer_click():
+func handle_left_click():
 	if not timer_running:
 		start_cooldown()
 	elif timer_running and not timer_paused:
 		timer_paused = true
 	elif timer_running and timer_paused:
-		reset_button()
+		timer_paused = false
+
 
 func start_cooldown():
 	timer_running = true
 	timer_paused = false
 	time_left = cooldown_seconds
-
-	# Swap texture
+	
 	if cooldown_texture:
 		texture_normal = cooldown_texture
 
@@ -113,9 +117,7 @@ func update_label():
 	var seconds := time_left % 60
 	label.text = "%02d:%02d" % [minutes, seconds]
 
-# ------------------------
-# External AnimatedSprite2D control
-# ------------------------
+
 func update_animation_state():
 	if not anim_sprite:
 		return
