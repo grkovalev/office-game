@@ -48,14 +48,20 @@ func _on_right_click(btn: TileTemplateButton) -> void:
 	btn.set_tile(6)
 	
 func _on_left_click(btn: TileTemplateButton) -> void:
-	var state = board._get_cell_state(btn.column_index, btn.row_index)
+	var state:CellState= board._get_cell_state(btn.column_index, btn.row_index)
 	if state.open:
 		return
 	state.open = true
 	if state.has_mine:
 		btn.set_tile(7)
 		return
-	btn.set_tile(1)
+	var danger_level = board._get_danger_level(btn.column_index, btn.row_index)
+	print("Danger level:", danger_level)
+	if danger_level == 0:
+		btn.set_tile(1)
+		return
+	btn.set_tile(danger_level + 1)
+
 
 class CellState:
 	var has_mine: bool
@@ -106,6 +112,42 @@ class Board:
 		var position = column_index * self.columns + row_index
 
 		return self.cells[position]
+
+	func _get_danger_level(column_index: int, row_index:int)->int:
+		var cell_state: CellState
+		var row_has_mines:bool = false
+		for i in range(self.rows):
+			cell_state = _get_cell_state(column_index, i)
+			row_has_mines = true
+			if row_has_mines:
+				break
+		var column_has_mines:bool
+		for i in range(self.columns):
+			cell_state = _get_cell_state(i, row_index)
+			column_has_mines = cell_state.has_mine
+			if column_has_mines:
+				break
+		var diff = row_index - column_index
+		var diag1_has_mines: bool = false
+		for r in range(rows):
+			var c = r - diff
+			if c >= 0 and c < columns:
+				cell_state = _get_cell_state(c, r)
+				diag1_has_mines = cell_state.has_mine
+				if diag1_has_mines:
+					break
+		
+		# Check / diagonal (top-right to bottom-left)
+		var sum_rc = row_index + column_index
+		var diag2_has_mines: bool = false
+		for r in range(rows):
+			var c = sum_rc - r
+			if c >= 0 and c < columns:
+				cell_state = _get_cell_state(c, r)
+				diag2_has_mines = cell_state.has_mine
+				if diag2_has_mines:
+					break
+		return int(row_has_mines) + int(column_has_mines) + int(diag1_has_mines) + int(diag2_has_mines)
 
 	func open_cell(column_index:int, row_index:int):
 		var cell_state = self._get_cell_state(column_index, row_index)
