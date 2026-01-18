@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var tiles = $Window/tiles_minesweeper/grid9x9
 @onready var tile: TileTemplateButton = $Window/tiles_minesweeper/grid9x9/tile
+@onready var avaAnim: AnimatedSprite2D = $Window/avatar_slack
 
 var board:Board
 var buttons:={}
@@ -25,11 +26,26 @@ func _ready() -> void:
 			func(event):
 				_on_button_gui_input(event, tile_copy)
 				)
+		tile_copy.mouse_entered.connect(
+			func(): _on_button_hover(tile_copy)
+			)
 		tiles.add_child(tile_copy)
 		buttons[Vector2i(column, row)] = tile_copy
 	tiles.remove_child(tile)
 
-		
+func _on_button_hover(btn: TileTemplateButton):
+	var column = btn.column_index
+	var anim_idx = int((column + 1) / 3)
+	if anim_idx == 1:
+		avaAnim.play("def_left")
+		return
+	if anim_idx == 2:
+		avaAnim.play("def_center")
+		return
+	if anim_idx == 3:
+		avaAnim.play("def_right")
+		print("Look right")
+
 func _on_button_gui_input(event: InputEvent, btn: TileTemplateButton) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		match event.button_index:
