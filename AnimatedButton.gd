@@ -120,11 +120,15 @@ func update_animation_state():
 	if not anim_sprite:
 		return
 
-	if timer_running:
-		if anim_sprite.animation != "anim_focused":
-			anim_sprite.animation = "anim_focused"
-			anim_sprite.play()
+	var target_animation := ""
+
+	if timer_running and not timer_paused:
+		target_animation = "anim_focused"
+	elif timer_running and timer_paused:
+		target_animation = "nonanim_pause"
 	else:
-		if anim_sprite.animation != "anim_idle_default":
-			anim_sprite.animation = "anim_idle_default"
-			anim_sprite.play()
+		target_animation = "anim_idle_default"
+
+	if anim_sprite.animation != target_animation:
+		anim_sprite.animation = target_animation
+		anim_sprite.play()
