@@ -44,7 +44,6 @@ func _on_button_hover(btn: TileTemplateButton):
 		return
 	if anim_idx == 3:
 		avaAnim.play("def_right")
-		print("Look right")
 
 func _on_button_gui_input(event: InputEvent, btn: TileTemplateButton) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
