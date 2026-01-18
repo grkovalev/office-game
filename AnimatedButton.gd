@@ -35,6 +35,25 @@ func _ready() -> void:
 	button_up.connect(_on_release)
 	original_texture = texture_normal
 
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
+			handle_left_click()
+		elif event.button_index == MouseButton.MOUSE_BUTTON_RIGHT:
+			handle_right_click()
+
+func handle_left_click():
+	if not timer_running:
+		start_cooldown()
+	elif timer_running and not timer_paused:
+		timer_paused = true
+	elif timer_running and timer_paused:
+		timer_paused = false
+
+func handle_right_click():
+	if timer_running and timer_paused:
+		reset_button()
+
 func animate_to(target_scale: Vector2):
 	if _tween:
 		_tween.kill()
