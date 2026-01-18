@@ -6,6 +6,7 @@ extends Node2D
 
 var board:Board
 var buttons:={}
+var gg:bool = false
 
 func _ready() -> void:
 	if tiles == null:
@@ -49,9 +50,15 @@ func _on_button_gui_input(event: InputEvent, btn: TileTemplateButton) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		match event.button_index:
 			MOUSE_BUTTON_LEFT:
+				if gg:
+					_new_game()
+					return
 				_on_left_click(btn)
 			MOUSE_BUTTON_RIGHT:
 				_on_right_click(btn)
+				if gg:
+					_new_game()
+					return
 func _on_right_click(btn: TileTemplateButton) -> void:
 	var state = board._get_cell_state(btn.column_index, btn.row_index)
 	if state.open:
@@ -70,6 +77,7 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 	state.open = true
 	if state.has_mine:
 		btn.set_tile(7)
+		_game_over()
 		return
 	var danger_level = board._get_danger_level(btn.column_index, btn.row_index)
 	if danger_level > 0:
@@ -84,6 +92,30 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 			cell.set_tile(1)
 			continue
 		cell.set_tile(c_danger_level + 1)
+
+func _game_over():
+	for c in range(board.columns):
+		for r in range(board.rows):
+			var cell = board._get_cell_state(c,r)
+			if cell.open:
+				continue
+			var btn = buttons[Vector2i(c,r)]
+			if cell.has_mine:
+				btn.set_tile(8)
+				continue
+			var danger_level = board._get_danger_level(c,r)
+			btn.set_tile(danger_level + 1)
+	avaAnim.play("lost")
+	gg = true
+
+func _new_game():
+	gg = false
+	avaAnim.play("def_center")
+	board = Board.new()
+	for btn_key in buttons:
+		var btn = buttons[btn_key]
+		btn.set_tile(0)
+
 
 
 class CellState:
