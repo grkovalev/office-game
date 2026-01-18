@@ -49,10 +49,8 @@ func _on_button_gui_input(event: InputEvent, btn: TileTemplateButton) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		match event.button_index:
 			MOUSE_BUTTON_LEFT:
-				print("Left click:", btn.row_index, btn.column_index)
 				_on_left_click(btn)
 			MOUSE_BUTTON_RIGHT:
-				print("Right click:", btn.row_index, btn.column_index)
 				_on_right_click(btn)
 func _on_right_click(btn: TileTemplateButton) -> void:
 	var state = board._get_cell_state(btn.column_index, btn.row_index)
@@ -74,13 +72,11 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 		btn.set_tile(7)
 		return
 	var danger_level = board._get_danger_level(btn.column_index, btn.row_index)
-	print("Danger level:", danger_level)
 	if danger_level > 0:
 		btn.set_tile(danger_level + 1)
 		return
 
 	var opened = board.open_adjacent_cells(btn.column_index, btn.row_index)
-	print("Opened:", opened)
 	for v in opened:
 		var cell = buttons[v]
 		var c_danger_level = board._get_danger_level(v.x, v.y)
@@ -115,8 +111,6 @@ class Board:
 		var mine_positions = self._generate_mine_positions()
 		for i in range(self.cells_count):
 			var has_mine:bool = mine_positions.has(i)
-			if has_mine:
-				print("Has mine at", i)
 			var cell_state = CellState.new(has_mine)
 			self.cells.insert(i, cell_state)
 	
@@ -129,7 +123,6 @@ class Board:
 				mine_index = rnd.randi_range(0, self.cells_count)
 
 			items_set[mine_index] = null
-			print("Added mine at position: ", mine_index)
 
 		return items_set
 
