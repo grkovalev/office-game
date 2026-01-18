@@ -128,25 +128,36 @@ class Board:
 
 	func _get_danger_level(column_index: int, row_index:int)->int:
 		var row_has_mines: bool = (
-			_get_cell_state(column_index, max(row_index - 1, 0)).has_mine or
-			_get_cell_state(column_index, min(row_index + 1, self.rows - 1)).has_mine
+			(_is_inside_board(column_index, row_index-1) and 
+			_get_cell_state(column_index, row_index-1).has_mine) or
+			(_is_inside_board(column_index, row_index +1) and
+			_get_cell_state(column_index, row_index + 1).has_mine)
 		)
 
 		var column_has_mines: bool = (
-			_get_cell_state(max(column_index - 1, 0), row_index).has_mine or
-			_get_cell_state(min(column_index + 1, self.columns - 1), row_index).has_mine
+			(_is_inside_board(column_index -1, row_index) and 
+			_get_cell_state(max(column_index - 1, 0), row_index).has_mine) or
+			(_is_inside_board(column_index +1, row_index) and 
+			_get_cell_state(column_index + 1, row_index).has_mine)
 		)
 
 		var diag1_has_mines: bool = (
-			_get_cell_state(max(column_index - 1, 0), max(row_index - 1, 0)).has_mine or
-			_get_cell_state(min(column_index + 1, self.columns - 1), min(row_index + 1, self.rows - 1)).has_mine
+			(_is_inside_board(column_index -1, row_index -1) and 
+			_get_cell_state(column_index - 1, row_index - 1).has_mine) or
+			(_is_inside_board(column_index +1, row_index +1) and 
+			_get_cell_state(column_index + 1, row_index + 1).has_mine)
 		)
 
 		var diag2_has_mines: bool = (
-			_get_cell_state(min(column_index + 1, self.columns - 1), max(row_index - 1, 0)).has_mine or
-			_get_cell_state(max(column_index - 1, 0), min(row_index + 1, self.rows - 1)).has_mine
+			(_is_inside_board(column_index + 1, row_index - 1) and 
+			_get_cell_state(column_index + 1, row_index - 1).has_mine) or
+			(_is_inside_board(column_index - 1, row_index + 1) and 
+			_get_cell_state(column_index - 1, row_index + 1).has_mine)
 		)
 		return int(row_has_mines) + int(column_has_mines) + int(diag1_has_mines) + int(diag2_has_mines)
+
+	func _is_inside_board(column_index: int, row_index:int) -> bool:
+		return !_is_outside_board(column_index, row_index)
 
 	func _is_outside_board(column_index: int, row_index:int) -> bool:
 		return (
