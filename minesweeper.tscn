@@ -190,7 +190,7 @@ script = ExtResource("5_cf5gv")
 [node name="avatar_slack" type="AnimatedSprite2D" parent="Window"]
 position = Vector2(584, 384)
 sprite_frames = SubResource("SpriteFrames_nlm7j")
-animation = &"def_center"
+animation = &"shock"
 
 [node name="calblock" type="Sprite2D" parent="Window"]
 position = Vector2(365, 982)

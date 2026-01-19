@@ -105,11 +105,12 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 		number_calblocks.text = str(max_flags - board.flags)
 		return
 	var danger_level = board._get_danger_level(btn.column_index, btn.row_index)
-	if danger_level > 0:
+	if danger_level >= 3:
+		avaAnim.play("shock")
+	elif danger_level > 0:
 		btn.set_tile(danger_level + 1)
 		number_calblocks.text = str(max_flags - board.flags)
 		return
-
 	var opened = board.open_adjacent_cells(btn.column_index, btn.row_index)
 	for v in opened:
 		var cell = buttons[v]
