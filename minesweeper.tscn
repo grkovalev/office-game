@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://6brnunq6a06k"]
+[gd_scene load_steps=28 format=3 uid="uid://6brnunq6a06k"]
 
 [ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="1_7nxku"]
 [ext_resource type="Texture2D" uid="uid://qkyky4hs4p2f" path="res://ui_buttons/minesweeper/ui_circle.png" id="1_a5xdw"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://bkphwlfihcy35" path="res://tilebutton.gd" id="12_1xtce"]
 [ext_resource type="Texture2D" uid="uid://8wn1ier2rei" path="res://minesweeper_atlas.png" id="15_8neyo"]
 [ext_resource type="Texture2D" uid="uid://cy2eejtdigm46" path="res://ui_buttons/minesweeper/minesweeper_ui_atlas.png" id="16_8neyo"]
+[ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="18_2so26"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.5897706, 0.686903, 0.71425915, 1, 0.44313726, 0.5411765, 0.5686275, 1)
@@ -211,6 +212,7 @@ offset_top = 336.0
 offset_right = 485.0
 offset_bottom = 426.0
 texture_normal = SubResource("AtlasTexture_crrax")
+script = ExtResource("18_2so26")
 
 [node name="restartbtn" type="TextureButton" parent="Window"]
 offset_left = 680.0
@@ -218,3 +220,4 @@ offset_top = 336.0
 offset_right = 845.0
 offset_bottom = 426.0
 texture_normal = SubResource("AtlasTexture_2so26")
+script = ExtResource("18_2so26")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bk08lfcueqr7m"]
+[gd_scene load_steps=29 format=3 uid="uid://bk08lfcueqr7m"]
 
 [ext_resource type="Script" uid="uid://dbrimv525bas6" path="res://main.gd" id="1_sy5k4"]
 [ext_resource type="Texture2D" uid="uid://cfg1btb3xrrqu" path="res://button_help.png" id="2_e2u21"]
@@ -17,15 +17,16 @@
 [ext_resource type="Texture2D" uid="uid://c1qdmw6wmc1vp" path="res://anim/idleanim/idleanim0012.png" id="16_w6pri"]
 [ext_resource type="Texture2D" uid="uid://dxkjokiltsv1u" path="res://anim/paused_still.png" id="20_85l3h"]
 [ext_resource type="Texture2D" uid="uid://dx63ka1u35kuk" path="res://anim/focusedanim/focusedanim0021.png" id="22_j31fo"]
+[ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="22_o6fs4"]
 [ext_resource type="Script" uid="uid://csf60u4dchx6y" path="res://btn_tomat_toggle.gd" id="22_qv2vy"]
 [ext_resource type="Texture2D" uid="uid://w7kidvkwr7h4" path="res://button_pomodorrotimer.png" id="23_8jewq"]
 [ext_resource type="Texture2D" uid="uid://b4376frop5gup" path="res://anim/focusedanim/focusedanim0022.png" id="23_o6fs4"]
+[ext_resource type="Script" uid="uid://nqlnqts88e4t" path="res://PomodorroButton.gd" id="24_j31fo"]
 [ext_resource type="Texture2D" uid="uid://cswfaxnv8bnsk" path="res://anim/focusedanim/focusedanim0023.png" id="24_twhnx"]
 [ext_resource type="Texture2D" uid="uid://roh0hbwxbx84" path="res://anim/focusedanim/focusedanim0024.png" id="25_1am0g"]
 [ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="25_3xwg0"]
 [ext_resource type="Texture2D" uid="uid://d258vjdxdpf0b" path="res://anim/focusedanim/focusedanim0025.png" id="26_2wy2p"]
 [ext_resource type="Texture2D" uid="uid://cjpxhr2i55wgd" path="res://anim/focusedanim/focusedanim0026.png" id="27_w6pri"]
-[ext_resource type="Script" uid="uid://olniyl52tw4r" path="res://AnimatedButton.gd" id="28_o6fs4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rl2iq"]
 animations = [{
@@ -118,7 +119,7 @@ offset_top = 482.0
 offset_right = 966.0
 offset_bottom = 578.0
 texture_normal = ExtResource("2_e2u21")
-script = ExtResource("28_o6fs4")
+script = ExtResource("22_o6fs4")
 
 [node name="btn_tomat" type="TextureButton" parent="." node_paths=PackedStringArray("anim_sprite")]
 offset_left = 970.0
@@ -127,7 +128,7 @@ offset_right = 1149.0
 offset_bottom = 580.0
 toggle_mode = true
 texture_normal = ExtResource("4_bss38")
-script = ExtResource("28_o6fs4")
+script = ExtResource("24_j31fo")
 cooldown_texture = ExtResource("23_8jewq")
 anim_sprite = NodePath("../anim_idlescreen")
 
