@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://6brnunq6a06k"]
+[gd_scene load_steps=31 format=3 uid="uid://6brnunq6a06k"]
 
 [ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="1_7nxku"]
 [ext_resource type="Texture2D" uid="uid://qkyky4hs4p2f" path="res://ui_buttons/minesweeper/ui_circle.png" id="1_a5xdw"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://8wn1ier2rei" path="res://minesweeper_atlas.png" id="15_8neyo"]
 [ext_resource type="Texture2D" uid="uid://cy2eejtdigm46" path="res://ui_buttons/minesweeper/minesweeper_ui_atlas.png" id="16_8neyo"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="18_2so26"]
+[ext_resource type="Script" uid="uid://dd6o4yn6x0t88" path="res://textureswitch.gd" id="19_r43nf"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.5897706, 0.686903, 0.71425915, 1, 0.44313726, 0.5411765, 0.5686275, 1)
@@ -97,6 +98,14 @@ region = Rect2(7, 7, 155, 77)
 [sub_resource type="AtlasTexture" id="AtlasTexture_2so26"]
 atlas = ExtResource("16_8neyo")
 region = Rect2(7, 92, 155, 77)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxn5k"]
+atlas = ExtResource("16_8neyo")
+region = Rect2(7, 92, 155, 77)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ldu3r"]
+atlas = ExtResource("16_8neyo")
+region = Rect2(7, 177, 155, 77)
 
 [node name="main_minesweeper" type="Node2D"]
 script = ExtResource("1_k6kum")
@@ -221,3 +230,8 @@ offset_right = 845.0
 offset_bottom = 426.0
 texture_normal = SubResource("AtlasTexture_2so26")
 script = ExtResource("18_2so26")
+
+[node name="TextureSwitch" type="Node" parent="Window/restartbtn"]
+script = ExtResource("19_r43nf")
+normal_texture = SubResource("AtlasTexture_mxn5k")
+try_again_texture = SubResource("AtlasTexture_ldu3r")

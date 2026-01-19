@@ -4,6 +4,11 @@ extends Node2D
 @onready var tile: TileTemplateButton = $Window/tiles_minesweeper/grid9x9/tile
 @onready var avaAnim: AnimatedSprite2D = $Window/avatar_slack
 @onready var number_calblocks: Label = $Window/number_calblocks
+@onready var restartbtn: TextureButton = $Window/restartbtn
+
+
+signal game_over_signal
+signal new_game_signal
 
 
 var board:Board
@@ -12,6 +17,7 @@ var gg:bool = false
 var max_flags:int = 10
 
 func _ready() -> void:
+	restartbtn.pressed.connect(_new_game)
 	if tiles == null:
 		push_error("Tiles are not defined")
 	
@@ -127,7 +133,8 @@ func _game_over():
 			btn.set_tile(danger_level + 1)
 	avaAnim.play("lost")
 	gg = true
-
+	emit_signal("game_over_signal")
+	
 func _new_game():
 	gg = false
 	avaAnim.play("def_center")
@@ -135,6 +142,7 @@ func _new_game():
 	for btn_key in buttons:
 		var btn = buttons[btn_key]
 		btn.set_tile(0)
+	emit_signal("new_game_signal")
 
 
 
