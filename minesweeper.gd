@@ -100,7 +100,7 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 		number_calblocks.text = str(max_flags - board.flags)
 	state.open = true
 	if state.has_mine:
-		btn.set_tile(7)
+		btn.set_tile(8)
 		_game_over()
 		number_calblocks.text = str(max_flags - board.flags)
 		return
@@ -129,7 +129,7 @@ func _game_over():
 				continue
 			var btn = buttons[Vector2i(c,r)]
 			if cell.has_mine:
-				btn.set_tile(7)
+				btn.set_tile(8)
 	avaAnim.play("lost")
 	gg = true
 	emit_signal("game_over_signal")

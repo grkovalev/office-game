@@ -2,7 +2,7 @@ extends TextureButton
 
 @export var atlas: Texture2D
 @export var tile_size: Vector2 = Vector2(50,50)
-@export var num_tiles_in_row: int = 9  # adjust depending on your atlas layout
+@export var num_tiles_in_row: int = 2  # adjust depending on your atlas layout
 
 func _ready():
 	# Set initial tile (Hidden)

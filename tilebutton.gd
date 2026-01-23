@@ -6,8 +6,8 @@ var column_index: int
 var row_index: int
 
 @export var tile_size := Vector2i(50, 50)
-@export var atlas_columns := 3
-@export var max_tiles := 9
+@export var atlas_columns := 2
+@export var max_tiles := 10
 
 
 
