@@ -129,7 +129,10 @@ func _game_over():
 				continue
 			var btn = buttons[Vector2i(c,r)]
 			if cell.has_mine:
-				btn.set_tile(8)
+				if cell.has_flag:
+					btn.set_tile(7)
+				else:
+					btn.set_tile(8)
 	avaAnim.play("lost")
 	gg = true
 	emit_signal("game_over_signal")
