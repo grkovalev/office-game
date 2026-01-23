@@ -15,6 +15,10 @@ var board:Board
 var buttons:={}
 var gg:bool = false
 var max_flags:int = 10
+var clicked_bomb_tile: TileTemplateButton = null
+var bomb_animation_timer: Timer = null
+var bomb_animation_speed: float = 0.2
+var current_bomb_texture_index: int = 8
 
 func _ready() -> void:
 	restartbtn.pressed.connect(_new_game)
@@ -24,7 +28,12 @@ func _ready() -> void:
 	if tile == null:
 		push_error("Tile is not defined")
 	
-
+	bomb_animation_timer = Timer.new()
+	bomb_animation_timer.wait_time = bomb_animation_speed
+	bomb_animation_timer.one_shot = false
+	bomb_animation_timer.timeout.connect(_on_bomb_animation_tick)
+	add_child(bomb_animation_timer)
+	
 	board = Board.new()
 	for i in range(board.cells_count):
 		var row := int(i / board.columns)
@@ -100,7 +109,10 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 		number_calblocks.text = str(max_flags - board.flags)
 	state.open = true
 	if state.has_mine:
+		clicked_bomb_tile = btn
+		current_bomb_texture_index = 8
 		btn.set_tile(8)
+		bomb_animation_timer.start()
 		_game_over()
 		number_calblocks.text = str(max_flags - board.flags)
 		return
@@ -140,11 +152,22 @@ func _game_over():
 func _new_game():
 	gg = false
 	avaAnim.play("def_center")
+	if bomb_animation_timer != null:
+		bomb_animation_timer.stop()
+	clicked_bomb_tile = null
 	board = Board.new()
 	for btn_key in buttons:
 		var btn = buttons[btn_key]
 		btn.set_tile(0)
 	emit_signal("new_game_signal")
+	
+func _on_bomb_animation_tick() -> void:
+	if clicked_bomb_tile != null:
+		if current_bomb_texture_index == 8:
+			current_bomb_texture_index = 9
+		else:
+			current_bomb_texture_index = 8
+		clicked_bomb_tile.set_tile(current_bomb_texture_index)
 
 
 
