@@ -51,7 +51,7 @@ func handle_left_click():
 		timer_paused = false
 
 func handle_right_click():
-	if timer_running and timer_paused:
+	if timer_running:
 		reset_button()
 
 func animate_to(target_scale: Vector2):
@@ -109,6 +109,8 @@ func reset_button():
 
 	label.text = ""
 	label.visible = false
+	if toggle_mode:
+		set_pressed_no_signal(false)
 	animate_to(Vector2.ONE)
 
 func update_label():
