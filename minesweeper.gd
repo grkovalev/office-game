@@ -5,6 +5,7 @@ extends Node2D
 @onready var avaAnim: AnimatedSprite2D = $Window/avatar_slack
 @onready var number_calblocks: Label = $Window/number_calblocks
 @onready var restartbtn: TextureButton = $Window/restartbtn
+@onready var exitbtn: TextureButton = $Window/exitbtn
 @onready var winlostmsg = get_node_or_null("Window/winlostmsg")
 
 signal game_over_signal
@@ -23,6 +24,7 @@ var current_bomb_texture_index: int = 8
 
 func _ready() -> void:
 	restartbtn.pressed.connect(_new_game)
+	exitbtn.pressed.connect(_on_exitbtn_pressed)
 	if tiles == null:
 		push_error("Tiles are not defined")
 	
@@ -171,6 +173,9 @@ func _game_won() -> void:
 func _check_win() -> bool:
 	return board.is_won()
 	
+func _on_exitbtn_pressed() -> void:
+	queue_free()
+
 func _new_game():
 	gg = false
 	if winlostmsg:
