@@ -5,10 +5,11 @@ extends Node2D
 @onready var avaAnim: AnimatedSprite2D = $Window/avatar_slack
 @onready var number_calblocks: Label = $Window/number_calblocks
 @onready var restartbtn: TextureButton = $Window/restartbtn
-
+@onready var winlostmsg = get_node_or_null("Window/winlostmsg")
 
 signal game_over_signal
 signal new_game_signal
+signal game_won_signal
 
 
 var board:Board
@@ -123,6 +124,8 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 
 		btn.set_tile(danger_level + 1)
 		number_calblocks.text = str(max_flags - board.flags)
+		if _check_win():
+			_game_won()
 		return
 	var opened = board.open_adjacent_cells(btn.column_index, btn.row_index)
 	for v in opened:
@@ -132,8 +135,14 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 			cell.set_tile(1)
 			continue
 		cell.set_tile(c_danger_level + 1)
+	if _check_win():
+		_game_won()
 
 func _game_over():
+	var flagged_bomb_count := 0
+	for cell in board.cells:
+		if cell.has_mine and cell.has_flag:
+			flagged_bomb_count += 1
 	for c in range(board.columns):
 		for r in range(board.rows):
 			var cell = board._get_cell_state(c,r)
@@ -147,10 +156,24 @@ func _game_over():
 					btn.set_tile(8)
 	avaAnim.play("lost")
 	gg = true
+	if winlostmsg:
+		winlostmsg.show_lose(flagged_bomb_count)
 	emit_signal("game_over_signal")
+	
+func _game_won() -> void:
+	gg = true
+	avaAnim.play("win")
+	if winlostmsg:
+		winlostmsg.show_win()
+	emit_signal("game_won_signal")
+
+func _check_win() -> bool:
+	return board.is_won()
 	
 func _new_game():
 	gg = false
+	if winlostmsg:
+		winlostmsg.hide_msg()
 	avaAnim.play("def_center")
 	if bomb_animation_timer != null:
 		bomb_animation_timer.stop()
@@ -249,6 +272,12 @@ class Board:
 			_get_cell_state(column_index - 1, row_index + 1).has_mine)
 		)
 		return int(row_has_mines) + int(column_has_mines) + int(diag1_has_mines) + int(diag2_has_mines)
+
+	func is_won() -> bool:
+		for cell in cells:
+			if not cell.has_mine and not cell.open:
+				return false
+		return true
 
 	func _is_inside_board(column_index: int, row_index:int) -> bool:
 		return !_is_outside_board(column_index, row_index)

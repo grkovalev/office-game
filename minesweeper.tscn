@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://6brnunq6a06k"]
+[gd_scene load_steps=33 format=3 uid="uid://6brnunq6a06k"]
 
 [ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="1_7nxku"]
 [ext_resource type="Texture2D" uid="uid://qkyky4hs4p2f" path="res://ui_buttons/minesweeper/ui_circle.png" id="1_a5xdw"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://cy2eejtdigm46" path="res://ui_buttons/minesweeper/minesweeper_ui_atlas.png" id="16_8neyo"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="18_2so26"]
 [ext_resource type="Script" uid="uid://dd6o4yn6x0t88" path="res://textureswitch.gd" id="19_r43nf"]
+[ext_resource type="Script" uid="uid://7skceusyb6wf" path="res://winlostmsg.gd" id="20_ldu3r"]
 [ext_resource type="Texture2D" uid="uid://cw3mwlvmuauub" path="res://ui_buttons/minesweeper/winlostatlas.png" id="20_mxn5k"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
@@ -237,10 +238,11 @@ script = ExtResource("19_r43nf")
 normal_texture = SubResource("AtlasTexture_mxn5k")
 try_again_texture = SubResource("AtlasTexture_ldu3r")
 
-[node name="winlostmsg" type="Node" parent="Window"]
+[node name="winlostmsg" type="Node2D" parent="Window"]
+script = ExtResource("20_ldu3r")
 
 [node name="winlostimg" type="Sprite2D" parent="Window/winlostmsg"]
-position = Vector2(816, 1120)
+position = Vector2(808, 1160)
 texture = ExtResource("20_mxn5k")
 region_enabled = true
 region_rect = Rect2(0, 0, 256, 512)
@@ -261,7 +263,7 @@ successfully!"
 [node name="losttext" type="Label" parent="Window/winlostmsg"]
 offset_left = 320.0
 offset_top = 1056.0
-offset_right = 682.0
+offset_right = 695.0
 offset_bottom = 1308.0
 theme_override_fonts/font = ExtResource("6_crrax")
 theme_override_font_sizes/font_size = 40
