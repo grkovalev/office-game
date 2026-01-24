@@ -7,6 +7,7 @@ func _ready() -> void:
 	$btn_offer_help.pressed.connect(_on_btn_offer_help_pressed)
 
 func _on_btn_offer_help_pressed() -> void:
+	$btn_tomat.pause_if_running()
 	var minesweeper := MINESWEEPER_SCENE.instantiate()
 	get_tree().root.add_child(minesweeper)
 	minesweeper.get_node("Window").popup_centered()

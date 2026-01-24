@@ -54,6 +54,10 @@ func handle_right_click():
 	if timer_running:
 		reset_button()
 
+func pause_if_running() -> void:
+	if timer_running and not timer_paused:
+		timer_paused = true
+
 func animate_to(target_scale: Vector2):
 	if _tween:
 		_tween.kill()
