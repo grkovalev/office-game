@@ -239,6 +239,7 @@ normal_texture = SubResource("AtlasTexture_mxn5k")
 try_again_texture = SubResource("AtlasTexture_ldu3r")
 
 [node name="winlostmsg" type="Node2D" parent="Window"]
+visible = false
 script = ExtResource("20_ldu3r")
 
 [node name="winlostimg" type="Sprite2D" parent="Window/winlostmsg"]

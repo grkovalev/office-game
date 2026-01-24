@@ -8,8 +8,8 @@ extends Node2D
 @export var win_atlas_columns: int = 4
 @export var win_cell_size: Vector2i = Vector2i(256, 512)
 @export var win_animation_speed: float = 0.3
-## Format for losttext; %s is replaced by the number of unflagged bombs. E.g. "%s" or "These new %s burning tasks are all yours!"
-@export var losttext_format: String = "%s"
+## losttext template: %s is replaced by the number of unflagged bombs. Only that part changes; the rest stays.
+@export var losttext_format: String = "CONGRATS!\n\nThese %s burning\ntasks are all yours!"
 
 var _win_anim_timer: Timer
 var _win_frame: int = 0

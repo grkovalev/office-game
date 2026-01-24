@@ -143,6 +143,7 @@ func _game_over():
 	for cell in board.cells:
 		if cell.has_mine and cell.has_flag:
 			flagged_bomb_count += 1
+	var unflagged_bomb_count := board.mines_count - flagged_bomb_count
 	for c in range(board.columns):
 		for r in range(board.rows):
 			var cell = board._get_cell_state(c,r)
@@ -157,7 +158,7 @@ func _game_over():
 	avaAnim.play("lost")
 	gg = true
 	if winlostmsg:
-		winlostmsg.show_lose(flagged_bomb_count)
+		winlostmsg.show_lose(flagged_bomb_count, unflagged_bomb_count)
 	emit_signal("game_over_signal")
 	
 func _game_won() -> void:
@@ -174,6 +175,7 @@ func _new_game():
 	gg = false
 	if winlostmsg:
 		winlostmsg.hide_msg()
+	number_calblocks.text = str(max_flags)
 	avaAnim.play("def_center")
 	if bomb_animation_timer != null:
 		bomb_animation_timer.stop()
