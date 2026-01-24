@@ -1,7 +1,6 @@
-[gd_scene load_steps=33 format=3 uid="uid://6brnunq6a06k"]
+[gd_scene load_steps=32 format=3 uid="uid://6brnunq6a06k"]
 
 [ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="1_7nxku"]
-[ext_resource type="Texture2D" uid="uid://qkyky4hs4p2f" path="res://ui_buttons/minesweeper/ui_circle.png" id="1_a5xdw"]
 [ext_resource type="Script" uid="uid://iixic5s2ny1f" path="res://minesweeper.gd" id="1_k6kum"]
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_xrf8k"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_xrf8k"]
@@ -133,56 +132,42 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_crrax")
 
-[node name="ui_circle" type="Sprite2D" parent="Window"]
-position = Vector2(40.000004, 32.000004)
-scale = Vector2(0.24, 0.24)
-texture = ExtResource("1_a5xdw")
-
-[node name="ui_circle2" type="Sprite2D" parent="Window"]
-position = Vector2(72.00001, 32)
-scale = Vector2(0.24, 0.24)
-texture = ExtResource("1_a5xdw")
-
-[node name="ui_circle3" type="Sprite2D" parent="Window"]
-position = Vector2(104.00001, 32)
-scale = Vector2(0.24, 0.24)
-texture = ExtResource("1_a5xdw")
-
 [node name="title" type="Label" parent="Window"]
-offset_left = 136.0
-offset_top = 16.0
-offset_right = 718.0
-offset_bottom = 61.0
+offset_left = 24.0
+offset_top = 40.0
+offset_right = 456.0
+offset_bottom = 85.0
 theme_override_fonts/font = ExtResource("1_xrf8k")
-theme_override_font_sizes/font_size = 44
+theme_override_font_sizes/font_size = 32
 text = "WORK CHATS NAVIGATION"
 
 [node name="subtitle" type="Label" parent="Window"]
-offset_left = 144.0
-offset_top = 56.0
-offset_right = 688.0
-offset_bottom = 107.0
+offset_left = 456.0
+offset_top = 24.0
+offset_right = 736.0
+offset_bottom = 88.0
 theme_override_fonts/font = ExtResource("2_xrf8k")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 29
 text = "escape extra workload at all costs"
+autowrap_mode = 2
 
 [node name="calendar blocks left" type="Label" parent="Window"]
-offset_left = 192.0
-offset_top = 752.0
-offset_right = 461.0
-offset_bottom = 783.0
+offset_left = 174.0
+offset_top = 755.0
+offset_right = 368.0
+offset_bottom = 778.0
 theme_override_colors/font_color = Color(0.07450981, 0.07450981, 0.07450981, 1)
 theme_override_fonts/font = ExtResource("1_7nxku")
 theme_override_font_sizes/font_size = 22
 text = "calendar blocks left:"
 
 [node name="number_calblocks" type="Label" parent="Window"]
-offset_left = 388.0
-offset_top = 741.0
-offset_right = 428.0
-offset_bottom = 776.0
-theme_override_colors/font_color = Color(0.92941177, 0, 0.03529412, 1)
-theme_override_colors/font_outline_color = Color(0.42295736, 0, 0.0061869672, 1)
+offset_left = 376.0
+offset_top = 745.0
+offset_right = 416.0
+offset_bottom = 780.0
+theme_override_colors/font_color = Color(0.9254902, 0, 0.043137256, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_fonts/font = ExtResource("6_crrax")
 theme_override_font_sizes/font_size = 29
@@ -195,7 +180,7 @@ sprite_frames = SubResource("SpriteFrames_nlm7j")
 animation = &"shock"
 
 [node name="calblock" type="Sprite2D" parent="Window"]
-position = Vector2(168, 760)
+position = Vector2(150, 766)
 scale = Vector2(0.88, 0.88)
 texture = ExtResource("10_m1acp")
 
@@ -243,8 +228,8 @@ try_again_texture = SubResource("AtlasTexture_ldu3r")
 script = ExtResource("20_ldu3r")
 
 [node name="winlostimg" type="Sprite2D" parent="Window/winlostmsg"]
-position = Vector2(602, 901)
-scale = Vector2(0.78124976, 0.78124976)
+position = Vector2(632, 872)
+scale = Vector2(0.8671873, 0.8671873)
 texture = ExtResource("20_mxn5k")
 region_enabled = true
 region_rect = Rect2(0, 0, 256, 512)
