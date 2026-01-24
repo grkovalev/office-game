@@ -110,101 +110,102 @@ atlas = ExtResource("16_8neyo")
 region = Rect2(7, 177, 155, 77)
 
 [node name="main_minesweeper" type="Node2D"]
+position = Vector2(200, 128)
 script = ExtResource("1_k6kum")
 
 [node name="Window" type="Window" parent="."]
 oversampling_override = 1.0
 initial_position = 1
-size = Vector2i(1200, 1500)
+size = Vector2i(740, 1100)
 
 [node name="bg_color" type="TextureRect" parent="Window"]
-offset_left = 32.0
-offset_top = 8.0
-offset_right = 1232.0
-offset_bottom = 1504.0
+offset_left = -8.0
+offset_right = 744.0
+offset_bottom = 1105.0
 texture = SubResource("GradientTexture2D_8neyo")
 
 [node name="bg_undermines" type="TextureRect" parent="Window"]
-offset_left = 320.0
-offset_top = 456.0
-offset_right = 832.0
-offset_bottom = 1024.0
+offset_left = 120.0
+offset_top = 240.0
+offset_right = 632.0
+offset_bottom = 808.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_crrax")
 
 [node name="ui_circle" type="Sprite2D" parent="Window"]
-position = Vector2(89, 89)
-scale = Vector2(0.5, 0.5)
+position = Vector2(40.000004, 32.000004)
+scale = Vector2(0.24, 0.24)
 texture = ExtResource("1_a5xdw")
 
 [node name="ui_circle2" type="Sprite2D" parent="Window"]
-position = Vector2(153, 89)
-scale = Vector2(0.5, 0.5)
+position = Vector2(72.00001, 32)
+scale = Vector2(0.24, 0.24)
 texture = ExtResource("1_a5xdw")
 
 [node name="ui_circle3" type="Sprite2D" parent="Window"]
-position = Vector2(217, 89)
-scale = Vector2(0.5, 0.5)
+position = Vector2(104.00001, 32)
+scale = Vector2(0.24, 0.24)
 texture = ExtResource("1_a5xdw")
 
 [node name="title" type="Label" parent="Window"]
-offset_left = 288.0
-offset_top = 64.0
-offset_right = 1082.0
-offset_bottom = 125.0
+offset_left = 136.0
+offset_top = 16.0
+offset_right = 718.0
+offset_bottom = 61.0
 theme_override_fonts/font = ExtResource("1_xrf8k")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 44
 text = "WORK CHATS NAVIGATION"
 
 [node name="subtitle" type="Label" parent="Window"]
-offset_left = 288.0
-offset_top = 136.0
-offset_right = 1045.0
-offset_bottom = 187.0
+offset_left = 144.0
+offset_top = 56.0
+offset_right = 688.0
+offset_bottom = 107.0
 theme_override_fonts/font = ExtResource("2_xrf8k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 36
 text = "escape extra workload at all costs"
 
 [node name="calendar blocks left" type="Label" parent="Window"]
-offset_left = 392.0
-offset_top = 968.0
-offset_right = 661.0
-offset_bottom = 999.0
+offset_left = 192.0
+offset_top = 752.0
+offset_right = 461.0
+offset_bottom = 783.0
 theme_override_colors/font_color = Color(0.07450981, 0.07450981, 0.07450981, 1)
 theme_override_fonts/font = ExtResource("1_7nxku")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 22
 text = "calendar blocks left:"
 
 [node name="number_calblocks" type="Label" parent="Window"]
-offset_left = 662.0
-offset_top = 959.0
-offset_right = 702.0
-offset_bottom = 1001.0
+offset_left = 388.0
+offset_top = 741.0
+offset_right = 428.0
+offset_bottom = 776.0
 theme_override_colors/font_color = Color(0.92941177, 0, 0.03529412, 1)
 theme_override_colors/font_outline_color = Color(0.42295736, 0, 0.0061869672, 1)
 theme_override_constants/outline_size = 2
 theme_override_fonts/font = ExtResource("6_crrax")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 29
 text = "10"
 script = ExtResource("5_cf5gv")
 
 [node name="avatar_slack" type="AnimatedSprite2D" parent="Window"]
-position = Vector2(584, 384)
+position = Vector2(384, 167.5)
 sprite_frames = SubResource("SpriteFrames_nlm7j")
 animation = &"shock"
 
 [node name="calblock" type="Sprite2D" parent="Window"]
-position = Vector2(365, 982)
+position = Vector2(168, 760)
+scale = Vector2(0.88, 0.88)
 texture = ExtResource("10_m1acp")
 
 [node name="tiles_minesweeper" type="CanvasLayer" parent="Window"]
 
 [node name="grid9x9" type="GridContainer" parent="Window/tiles_minesweeper"]
-offset_left = 336.0
-offset_top = 472.0
-offset_right = 416.0
-offset_bottom = 528.0
+offset_left = 128.0
+offset_top = 248.5
+offset_right = 208.0
+offset_bottom = 304.5
 size_flags_horizontal = 4
 size_flags_vertical = 4
 columns = 9
@@ -218,18 +219,18 @@ texture_pressed = SubResource("AtlasTexture_8neyo")
 script = ExtResource("12_1xtce")
 
 [node name="exitbtn" type="TextureButton" parent="Window"]
-offset_left = 320.0
-offset_top = 336.0
-offset_right = 485.0
-offset_bottom = 426.0
+offset_left = 120.0
+offset_top = 119.5
+offset_right = 285.0
+offset_bottom = 209.5
 texture_normal = SubResource("AtlasTexture_crrax")
 script = ExtResource("18_2so26")
 
 [node name="restartbtn" type="TextureButton" parent="Window"]
-offset_left = 680.0
-offset_top = 336.0
-offset_right = 845.0
-offset_bottom = 426.0
+offset_left = 480.0
+offset_top = 119.5
+offset_right = 645.0
+offset_bottom = 209.5
 texture_normal = SubResource("AtlasTexture_2so26")
 script = ExtResource("18_2so26")
 
@@ -239,22 +240,22 @@ normal_texture = SubResource("AtlasTexture_mxn5k")
 try_again_texture = SubResource("AtlasTexture_ldu3r")
 
 [node name="winlostmsg" type="Node2D" parent="Window"]
-visible = false
 script = ExtResource("20_ldu3r")
 
 [node name="winlostimg" type="Sprite2D" parent="Window/winlostmsg"]
-position = Vector2(808, 1160)
+position = Vector2(602, 901)
+scale = Vector2(0.78124976, 0.78124976)
 texture = ExtResource("20_mxn5k")
 region_enabled = true
 region_rect = Rect2(0, 0, 256, 512)
 
 [node name="wintext" type="Label" parent="Window/winlostmsg"]
-offset_left = 320.0
-offset_top = 1056.0
-offset_right = 682.0
-offset_bottom = 1308.0
+offset_left = 120.0
+offset_top = 832.0
+offset_right = 392.0
+offset_bottom = 1024.0
 theme_override_fonts/font = ExtResource("6_crrax")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 30
 text = "CONGRATS!
 
 All extra workload 
@@ -262,12 +263,12 @@ was dodged
 successfully!"
 
 [node name="losttext" type="Label" parent="Window/winlostmsg"]
-offset_left = 320.0
-offset_top = 1056.0
-offset_right = 695.0
-offset_bottom = 1308.0
+offset_left = 120.0
+offset_top = 832.0
+offset_right = 401.0
+offset_bottom = 985.0
 theme_override_fonts/font = ExtResource("6_crrax")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 30
 text = "CONGRATS!
 
 These new burning

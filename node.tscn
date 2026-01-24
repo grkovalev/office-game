@@ -104,6 +104,7 @@ animations = [{
 }]
 
 [node name="main" type="Node2D"]
+position = Vector2(-416, 512)
 script = ExtResource("1_sy5k4")
 
 [node name="anim_idlescreen" type="AnimatedSprite2D" parent="."]
