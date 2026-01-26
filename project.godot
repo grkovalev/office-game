@@ -21,7 +21,6 @@ window/size/viewport_width=1500
 window/size/viewport_height=1100
 window/size/transparent=true
 window/stretch/mode="canvas_items"
-window/stretch/scale=0.86
 window/per_pixel_transparency/allowed=true
 
 [rendering]

@@ -1,0 +1,154 @@
+[gd_scene load_steps=17 format=3 uid="uid://dvdkj6gr6sny"]
+
+[ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_5l5t3"]
+[ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_jwokj"]
+
+[sub_resource type="Gradient" id="Gradient_k6kum"]
+colors = PackedColorArray(0.5897706, 0.686903, 0.71425915, 1, 0.44313726, 0.5411765, 0.5686275, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ucthv"]
+gradient = SubResource("Gradient_k6kum")
+
+[sub_resource type="Gradient" id="Gradient_5l5t3"]
+colors = PackedColorArray(0.7529412, 0.81960785, 0.8392157, 1, 0.751621, 0.8193747, 0.8392775, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ay14k"]
+gradient = SubResource("Gradient_5l5t3")
+
+[sub_resource type="Gradient" id="Gradient_jwokj"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4w1so"]
+gradient = SubResource("Gradient_jwokj")
+
+[sub_resource type="Gradient" id="Gradient_pl1es"]
+colors = PackedColorArray(0.20392157, 0.29411766, 0.80784315, 1, 0.20392157, 0.29411766, 0.80784315, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_063xu"]
+gradient = SubResource("Gradient_pl1es")
+
+[sub_resource type="Gradient" id="Gradient_bwdfo"]
+colors = PackedColorArray(0.8980392, 0.6156863, 0.26666668, 1, 0.8980392, 0.6156863, 0.26666668, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xt0v1"]
+gradient = SubResource("Gradient_bwdfo")
+
+[sub_resource type="Gradient" id="Gradient_sriha"]
+colors = PackedColorArray(0.10152156, 0.4439258, 0.31549373, 1, 0.101960786, 0.44313726, 0.3137255, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ek6ok"]
+gradient = SubResource("Gradient_sriha")
+
+[sub_resource type="Gradient" id="Gradient_5beks"]
+colors = PackedColorArray(0.7358665, 0.23198193, 0.32481375, 1, 0.7372549, 0.23137255, 0.3254902, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yv368"]
+gradient = SubResource("Gradient_5beks")
+
+[node name="main_calendartetris" type="Node2D"]
+
+[node name="bg_color" type="TextureRect" parent="."]
+offset_right = 1504.0
+offset_bottom = 1105.0
+texture = SubResource("GradientTexture2D_ucthv")
+
+[node name="bg_undercalendar" type="TextureRect" parent="."]
+offset_left = 64.0
+offset_top = 256.0
+offset_right = 1472.0
+offset_bottom = 960.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_ay14k")
+
+[node name="calendar_ui" type="TextureRect" parent="."]
+offset_left = 80.0
+offset_top = 280.0
+offset_right = 328.0
+offset_bottom = 512.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_4w1so")
+
+[node name="calendar_ui3" type="TextureRect" parent="."]
+offset_left = 352.0
+offset_top = 280.0
+offset_right = 472.0
+offset_bottom = 936.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_4w1so")
+
+[node name="calendar_ui2" type="TextureRect" parent="."]
+offset_left = 80.0
+offset_top = 536.0
+offset_right = 328.0
+offset_bottom = 936.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_4w1so")
+
+[node name="01_secpers" type="TextureRect" parent="."]
+offset_left = 472.0
+offset_top = 160.0
+offset_right = 722.0
+offset_bottom = 240.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_063xu")
+
+[node name="02_secpers" type="TextureRect" parent="."]
+offset_left = 722.0
+offset_top = 160.0
+offset_right = 972.0
+offset_bottom = 240.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_xt0v1")
+
+[node name="03_secpers" type="TextureRect" parent="."]
+offset_left = 972.0
+offset_top = 160.0
+offset_right = 1222.0
+offset_bottom = 240.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_ek6ok")
+
+[node name="04_secpers" type="TextureRect" parent="."]
+offset_left = 1222.0
+offset_top = 160.0
+offset_right = 1472.0
+offset_bottom = 240.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_yv368")
+
+[node name="title" type="Label" parent="."]
+offset_left = 376.0
+offset_top = 38.0
+offset_right = 808.0
+offset_bottom = 83.0
+theme_override_fonts/font = ExtResource("1_5l5t3")
+theme_override_font_sizes/font_size = 32
+text = "SCHEDULE A MEETING"
+
+[node name="subtitle" type="Label" parent="."]
+offset_left = 760.0
+offset_top = 38.0
+offset_right = 1144.0
+offset_bottom = 78.0
+theme_override_fonts/font = ExtResource("2_jwokj")
+theme_override_font_sizes/font_size = 29
+text = "this tetris is not for the weak"
+autowrap_mode = 2
+
+[node name="grid10x20" type="GridContainer" parent="."]
+z_index = 4
+offset_left = 496.0
+offset_top = 280.0
+offset_right = 576.0
+offset_bottom = 336.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 20

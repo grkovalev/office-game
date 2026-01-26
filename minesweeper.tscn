@@ -21,17 +21,17 @@
 [ext_resource type="Script" uid="uid://7skceusyb6wf" path="res://winlostmsg.gd" id="20_ldu3r"]
 [ext_resource type="Texture2D" uid="uid://cw3mwlvmuauub" path="res://ui_buttons/minesweeper/winlostatlas.png" id="20_mxn5k"]
 
-[sub_resource type="Gradient" id="Gradient_k6kum"]
+[sub_resource type="Gradient" id="Gradient_mxn5k"]
 colors = PackedColorArray(0.5897706, 0.686903, 0.71425915, 1, 0.44313726, 0.5411765, 0.5686275, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_8neyo"]
-gradient = SubResource("Gradient_k6kum")
+gradient = SubResource("Gradient_mxn5k")
 
-[sub_resource type="Gradient" id="Gradient_8neyo"]
+[sub_resource type="Gradient" id="Gradient_ldu3r"]
 colors = PackedColorArray(0.7529412, 0.81960785, 0.8392157, 1, 0.751621, 0.8193747, 0.8392775, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_crrax"]
-gradient = SubResource("Gradient_8neyo")
+gradient = SubResource("Gradient_ldu3r")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nlm7j"]
 animations = [{
@@ -123,9 +123,9 @@ offset_bottom = 1105.0
 texture = SubResource("GradientTexture2D_8neyo")
 
 [node name="bg_undermines" type="TextureRect" parent="Window"]
-offset_left = 472.0
+offset_left = 470.0
 offset_top = 240.0
-offset_right = 984.0
+offset_right = 976.0
 offset_bottom = 808.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
