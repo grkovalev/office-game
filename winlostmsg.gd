@@ -1,14 +1,12 @@
 extends Node2D
 
-@onready var winlostimg: Sprite2D = $winlostimg
+@onready var winlostimg: Sprite2D = $winlostimg_canvas/winlostimg
 @onready var wintext: Label = $wintext
 @onready var losttext: Label = $losttext
-## Must be the full atlas image (e.g. winlostatlas.png), not an AtlasTexture.
 @export var win_atlas: Texture2D
 @export var win_atlas_columns: int = 4
 @export var win_cell_size: Vector2i = Vector2i(256, 512)
 @export var win_animation_speed: float = 0.3
-## losttext template: %s is replaced by the number of unflagged bombs. Only that part changes; the rest stays.
 @export var losttext_format: String = "CONGRATS!\n\nThese %s burning\ntasks are all yours!"
 
 var _win_anim_timer: Timer
@@ -50,6 +48,7 @@ func show_win() -> void:
 		_win_anim_timer.wait_time = win_animation_speed
 		_win_anim_timer.start()
 	wintext.visible = true
+	winlostimg.visible = true
 	losttext.visible = false
 	show()
 
@@ -63,9 +62,11 @@ func show_lose(flagged_bomb_count: int = 0, unflagged_bomb_count: int = 0) -> vo
 		_apply_region(idx)
 	losttext.text = losttext_format % unflagged_bomb_count
 	wintext.visible = false
+	winlostimg.visible = true
 	losttext.visible = true
 	show()
 
 func hide_msg() -> void:
 	_win_anim_timer.stop()
+	winlostimg.visible = false
 	hide()

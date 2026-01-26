@@ -227,9 +227,12 @@ try_again_texture = SubResource("AtlasTexture_ldu3r")
 [node name="winlostmsg" type="Node2D" parent="Window"]
 script = ExtResource("20_ldu3r")
 
-[node name="winlostimg" type="Sprite2D" parent="Window/winlostmsg"]
-position = Vector2(632, 872)
-scale = Vector2(0.8671873, 0.8671873)
+[node name="winlostimg_canvas" type="CanvasLayer" parent="Window/winlostmsg"]
+layer = 2
+
+[node name="winlostimg" type="Sprite2D" parent="Window/winlostmsg/winlostimg_canvas"]
+position = Vector2(592, 832)
+scale = Vector2(0.9960934, 0.9960934)
 texture = ExtResource("20_mxn5k")
 region_enabled = true
 region_rect = Rect2(0, 0, 256, 512)
