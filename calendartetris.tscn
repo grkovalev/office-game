@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://dvdkj6gr6sny"]
 
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_5l5t3"]
-[ext_resource type="Script" uid="uid://bg6kmco1mybb3" path="res://calendartetris.gd" id="1_script"]
+[ext_resource type="Script" path="res://tetris_gridcontainer.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_jwokj"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
