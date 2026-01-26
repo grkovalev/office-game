@@ -109,24 +109,24 @@ script = ExtResource("1_sy5k4")
 
 [node name="anim_idlescreen" type="AnimatedSprite2D" parent="."]
 texture_repeat = 2
-position = Vector2(891, 248)
+position = Vector2(1616, 216)
 sprite_frames = SubResource("SpriteFrames_rl2iq")
 animation = &"nonanim_pause"
 autoplay = "anim_idle_default"
 
 [node name="btn_offer_help" type="TextureButton" parent="."]
-offset_left = 642.0
-offset_top = 482.0
-offset_right = 966.0
-offset_bottom = 578.0
+offset_left = 1367.0
+offset_top = 450.0
+offset_right = 1691.0
+offset_bottom = 546.0
 texture_normal = ExtResource("2_e2u21")
 script = ExtResource("22_o6fs4")
 
 [node name="btn_tomat" type="TextureButton" parent="." node_paths=PackedStringArray("anim_sprite")]
-offset_left = 970.0
-offset_top = 484.0
-offset_right = 1149.0
-offset_bottom = 580.0
+offset_left = 1695.0
+offset_top = 452.0
+offset_right = 1874.0
+offset_bottom = 548.0
 toggle_mode = true
 texture_normal = ExtResource("4_bss38")
 script = ExtResource("24_j31fo")

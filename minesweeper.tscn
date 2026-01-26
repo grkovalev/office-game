@@ -115,36 +115,35 @@ script = ExtResource("1_k6kum")
 [node name="Window" type="Window" parent="."]
 oversampling_override = 1.0
 initial_position = 1
-size = Vector2i(740, 1100)
+size = Vector2i(1500, 1100)
 
 [node name="bg_color" type="TextureRect" parent="Window"]
-offset_left = -8.0
-offset_right = 744.0
+offset_right = 1504.0
 offset_bottom = 1105.0
 texture = SubResource("GradientTexture2D_8neyo")
 
 [node name="bg_undermines" type="TextureRect" parent="Window"]
-offset_left = 120.0
+offset_left = 472.0
 offset_top = 240.0
-offset_right = 632.0
+offset_right = 984.0
 offset_bottom = 808.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_crrax")
 
 [node name="title" type="Label" parent="Window"]
-offset_left = 24.0
+offset_left = 376.0
 offset_top = 40.0
-offset_right = 456.0
+offset_right = 808.0
 offset_bottom = 85.0
 theme_override_fonts/font = ExtResource("1_xrf8k")
 theme_override_font_sizes/font_size = 32
 text = "WORK CHATS NAVIGATION"
 
 [node name="subtitle" type="Label" parent="Window"]
-offset_left = 456.0
+offset_left = 808.0
 offset_top = 24.0
-offset_right = 736.0
+offset_right = 1088.0
 offset_bottom = 88.0
 theme_override_fonts/font = ExtResource("2_xrf8k")
 theme_override_font_sizes/font_size = 29
@@ -152,9 +151,9 @@ text = "escape extra workload at all costs"
 autowrap_mode = 2
 
 [node name="calendar blocks left" type="Label" parent="Window"]
-offset_left = 174.0
+offset_left = 526.0
 offset_top = 755.0
-offset_right = 368.0
+offset_right = 720.0
 offset_bottom = 778.0
 theme_override_colors/font_color = Color(0.07450981, 0.07450981, 0.07450981, 1)
 theme_override_fonts/font = ExtResource("1_7nxku")
@@ -162,9 +161,9 @@ theme_override_font_sizes/font_size = 22
 text = "calendar blocks left:"
 
 [node name="number_calblocks" type="Label" parent="Window"]
-offset_left = 376.0
+offset_left = 728.0
 offset_top = 745.0
-offset_right = 416.0
+offset_right = 768.0
 offset_bottom = 780.0
 theme_override_colors/font_color = Color(0.9254902, 0, 0.043137256, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -175,21 +174,21 @@ text = "10"
 script = ExtResource("5_cf5gv")
 
 [node name="avatar_slack" type="AnimatedSprite2D" parent="Window"]
-position = Vector2(384, 167.5)
+position = Vector2(736, 167.5)
 sprite_frames = SubResource("SpriteFrames_nlm7j")
 animation = &"shock"
 
 [node name="calblock" type="Sprite2D" parent="Window"]
-position = Vector2(150, 766)
+position = Vector2(502, 766)
 scale = Vector2(0.88, 0.88)
 texture = ExtResource("10_m1acp")
 
 [node name="tiles_minesweeper" type="CanvasLayer" parent="Window"]
 
 [node name="grid9x9" type="GridContainer" parent="Window/tiles_minesweeper"]
-offset_left = 128.0
+offset_left = 480.0
 offset_top = 248.5
-offset_right = 208.0
+offset_right = 560.0
 offset_bottom = 304.5
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -204,17 +203,17 @@ texture_pressed = SubResource("AtlasTexture_8neyo")
 script = ExtResource("12_1xtce")
 
 [node name="exitbtn" type="TextureButton" parent="Window"]
-offset_left = 120.0
+offset_left = 472.0
 offset_top = 119.5
-offset_right = 285.0
+offset_right = 637.0
 offset_bottom = 209.5
 texture_normal = SubResource("AtlasTexture_crrax")
 script = ExtResource("18_2so26")
 
 [node name="restartbtn" type="TextureButton" parent="Window"]
-offset_left = 480.0
+offset_left = 832.0
 offset_top = 119.5
-offset_right = 645.0
+offset_right = 997.0
 offset_bottom = 209.5
 texture_normal = SubResource("AtlasTexture_2so26")
 script = ExtResource("18_2so26")
@@ -225,13 +224,14 @@ normal_texture = SubResource("AtlasTexture_mxn5k")
 try_again_texture = SubResource("AtlasTexture_ldu3r")
 
 [node name="winlostmsg" type="Node2D" parent="Window"]
+position = Vector2(352, 0)
 script = ExtResource("20_ldu3r")
 
 [node name="winlostimg_canvas" type="CanvasLayer" parent="Window/winlostmsg"]
 layer = 2
 
 [node name="winlostimg" type="Sprite2D" parent="Window/winlostmsg/winlostimg_canvas"]
-position = Vector2(592, 832)
+position = Vector2(944, 832)
 scale = Vector2(0.9960934, 0.9960934)
 texture = ExtResource("20_mxn5k")
 region_enabled = true
