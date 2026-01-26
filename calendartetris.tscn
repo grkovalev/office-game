@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://dvdkj6gr6sny"]
+[gd_scene load_steps=18 format=3 uid="uid://dvdkj6gr6sny"]
 
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_5l5t3"]
+[ext_resource type="Script" uid="uid://bg6kmco1mybb3" path="res://calendartetris.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_jwokj"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
@@ -73,8 +74,8 @@ texture = SubResource("GradientTexture2D_4w1so")
 [node name="calendar_ui3" type="TextureRect" parent="."]
 offset_left = 352.0
 offset_top = 280.0
-offset_right = 472.0
-offset_bottom = 936.0
+offset_right = 440.0
+offset_bottom = 875.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_4w1so")
@@ -83,43 +84,43 @@ texture = SubResource("GradientTexture2D_4w1so")
 offset_left = 80.0
 offset_top = 536.0
 offset_right = 328.0
-offset_bottom = 936.0
+offset_bottom = 875.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_4w1so")
 
 [node name="01_secpers" type="TextureRect" parent="."]
-offset_left = 472.0
-offset_top = 160.0
-offset_right = 722.0
-offset_bottom = 240.0
+offset_left = 456.0
+offset_top = 280.0
+offset_right = 706.0
+offset_bottom = 360.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_063xu")
 
 [node name="02_secpers" type="TextureRect" parent="."]
-offset_left = 722.0
-offset_top = 160.0
-offset_right = 972.0
-offset_bottom = 240.0
+offset_left = 706.0
+offset_top = 280.0
+offset_right = 956.0
+offset_bottom = 360.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_xt0v1")
 
 [node name="03_secpers" type="TextureRect" parent="."]
-offset_left = 972.0
-offset_top = 160.0
-offset_right = 1222.0
-offset_bottom = 240.0
+offset_left = 956.0
+offset_top = 280.0
+offset_right = 1206.0
+offset_bottom = 360.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_ek6ok")
 
 [node name="04_secpers" type="TextureRect" parent="."]
-offset_left = 1222.0
-offset_top = 160.0
-offset_right = 1472.0
-offset_bottom = 240.0
+offset_left = 1206.0
+offset_top = 280.0
+offset_right = 1456.0
+offset_bottom = 360.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_yv368")
@@ -143,12 +144,7 @@ theme_override_font_sizes/font_size = 29
 text = "this tetris is not for the weak"
 autowrap_mode = 2
 
-[node name="grid10x20" type="GridContainer" parent="."]
+[node name="grid_container" type="Node2D" parent="."]
 z_index = 4
-offset_left = 496.0
-offset_top = 280.0
-offset_right = 576.0
-offset_bottom = 336.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-columns = 20
+position = Vector2(456, 376)
+script = ExtResource("1_script")
