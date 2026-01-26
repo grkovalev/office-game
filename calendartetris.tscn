@@ -1,8 +1,15 @@
-[gd_scene load_steps=18 format=3 uid="uid://dvdkj6gr6sny"]
+[gd_scene load_steps=27 format=3 uid="uid://dvdkj6gr6sny"]
 
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_5l5t3"]
 [ext_resource type="Script" path="res://tetris_gridcontainer.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_jwokj"]
+[ext_resource type="Texture2D" uid="uid://b8to1iqif083x" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_O.png" id="4_ay14k"]
+[ext_resource type="Texture2D" uid="uid://jau56ifui51g" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_i.png" id="5_063xu"]
+[ext_resource type="Texture2D" uid="uid://bm5hum10g6a6s" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_s.png" id="6_bwdfo"]
+[ext_resource type="Texture2D" uid="uid://fvtmo37af6uq" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_z.png" id="7_xt0v1"]
+[ext_resource type="Texture2D" uid="uid://h3vuqnh2jtf3" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_l.png" id="8_xt0v1"]
+[ext_resource type="Texture2D" uid="uid://cubvjfydm27r6" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_j.png" id="9_sriha"]
+[ext_resource type="Texture2D" uid="uid://csu44dfogy51c" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_t.png" id="10_sriha"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.5897706, 0.686903, 0.71425915, 1, 0.44313726, 0.5411765, 0.5686275, 1)
@@ -45,6 +52,12 @@ colors = PackedColorArray(0.7358665, 0.23198193, 0.32481375, 1, 0.7372549, 0.231
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_yv368"]
 gradient = SubResource("Gradient_5beks")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4w1so"]
+size = Vector2(102, 102)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sriha"]
+size = Vector2(52, 202)
 
 [node name="main_calendartetris" type="Node2D"]
 
@@ -148,3 +161,81 @@ autowrap_mode = 2
 z_index = 4
 position = Vector2(456, 376)
 script = ExtResource("1_script")
+
+[node name="tetromino_lib" type="Node2D" parent="."]
+
+[node name="shape_o_area" type="Area2D" parent="tetromino_lib"]
+position = Vector2(-712, 60)
+
+[node name="shape_o_img" type="Sprite2D" parent="tetromino_lib/shape_o_area"]
+texture = ExtResource("4_ay14k")
+
+[node name="shape_o_col" type="CollisionShape2D" parent="tetromino_lib/shape_o_area"]
+visible = false
+shape = SubResource("RectangleShape2D_4w1so")
+
+[node name="shape_i_area" type="Area2D" parent="tetromino_lib"]
+position = Vector2(-587, 108)
+
+[node name="shape_i_img" type="Sprite2D" parent="tetromino_lib/shape_i_area"]
+texture = ExtResource("5_063xu")
+
+[node name="shape_i_col" type="CollisionShape2D" parent="tetromino_lib/shape_i_area"]
+visible = false
+shape = SubResource("RectangleShape2D_sriha")
+
+[node name="shape_s_area" type="Area2D" parent="tetromino_lib"]
+position = Vector2(-424, 108)
+
+[node name="shape_s_img" type="Sprite2D" parent="tetromino_lib/shape_s_area"]
+texture = ExtResource("6_bwdfo")
+
+[node name="shape_s_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_s_area"]
+polygon = PackedVector2Array(-25, -50, 75, -50, 75, 0, 25, 0, 26, 50, -76, 51, -76, -1, -26, -1)
+
+[node name="shape_z_area" type="Area2D" parent="tetromino_lib"]
+position = Vector2(-225, 108)
+
+[node name="shape_z_img" type="Sprite2D" parent="tetromino_lib/shape_z_area"]
+texture = ExtResource("7_xt0v1")
+
+[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_z_area"]
+position = Vector2(-3.000002, 1.9073486e-06)
+scale = Vector2(0.94592327, -0.9342187)
+polygon = PackedVector2Array(-24.31488, -53.52066, 83.51628, -53.52066, 82.45911, 0, 29.600708, 0, 29.600708, 53.520653, -77.17328, 54.59107, -76.11612, -1.0704117, -24.31488, -1.0704117)
+
+[node name="shape_l_area" type="Area2D" parent="tetromino_lib"]
+position = Vector2(-712, 331)
+
+[node name="shape_l_img" type="Sprite2D" parent="tetromino_lib/shape_l_area"]
+texture = ExtResource("8_xt0v1")
+
+[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_l_area"]
+position = Vector2(-3.000002, 1.9073486e-06)
+scale = Vector2(0.94592327, -0.9342187)
+polygon = PackedVector2Array(-49.68689, -79.21057, 57.087082, -80.28099, 57.087082, -26.76033, 4.228668, -26.76033, 3.1715088, 81.351395, -49.68689, 81.351395)
+
+[node name="shape_j_area" type="Area2D" parent="tetromino_lib"]
+visible = false
+position = Vector2(-549, 331)
+
+[node name="shape_j_img" type="Sprite2D" parent="tetromino_lib/shape_j_area"]
+texture = ExtResource("9_sriha")
+
+[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_j_area"]
+position = Vector2(-3.000002, 1.9073486e-06)
+rotation = 3.1415927
+scale = Vector2(1.0156913, 0.9910609)
+polygon = PackedVector2Array(-53.165833, -76.685486, 47.258423, -76.685486, 46.273865, -24.216461, -2.9536743, -25.225494, -2.9536133, 76.68552, -53.16577, 76.68552)
+
+[node name="shape_t_area" type="Area2D" parent="tetromino_lib"]
+position = Vector2(-549, 331)
+
+[node name="shape_t_img" type="Sprite2D" parent="tetromino_lib/shape_t_area"]
+texture = ExtResource("10_sriha")
+
+[node name="shape_t_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_t_area"]
+position = Vector2(-3.000002, 1.9073486e-06)
+rotation = 3.1415927
+scale = Vector2(1.0156913, 0.9910609)
+polygon = PackedVector2Array(-77.77957, 1.0090637, -27.567444, 0, -27.567505, -49.441956, 21.660034, -50.45099, 21.660095, 1.0090332, 70.887695, 1.0090332, 70.887695, 50.45099, -76.79501, 51.460052)
