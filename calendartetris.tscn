@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=3 uid="uid://dvdkj6gr6sny"]
+[gd_scene load_steps=28 format=3 uid="uid://dvdkj6gr6sny"]
 
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_5l5t3"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_jwokj"]
 [ext_resource type="Script" uid="uid://bg6kmco1mybb3" path="res://calendartetris.gd" id="3_sriha"]
 [ext_resource type="Texture2D" uid="uid://b8to1iqif083x" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_o.png" id="4_ay14k"]
+[ext_resource type="Script" uid="uid://rdwv8h8o3snh" path="res://tetromino_lib.gd" id="4_ek6ok"]
 [ext_resource type="Texture2D" uid="uid://jau56ifui51g" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_i.png" id="5_063xu"]
 [ext_resource type="Texture2D" uid="uid://bm5hum10g6a6s" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_s.png" id="6_bwdfo"]
 [ext_resource type="Texture2D" uid="uid://fvtmo37af6uq" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_z.png" id="7_xt0v1"]
@@ -163,6 +164,7 @@ position = Vector2(456, 376)
 script = ExtResource("3_sriha")
 
 [node name="tetromino_lib" type="Node2D" parent="."]
+script = ExtResource("4_ek6ok")
 
 [node name="shape_o_area" type="Area2D" parent="tetromino_lib"]
 position = Vector2(-712, 60)
@@ -216,7 +218,6 @@ scale = Vector2(0.94592327, -0.9342187)
 polygon = PackedVector2Array(-49.68689, -79.21057, 57.087082, -80.28099, 57.087082, -26.76033, 4.228668, -26.76033, 3.1715088, 81.351395, -49.68689, 81.351395)
 
 [node name="shape_j_area" type="Area2D" parent="tetromino_lib"]
-visible = false
 position = Vector2(-549, 331)
 
 [node name="shape_j_img" type="Sprite2D" parent="tetromino_lib/shape_j_area"]
@@ -241,3 +242,10 @@ scale = Vector2(1.0156913, 0.9910609)
 polygon = PackedVector2Array(-77.77957, 1.0090637, -27.567444, 0, -27.567505, -49.441956, 21.660034, -50.45099, 21.660095, 1.0090332, 70.887695, 1.0090332, 70.887695, 50.45099, -76.79501, 51.460052)
 
 [node name="spawn_slot_0" type="Node2D" parent="tetromino_lib"]
+position = Vector2(182, 589)
+
+[node name="spawn_slot_1" type="Node2D" parent="tetromino_lib"]
+position = Vector2(182, 702)
+
+[node name="spawn_slot_2" type="Node2D" parent="tetromino_lib"]
+position = Vector2(182, 819)
