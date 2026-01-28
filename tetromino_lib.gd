@@ -1,7 +1,17 @@
 extends Node2D
 
 @onready var board = $"../grid_container"
-@onready var slots = [ $spawn_slot_0, $spawn_slot_1, $spawn_slot_2 ]
+@onready var slots = [ $spawn_slot_0]
+
+@onready var TEMPLATE_SHAPES := {
+	"O": $shape_o_area,
+	"I": $shape_i_area,
+	"S": $shape_s_area,
+	"Z": $shape_z_area,
+	"L": $shape_l_area,
+	"J": $shape_j_area,
+	"T": $shape_t_area,
+}
 
 const TILE_SIZE := 50
 const SHAPES := {
@@ -59,23 +69,14 @@ const PIVOT_OFFSETS := {
 	"T": Vector2(0.0, 0.5),
 }
 
-@onready var TEMPLATE_SHAPES := {
-	"O": $shape_o_area,
-	"I": $shape_i_area,
-	"S": $shape_s_area,
-	"Z": $shape_z_area,
-	"L": $shape_l_area,
-	"J": $shape_j_area,
-	"T": $shape_t_area,
-}
-
-var pieces: Array = [null, null, null]
+var pieces: Array = []
 var dragging: bool = false
 var selected_slot: int = -1
 var drag_offset: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	randomize()
+	pieces.resize(slots.size())
 	for i in range(slots.size()):
 		spawn_piece(i)
 

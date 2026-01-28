@@ -1,6 +1,7 @@
-[gd_scene load_steps=28 format=3 uid="uid://dvdkj6gr6sny"]
+[gd_scene load_steps=29 format=3 uid="uid://dvdkj6gr6sny"]
 
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_5l5t3"]
+[ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="2_5beks"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_jwokj"]
 [ext_resource type="Script" uid="uid://bg6kmco1mybb3" path="res://calendartetris.gd" id="3_sriha"]
 [ext_resource type="Texture2D" uid="uid://b8to1iqif083x" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_o.png" id="4_ay14k"]
@@ -68,10 +69,10 @@ offset_bottom = 1105.0
 texture = SubResource("GradientTexture2D_ucthv")
 
 [node name="bg_undercalendar" type="TextureRect" parent="."]
-offset_left = 64.0
+offset_left = 39.0
 offset_top = 256.0
-offset_right = 1472.0
-offset_bottom = 960.0
+offset_right = 1481.0
+offset_bottom = 916.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_ay14k")
@@ -140,22 +141,36 @@ size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_yv368")
 
 [node name="title" type="Label" parent="."]
-offset_left = 376.0
-offset_top = 38.0
-offset_right = 808.0
-offset_bottom = 83.0
+offset_left = 80.0
+offset_top = 108.0
+offset_right = 756.0
+offset_bottom = 177.0
 theme_override_fonts/font = ExtResource("1_5l5t3")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 60
 text = "SCHEDULE A MEETING"
+vertical_alignment = 1
 
 [node name="subtitle" type="Label" parent="."]
-offset_left = 760.0
-offset_top = 38.0
-offset_right = 1144.0
-offset_bottom = 78.0
+offset_left = 776.0
+offset_top = 108.0
+offset_right = 1438.0
+offset_bottom = 177.0
 theme_override_fonts/font = ExtResource("2_jwokj")
-theme_override_font_sizes/font_size = 29
+theme_override_font_sizes/font_size = 50
 text = "this tetris is not for the weak"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="nextpiecetitle" type="Label" parent="."]
+offset_left = 80.0
+offset_top = 566.0
+offset_right = 328.0
+offset_bottom = 627.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 28
+text = "NEXT MEETING TO SCHEDULE:"
+horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="grid_container" type="Node2D" parent="."]
@@ -241,10 +256,4 @@ scale = Vector2(1.0156913, 0.9910609)
 polygon = PackedVector2Array(-76.79498, 1.0090332, -27.567444, 0, -27.567505, -49.441956, 21.660034, -50.45099, 21.660095, 1.0090332, 70.887695, 1.0090332, 70.887695, 50.45099, -76.79501, 51.460052)
 
 [node name="spawn_slot_0" type="Node2D" parent="tetromino_lib"]
-position = Vector2(182, 589)
-
-[node name="spawn_slot_1" type="Node2D" parent="tetromino_lib"]
-position = Vector2(182, 702)
-
-[node name="spawn_slot_2" type="Node2D" parent="tetromino_lib"]
-position = Vector2(182, 819)
+position = Vector2(200, 750)
