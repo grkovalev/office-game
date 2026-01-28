@@ -257,3 +257,21 @@ polygon = PackedVector2Array(-76.79498, 1.0090332, -27.567444, 0, -27.567505, -4
 
 [node name="spawn_slot_0" type="Node2D" parent="tetromino_lib"]
 position = Vector2(200, 750)
+
+[node name="cal_border" type="Line2D" parent="."]
+top_level = true
+position = Vector2(706, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
+
+[node name="cal_border2" type="Line2D" parent="."]
+top_level = true
+position = Vector2(956, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
+
+[node name="cal_border3" type="Line2D" parent="."]
+top_level = true
+position = Vector2(1206, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
