@@ -55,10 +55,10 @@ colors = PackedColorArray(0.7358665, 0.23198193, 0.32481375, 1, 0.7372549, 0.231
 gradient = SubResource("Gradient_5beks")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4w1so"]
-size = Vector2(102, 102)
+size = Vector2(100, 101)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sriha"]
-size = Vector2(52, 202)
+size = Vector2(50, 200)
 
 [node name="main_calendartetris" type="Node2D"]
 
@@ -173,7 +173,7 @@ position = Vector2(-712, 60)
 texture = ExtResource("4_ay14k")
 
 [node name="shape_o_col" type="CollisionShape2D" parent="tetromino_lib/shape_o_area"]
-visible = false
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_4w1so")
 
 [node name="shape_i_area" type="Area2D" parent="tetromino_lib"]
@@ -183,7 +183,6 @@ position = Vector2(-587, 108)
 texture = ExtResource("5_063xu")
 
 [node name="shape_i_col" type="CollisionShape2D" parent="tetromino_lib/shape_i_area"]
-visible = false
 shape = SubResource("RectangleShape2D_sriha")
 
 [node name="shape_s_area" type="Area2D" parent="tetromino_lib"]
@@ -204,7 +203,7 @@ texture = ExtResource("7_xt0v1")
 [node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_z_area"]
 position = Vector2(-3.000002, 1.9073486e-06)
 scale = Vector2(0.94592327, -0.9342187)
-polygon = PackedVector2Array(-24.31488, -53.52066, 83.51628, -53.52066, 82.45911, 0, 29.600708, 0, 29.600708, 53.520653, -77.17328, 54.59107, -76.11612, -1.0704117, -24.31488, -1.0704117)
+polygon = PackedVector2Array(-24.31488, -53.52066, 83.51628, -53.52066, 82.45911, 0, 29.600708, 0, 29.600708, 53.520653, -75.05893, 53.520653, -75.05893, 0, -24.31488, -1.0704117)
 
 [node name="shape_l_area" type="Area2D" parent="tetromino_lib"]
 position = Vector2(-712, 331)
@@ -227,10 +226,10 @@ texture = ExtResource("9_sriha")
 position = Vector2(-3.000002, 1.9073486e-06)
 rotation = 3.1415927
 scale = Vector2(1.0156913, 0.9910609)
-polygon = PackedVector2Array(-53.165833, -76.685486, 47.258423, -76.685486, 46.273865, -24.216461, -2.9536743, -25.225494, -2.9536133, 76.68552, -53.16577, 76.68552)
+polygon = PackedVector2Array(-52.181244, -74.66742, 46.273865, -74.66745, 46.273865, -25.225494, -2.9536743, -25.225494, -2.9536743, 75.67648, -52.181244, 75.67651)
 
 [node name="shape_t_area" type="Area2D" parent="tetromino_lib"]
-position = Vector2(-549, 331)
+position = Vector2(-361, 322)
 
 [node name="shape_t_img" type="Sprite2D" parent="tetromino_lib/shape_t_area"]
 texture = ExtResource("10_sriha")
@@ -239,7 +238,7 @@ texture = ExtResource("10_sriha")
 position = Vector2(-3.000002, 1.9073486e-06)
 rotation = 3.1415927
 scale = Vector2(1.0156913, 0.9910609)
-polygon = PackedVector2Array(-77.77957, 1.0090637, -27.567444, 0, -27.567505, -49.441956, 21.660034, -50.45099, 21.660095, 1.0090332, 70.887695, 1.0090332, 70.887695, 50.45099, -76.79501, 51.460052)
+polygon = PackedVector2Array(-76.79498, 1.0090332, -27.567444, 0, -27.567505, -49.441956, 21.660034, -50.45099, 21.660095, 1.0090332, 70.887695, 1.0090332, 70.887695, 50.45099, -76.79501, 51.460052)
 
 [node name="spawn_slot_0" type="Node2D" parent="tetromino_lib"]
 position = Vector2(182, 589)

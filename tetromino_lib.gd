@@ -48,6 +48,17 @@ const SHAPES := {
 		[Vector2i(0, -1), Vector2i(-1, 0), Vector2i(0, 0), Vector2i(0, 1)],
 	],
 }
+
+const PIVOT_OFFSETS := {
+	"O": Vector2(0.5, 0.5),
+	"I": Vector2(0.5, 0.0),
+	"S": Vector2(0.0, 0.5),
+	"Z": Vector2(0.0, 0.5),
+	"L": Vector2(0.0, 0.0),
+	"J": Vector2(0.0, 0.0),
+	"T": Vector2(0.0, 0.5),
+}
+
 @onready var TEMPLATE_SHAPES := {
 	"O": $shape_o_area,
 	"I": $shape_i_area,
@@ -169,10 +180,21 @@ func _rotate_selected_piece() -> void:
 	piece["rotation"] = rotation
 	pieces[selected_slot] = piece
 
-	# Simple visual rotation (90 degrees per step).
 	var area: Area2D = piece["area"]
 	area.rotation = float(rotation) * PI / 2.0
 
+func get_rotated_pivot_offset(shape_id: String, rotation: int) -> Vector2:
+	var base_offset: Vector2 = PIVOT_OFFSETS.get(shape_id, Vector2.ZERO)
+	match rotation:
+		0:
+			return base_offset
+		1:
+			return Vector2(-base_offset.y, base_offset.x)
+		2:
+			return Vector2(-base_offset.x, -base_offset.y)
+		3:
+			return Vector2(base_offset.y, -base_offset.x)
+	return base_offset
 
 func _try_place_piece_on_board(slot_index: int) -> void:
 	var piece = pieces[slot_index]
@@ -184,14 +206,27 @@ func _try_place_piece_on_board(slot_index: int) -> void:
 	var area: Area2D = piece["area"]
 	var shape_id: String = piece["shape_id"]
 	var rotation: int = piece["rotation"]
-	var base_cell: Vector2i = board.world_to_cell(area.global_position)
-	var local_cells: Array = SHAPES[shape_id][rotation]  # Array of Vector2i
+	var pivot_offset: Vector2 = get_rotated_pivot_offset(shape_id, rotation)
+	var drop_pos: Vector2 = area.global_position
+	var adjusted_pos: Vector2 = drop_pos + pivot_offset * TILE_SIZE
+	var base_cell: Vector2i = board.world_to_cell(adjusted_pos)
+	
+	var local_cells: Array = SHAPES[shape_id][rotation]
+	
 	if board.can_place_piece(local_cells, base_cell):
 		board.place_piece(local_cells, base_cell, shape_id)
-
+		
+		# Snap visual piece to grid-aligned position
+		var snapped_pos: Vector2 = board.cell_to_world(base_cell)
+		# Adjust back for pivot so sprite center aligns correctly
+		area.global_position = snapped_pos - pivot_offset * TILE_SIZE
+		
+		# Mark as placed but keep visible
 		piece["placed"] = true
 		pieces[slot_index] = piece
-		pieces[slot_index] = null
+		
+		# Spawn new piece in this slot
 		spawn_piece(slot_index)
 	else:
+		# Return to original position
 		area.global_position = piece["original_pos"]
