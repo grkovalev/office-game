@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dvdkj6gr6sny"]
+[gd_scene format=3 uid="uid://dvdkj6gr6sny"]
 
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_5l5t3"]
 [ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="2_5beks"]
@@ -61,14 +61,14 @@ size = Vector2(100, 101)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sriha"]
 size = Vector2(50, 200)
 
-[node name="main_calendartetris" type="Node2D"]
+[node name="main_calendartetris" type="Node2D" unique_id=1567789064]
 
-[node name="bg_color" type="TextureRect" parent="."]
+[node name="bg_color" type="TextureRect" parent="." unique_id=163175786]
 offset_right = 1504.0
 offset_bottom = 1105.0
 texture = SubResource("GradientTexture2D_ucthv")
 
-[node name="bg_undercalendar" type="TextureRect" parent="."]
+[node name="bg_undercalendar" type="TextureRect" parent="." unique_id=976245915]
 offset_left = 39.0
 offset_top = 256.0
 offset_right = 1481.0
@@ -77,7 +77,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_ay14k")
 
-[node name="calendar_ui" type="TextureRect" parent="."]
+[node name="calendar_ui" type="TextureRect" parent="." unique_id=730144622]
 offset_left = 80.0
 offset_top = 280.0
 offset_right = 328.0
@@ -86,7 +86,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_4w1so")
 
-[node name="calendar_ui3" type="TextureRect" parent="."]
+[node name="calendar_ui3" type="TextureRect" parent="." unique_id=969118720]
 offset_left = 352.0
 offset_top = 280.0
 offset_right = 440.0
@@ -95,7 +95,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_4w1so")
 
-[node name="calendar_ui2" type="TextureRect" parent="."]
+[node name="calendar_ui2" type="TextureRect" parent="." unique_id=499924150]
 offset_left = 80.0
 offset_top = 536.0
 offset_right = 328.0
@@ -104,7 +104,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_4w1so")
 
-[node name="01_secpers" type="TextureRect" parent="."]
+[node name="01_secpers" type="TextureRect" parent="." unique_id=811110673]
 offset_left = 456.0
 offset_top = 280.0
 offset_right = 706.0
@@ -113,7 +113,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_063xu")
 
-[node name="02_secpers" type="TextureRect" parent="."]
+[node name="02_secpers" type="TextureRect" parent="." unique_id=458442044]
 offset_left = 706.0
 offset_top = 280.0
 offset_right = 956.0
@@ -122,7 +122,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_xt0v1")
 
-[node name="03_secpers" type="TextureRect" parent="."]
+[node name="03_secpers" type="TextureRect" parent="." unique_id=2063164081]
 offset_left = 956.0
 offset_top = 280.0
 offset_right = 1206.0
@@ -131,7 +131,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_ek6ok")
 
-[node name="04_secpers" type="TextureRect" parent="."]
+[node name="04_secpers" type="TextureRect" parent="." unique_id=2038633763]
 offset_left = 1206.0
 offset_top = 280.0
 offset_right = 1456.0
@@ -140,7 +140,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_yv368")
 
-[node name="title" type="Label" parent="."]
+[node name="title" type="Label" parent="." unique_id=1520938463]
 offset_left = 80.0
 offset_top = 108.0
 offset_right = 756.0
@@ -150,7 +150,7 @@ theme_override_font_sizes/font_size = 60
 text = "SCHEDULE A MEETING"
 vertical_alignment = 1
 
-[node name="subtitle" type="Label" parent="."]
+[node name="subtitle" type="Label" parent="." unique_id=890376252]
 offset_left = 776.0
 offset_top = 108.0
 offset_right = 1438.0
@@ -161,7 +161,7 @@ text = "this tetris is not for the weak"
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="nextpiecetitle" type="Label" parent="."]
+[node name="nextpiecetitle" type="Label" parent="." unique_id=1505591641]
 offset_left = 80.0
 offset_top = 566.0
 offset_right = 328.0
@@ -173,104 +173,115 @@ text = "NEXT MEETING TO SCHEDULE:"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="grid_container" type="Node2D" parent="."]
+[node name="datetext" type="Label" parent="." unique_id=1824845824]
+offset_left = 80.0
+offset_top = 210.0
+offset_right = 509.0
+offset_bottom = 246.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 35
+text = "Today, NN Worktober 2026"
+autowrap_mode = 2
+
+[node name="grid_container" type="Node2D" parent="." unique_id=144483308]
 z_index = 4
 position = Vector2(456, 376)
 script = ExtResource("3_sriha")
 
-[node name="tetromino_lib" type="Node2D" parent="."]
+[node name="tetromino_lib" type="Node2D" parent="." unique_id=1185507880]
 script = ExtResource("4_ek6ok")
 
-[node name="shape_o_area" type="Area2D" parent="tetromino_lib"]
+[node name="shape_o_area" type="Area2D" parent="tetromino_lib" unique_id=1124557357]
 position = Vector2(-712, 60)
 
-[node name="shape_o_img" type="Sprite2D" parent="tetromino_lib/shape_o_area"]
+[node name="shape_o_img" type="Sprite2D" parent="tetromino_lib/shape_o_area" unique_id=618418232]
 texture = ExtResource("4_ay14k")
 
-[node name="shape_o_col" type="CollisionShape2D" parent="tetromino_lib/shape_o_area"]
+[node name="shape_o_col" type="CollisionShape2D" parent="tetromino_lib/shape_o_area" unique_id=1631266568]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_4w1so")
 
-[node name="shape_i_area" type="Area2D" parent="tetromino_lib"]
+[node name="shape_i_area" type="Area2D" parent="tetromino_lib" unique_id=802704956]
 position = Vector2(-587, 108)
 
-[node name="shape_i_img" type="Sprite2D" parent="tetromino_lib/shape_i_area"]
+[node name="shape_i_img" type="Sprite2D" parent="tetromino_lib/shape_i_area" unique_id=355730925]
 texture = ExtResource("5_063xu")
 
-[node name="shape_i_col" type="CollisionShape2D" parent="tetromino_lib/shape_i_area"]
+[node name="shape_i_col" type="CollisionShape2D" parent="tetromino_lib/shape_i_area" unique_id=1478855269]
 shape = SubResource("RectangleShape2D_sriha")
 
-[node name="shape_s_area" type="Area2D" parent="tetromino_lib"]
+[node name="shape_s_area" type="Area2D" parent="tetromino_lib" unique_id=555822906]
 position = Vector2(-424, 108)
 
-[node name="shape_s_img" type="Sprite2D" parent="tetromino_lib/shape_s_area"]
+[node name="shape_s_img" type="Sprite2D" parent="tetromino_lib/shape_s_area" unique_id=1142109158]
 texture = ExtResource("6_bwdfo")
 
-[node name="shape_s_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_s_area"]
+[node name="shape_s_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_s_area" unique_id=363727420]
 polygon = PackedVector2Array(-25, -50, 75, -50, 75, 0, 25, 0, 26, 50, -76, 51, -76, -1, -26, -1)
 
-[node name="shape_z_area" type="Area2D" parent="tetromino_lib"]
+[node name="shape_z_area" type="Area2D" parent="tetromino_lib" unique_id=1006151970]
 position = Vector2(-225, 108)
 
-[node name="shape_z_img" type="Sprite2D" parent="tetromino_lib/shape_z_area"]
+[node name="shape_z_img" type="Sprite2D" parent="tetromino_lib/shape_z_area" unique_id=80417114]
 texture = ExtResource("7_xt0v1")
 
-[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_z_area"]
+[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_z_area" unique_id=1537516587]
 position = Vector2(-3.000002, 1.9073486e-06)
 scale = Vector2(0.94592327, -0.9342187)
 polygon = PackedVector2Array(-24.31488, -53.52066, 83.51628, -53.52066, 82.45911, 0, 29.600708, 0, 29.600708, 53.520653, -75.05893, 53.520653, -75.05893, 0, -24.31488, -1.0704117)
 
-[node name="shape_l_area" type="Area2D" parent="tetromino_lib"]
+[node name="shape_l_area" type="Area2D" parent="tetromino_lib" unique_id=396737088]
 position = Vector2(-712, 331)
 
-[node name="shape_l_img" type="Sprite2D" parent="tetromino_lib/shape_l_area"]
+[node name="shape_l_img" type="Sprite2D" parent="tetromino_lib/shape_l_area" unique_id=278525897]
 texture = ExtResource("8_xt0v1")
 
-[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_l_area"]
+[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_l_area" unique_id=1644981029]
 position = Vector2(-3.000002, 1.9073486e-06)
 scale = Vector2(0.94592327, -0.9342187)
 polygon = PackedVector2Array(-49.68689, -79.21057, 57.087082, -80.28099, 57.087082, -26.76033, 4.228668, -26.76033, 3.1715088, 81.351395, -49.68689, 81.351395)
 
-[node name="shape_j_area" type="Area2D" parent="tetromino_lib"]
+[node name="shape_j_area" type="Area2D" parent="tetromino_lib" unique_id=424442293]
 position = Vector2(-549, 331)
 
-[node name="shape_j_img" type="Sprite2D" parent="tetromino_lib/shape_j_area"]
+[node name="shape_j_img" type="Sprite2D" parent="tetromino_lib/shape_j_area" unique_id=1674764351]
 texture = ExtResource("9_sriha")
 
-[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_j_area"]
+[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_j_area" unique_id=991552925]
 position = Vector2(-3.000002, 1.9073486e-06)
 rotation = 3.1415927
 scale = Vector2(1.0156913, 0.9910609)
 polygon = PackedVector2Array(-52.181244, -74.66742, 46.273865, -74.66745, 46.273865, -25.225494, -2.9536743, -25.225494, -2.9536743, 75.67648, -52.181244, 75.67651)
 
-[node name="shape_t_area" type="Area2D" parent="tetromino_lib"]
+[node name="shape_t_area" type="Area2D" parent="tetromino_lib" unique_id=1998812457]
 position = Vector2(-361, 322)
 
-[node name="shape_t_img" type="Sprite2D" parent="tetromino_lib/shape_t_area"]
+[node name="shape_t_img" type="Sprite2D" parent="tetromino_lib/shape_t_area" unique_id=843819129]
 texture = ExtResource("10_sriha")
 
-[node name="shape_t_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_t_area"]
+[node name="shape_t_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_t_area" unique_id=923549228]
 position = Vector2(-3.000002, 1.9073486e-06)
 rotation = 3.1415927
 scale = Vector2(1.0156913, 0.9910609)
 polygon = PackedVector2Array(-76.79498, 1.0090332, -27.567444, 0, -27.567505, -49.441956, 21.660034, -50.45099, 21.660095, 1.0090332, 70.887695, 1.0090332, 70.887695, 50.45099, -76.79501, 51.460052)
 
-[node name="spawn_slot_0" type="Node2D" parent="tetromino_lib"]
+[node name="spawn_slot_0" type="Node2D" parent="tetromino_lib" unique_id=1397780773]
 position = Vector2(200, 750)
 
-[node name="cal_border" type="Line2D" parent="."]
+[node name="cal_border" type="Line2D" parent="." unique_id=1734831251]
 top_level = true
 position = Vector2(706, 280)
 points = PackedVector2Array(0, 596, 0, 0)
 width = 3.0
 
-[node name="cal_border2" type="Line2D" parent="."]
+[node name="cal_border2" type="Line2D" parent="." unique_id=938284024]
 top_level = true
 position = Vector2(956, 280)
 points = PackedVector2Array(0, 596, 0, 0)
 width = 3.0
 
-[node name="cal_border3" type="Line2D" parent="."]
+[node name="cal_border3" type="Line2D" parent="." unique_id=1507249782]
 top_level = true
 position = Vector2(1206, 280)
 points = PackedVector2Array(0, 596, 0, 0)

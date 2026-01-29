@@ -216,18 +216,9 @@ func _try_place_piece_on_board(slot_index: int) -> void:
 	
 	if board.can_place_piece(local_cells, base_cell):
 		board.place_piece(local_cells, base_cell, shape_id)
-		
-		# Snap visual piece to grid-aligned position
-		var snapped_pos: Vector2 = board.cell_to_world(base_cell)
-		# Adjust back for pivot so sprite center aligns correctly
-		area.global_position = snapped_pos - pivot_offset * TILE_SIZE
-		
-		# Mark as placed but keep visible
-		piece["placed"] = true
-		pieces[slot_index] = piece
-		
-		# Spawn new piece in this slot
+		area.queue_free()
+		pieces[slot_index] = null
 		spawn_piece(slot_index)
+		
 	else:
-		# Return to original position
 		area.global_position = piece["original_pos"]

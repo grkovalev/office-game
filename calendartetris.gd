@@ -4,7 +4,8 @@ const GRID_WIDTH  := 20
 const GRID_HEIGHT := 10
 const TILE_SIZE   := 50
 
-var cells: Array = []   # cells[y][x] = bool, true if occupied
+var cells: Array = []
+var tile_nodes: Array = []
 
 func _ready() -> void:
 	_init_cells()
@@ -21,11 +22,15 @@ func _init_cells() -> void:
 
 
 func create_grid() -> void:
+	tile_nodes.clear()
 	for row in range(GRID_HEIGHT):
+		var row_tiles: Array = []
 		for col in range(GRID_WIDTH):
 			var tile = create_tile()
 			tile.position = Vector2(col * TILE_SIZE, row * TILE_SIZE)
 			add_child(tile)
+			row_tiles.append(tile)
+		tile_nodes.append(row_tiles)
 
 
 func create_tile() -> Panel:
@@ -70,6 +75,15 @@ func place_piece(local_cells: Array, base_cell: Vector2i, shape_id: String) -> v
 		var cell: Vector2i = base_cell + offset
 		if cell_in_bounds(cell):
 			cells[cell.y][cell.x] = true
+			set_cell_color(cell, Color(0.8, 0.22, 0.543, 1.0))
+			
+func set_cell_color(cell: Vector2i, color: Color) -> void:
+	if not cell_in_bounds(cell):
+		return
+	var tile: Panel = tile_nodes[cell.y][cell.x]
+	var stylebox: StyleBoxFlat = tile.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
+	stylebox.bg_color = color
+	tile.add_theme_stylebox_override("panel", stylebox)
 
 func cell_to_world(cell:Vector2i)->Vector2:
 	return to_global(Vector2(cell.x*TILE_SIZE+
