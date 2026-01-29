@@ -201,24 +201,16 @@ func _try_place_piece_on_board(slot_index: int) -> void:
 	var piece = pieces[slot_index]
 	if piece == null:
 		return
-	if piece["placed"]:
+	if piece.get("placed", false):
 		return
 
 	var area: Area2D = piece["area"]
-	var shape_id: String = piece["shape_id"]
-	var rotation: int = piece["rotation"]
-	var pivot_offset: Vector2 = get_rotated_pivot_offset(shape_id, rotation)
-	var drop_pos: Vector2 = area.global_position
-	var adjusted_pos: Vector2 = drop_pos + pivot_offset * TILE_SIZE
-	var base_cell: Vector2i = board.world_to_cell(adjusted_pos)
-	
-	var local_cells: Array = SHAPES[shape_id][rotation]
-	
-	if board.can_place_piece(local_cells, base_cell):
-		board.place_piece(local_cells, base_cell, shape_id)
+	var threshold: float = board.PLACEMENT_COVERAGE_THRESHOLD
+
+	if board.can_place_piece_by_collision(area, threshold):
+		board.place_piece_by_collision(area, threshold)
 		area.queue_free()
 		pieces[slot_index] = null
 		spawn_piece(slot_index)
-		
 	else:
 		area.global_position = piece["original_pos"]
