@@ -4,12 +4,15 @@ const GRID_WIDTH  := 20
 const GRID_HEIGHT := 10
 const TILE_SIZE   := 50
 
+@onready var tetromino_lib = $"../tetromino_lib"
+
 var cells: Array = []
 var tile_nodes: Array = []
 
 func _ready() -> void:
 	_init_cells()
 	create_grid()
+	prefill_regions_with_random_shapes.call_deferred()
 
 
 func _init_cells() -> void:
@@ -48,20 +51,15 @@ func create_tile(col: int) -> Panel:
 	stylebox.border_width_bottom = 1
 	tile.add_theme_stylebox_override("panel", stylebox)
 	return tile
-
-
 func world_to_cell(world_pos: Vector2) -> Vector2i:
 	var local_pos := to_local(world_pos)
 	var col := int(floor(local_pos.x / TILE_SIZE))
 	var row := int(floor(local_pos.y / TILE_SIZE))
 	return Vector2i(col, row)
 
-
 func cell_in_bounds(cell: Vector2i) -> bool:
 	return cell.x >= 0 and cell.x < GRID_WIDTH and cell.y >= 0 and cell.y < GRID_HEIGHT
 
-
-## Clamp base_cell so that every base_cell + local stays in grid bounds.
 func clamp_base_cell_for_shape(local_cells: Array, base_cell: Vector2i) -> Vector2i:
 	var min_lx := 0
 	var max_lx := 0
@@ -100,7 +98,7 @@ func place_piece(local_cells: Array, base_cell: Vector2i, shape_id: String) -> v
 		var cell: Vector2i = base_cell + offset
 		if cell_in_bounds(cell):
 			cells[cell.y][cell.x] = true
-			set_cell_color(cell, Color(0.867, 0.463, 0.686, 0.792))
+			set_cell_color(cell, Color(1.0, 0.502, 0.0, 0.792))
 			
 func set_cell_color(cell: Vector2i, color: Color) -> void:
 	if not cell_in_bounds(cell):
@@ -109,17 +107,84 @@ func set_cell_color(cell: Vector2i, color: Color) -> void:
 	var stylebox: StyleBoxFlat = tile.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
 	stylebox.bg_color = color
 	tile.add_theme_stylebox_override("panel", stylebox)
+	
+func mark_cells_occupied(covered_cells: Array, color: Color) -> void:
+	for cell in covered_cells:
+		var c: Vector2i = cell
+		if cell_in_bounds(c):
+			cells[c.y][c.x] = true
+			set_cell_color(c, color)
+
+const PREFILLED_TILE := Color(0.0, 0.271, 0.471, 0.443)
+const COLUMNS_PER_REGION := 5
+
+## Returns [min_col, max_col, min_row, max_row] for base_cell so that base_cell + local stays in region and bounds.
+func _base_cell_range_in_region(local_cells: Array, col_start: int, col_end: int) -> Array:
+	var min_lx := 0
+	var max_lx := 0
+	var min_ly := 0
+	var max_ly := 0
+	for local in local_cells:
+		var o: Vector2i = local
+		min_lx = mini(min_lx, o.x)
+		max_lx = maxi(max_lx, o.x)
+		min_ly = mini(min_ly, o.y)
+		max_ly = maxi(max_ly, o.y)
+	var min_base_col := maxi(0, col_start - min_lx)
+	var max_base_col := mini(GRID_WIDTH - 1 - max_lx, col_end - max_lx)
+	var min_base_row := maxi(0, -min_ly)
+	var max_base_row := GRID_HEIGHT - 1 - max_ly
+	return [min_base_col, max_base_col, min_base_row, max_base_row]
+
+func prefill_regions_with_random_shapes() -> void:
+	if tetromino_lib == null:
+		return
+	var shape_ids: Array = tetromino_lib.SHAPES.keys()
+	if shape_ids.is_empty():
+		return
+	await get_tree().process_frame
+
+	var num_regions := GRID_WIDTH / COLUMNS_PER_REGION
+	for region_index in range(num_regions):
+		var col_start := region_index * COLUMNS_PER_REGION
+		var col_end := col_start + COLUMNS_PER_REGION - 1
+		var placed := false
+
+		for _attempt in range(80):
+			var shape_id: String = shape_ids[randi() % shape_ids.size()]
+			var rotation: int = randi() % 4
+			var local_cells: Array = tetromino_lib.SHAPES[shape_id][rotation]
+
+			var range_v: Array = _base_cell_range_in_region(local_cells, col_start, col_end)
+			var min_base_col: int = range_v[0]
+			var max_base_col: int = range_v[1]
+			var min_base_row: int = range_v[2]
+			var max_base_row: int = range_v[3]
+			if min_base_col > max_base_col or min_base_row > max_base_row:
+				continue
+
+			var base_col := min_base_col + randi() % (max_base_col - min_base_col + 1)
+			var base_row := min_base_row + randi() % (max_base_row - min_base_row + 1)
+			var base_cell := Vector2i(base_col, base_row)
+
+			if not can_place_piece(local_cells, base_cell):
+				continue
+
+			for local in local_cells:
+				var offset: Vector2i = local
+				var cell: Vector2i = base_cell + offset
+				if cell_in_bounds(cell):
+					cells[cell.y][cell.x] = true
+					set_cell_color(cell, PREFILLED_TILE)
+			placed = true
+			break
 
 func cell_to_world(cell:Vector2i)->Vector2:
 	return to_global(Vector2(cell.x*TILE_SIZE+
 	TILE_SIZE*0.5,cell.y*TILE_SIZE+TILE_SIZE*0.5))
 
 
-# --- Collision-based placement (90% tile coverage) ---
-
 const PLACEMENT_COVERAGE_THRESHOLD := 0.9
-
-## Shoelace formula: signed area of polygon (positive = CCW).
 func _polygon_area(poly: PackedVector2Array) -> float:
 	if poly.size() < 3:
 		return 0.0
@@ -129,8 +194,6 @@ func _polygon_area(poly: PackedVector2Array) -> float:
 		area += poly[i].x * poly[j].y - poly[j].x * poly[i].y
 	return abs(area) * 0.5
 
-
-## Collect world-space polygons from an Area2D's collision (CollisionShape2D + CollisionPolygon2D).
 func _get_shape_world_polygons(area: Area2D) -> Array:
 	var polygons: Array = []
 	var area_gt := area.global_transform
@@ -161,8 +224,6 @@ func _get_shape_world_polygons(area: Area2D) -> Array:
 			polygons.append(world)
 	return polygons
 
-
-## Four corners of tile (col, row) in world space.
 func _tile_rect_world(col: int, row: int) -> PackedVector2Array:
 	var a := to_global(Vector2(col * TILE_SIZE, row * TILE_SIZE))
 	var b := to_global(Vector2((col + 1) * TILE_SIZE, row * TILE_SIZE))
@@ -170,8 +231,6 @@ func _tile_rect_world(col: int, row: int) -> PackedVector2Array:
 	var d := to_global(Vector2(col * TILE_SIZE, (row + 1) * TILE_SIZE))
 	return PackedVector2Array([a, b, c, d])
 
-
-## True if intersection area >= threshold * tile_area, OR tile center is inside any shape polygon.
 func _tile_covered_by_polygons(col: int, row: int, shape_polygons: Array, threshold: float) -> bool:
 	var tile_poly: PackedVector2Array = _tile_rect_world(col, row)
 	var tile_center := to_global(Vector2(col * TILE_SIZE + TILE_SIZE * 0.5, row * TILE_SIZE + TILE_SIZE * 0.5))
@@ -222,4 +281,4 @@ func place_piece_by_collision(area: Area2D, threshold: float) -> void:
 		var c: Vector2i = cell
 		if cell_in_bounds(c):
 			cells[c.y][c.x] = true
-			set_cell_color(c, Color(0.867, 0.463, 0.686, 0.792))
+			set_cell_color(c, Color(1.0, 0.502, 0.0, 0.718))
