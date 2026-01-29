@@ -14,43 +14,43 @@
 [ext_resource type="Texture2D" uid="uid://csu44dfogy51c" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_t.png" id="10_sriha"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
-colors = PackedColorArray(0.5897706, 0.686903, 0.71425915, 1, 0.44313726, 0.5411765, 0.5686275, 1)
+colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ucthv"]
 gradient = SubResource("Gradient_k6kum")
 
 [sub_resource type="Gradient" id="Gradient_5l5t3"]
-colors = PackedColorArray(0.7529412, 0.81960785, 0.8392157, 1, 0.751621, 0.8193747, 0.8392775, 1)
+colors = PackedColorArray(0.5921569, 0.7647059, 0.9137255, 0.40784314, 0.5921569, 0.7647059, 0.9137255, 0.40784314)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ay14k"]
 gradient = SubResource("Gradient_5l5t3")
 
 [sub_resource type="Gradient" id="Gradient_jwokj"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0.87058824, 0.9254902, 0.9764706, 1, 0.87058824, 0.9254902, 0.9764706, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_4w1so"]
 gradient = SubResource("Gradient_jwokj")
 
 [sub_resource type="Gradient" id="Gradient_pl1es"]
-colors = PackedColorArray(0.20392157, 0.29411766, 0.80784315, 1, 0.20392157, 0.29411766, 0.80784315, 1)
+colors = PackedColorArray(0.42745098, 0.627451, 0.8, 1, 0.42745098, 0.627451, 0.8, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_063xu"]
 gradient = SubResource("Gradient_pl1es")
 
 [sub_resource type="Gradient" id="Gradient_bwdfo"]
-colors = PackedColorArray(0.8980392, 0.6156863, 0.26666668, 1, 0.8980392, 0.6156863, 0.26666668, 1)
+colors = PackedColorArray(0.6392157, 0.7490196, 0.8392157, 1, 0.6392157, 0.7490196, 0.8392157, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xt0v1"]
 gradient = SubResource("Gradient_bwdfo")
 
 [sub_resource type="Gradient" id="Gradient_sriha"]
-colors = PackedColorArray(0.10152156, 0.4439258, 0.31549373, 1, 0.101960786, 0.44313726, 0.3137255, 1)
+colors = PackedColorArray(0, 0.3529412, 0.61960787, 1, 0, 0.3529412, 0.61960787, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ek6ok"]
 gradient = SubResource("Gradient_sriha")
 
 [sub_resource type="Gradient" id="Gradient_5beks"]
-colors = PackedColorArray(0.7358665, 0.23198193, 0.32481375, 1, 0.7372549, 0.23137255, 0.3254902, 1)
+colors = PackedColorArray(0.16862746, 0.53333336, 0.84705883, 1, 0.16862746, 0.53333336, 0.84705883, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_yv368"]
 gradient = SubResource("Gradient_5beks")
@@ -108,7 +108,7 @@ texture = SubResource("GradientTexture2D_4w1so")
 offset_left = 456.0
 offset_top = 280.0
 offset_right = 706.0
-offset_bottom = 360.0
+offset_bottom = 368.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_063xu")
@@ -117,7 +117,7 @@ texture = SubResource("GradientTexture2D_063xu")
 offset_left = 706.0
 offset_top = 280.0
 offset_right = 956.0
-offset_bottom = 360.0
+offset_bottom = 368.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_xt0v1")
@@ -126,16 +126,16 @@ texture = SubResource("GradientTexture2D_xt0v1")
 offset_left = 956.0
 offset_top = 280.0
 offset_right = 1206.0
-offset_bottom = 360.0
+offset_bottom = 368.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_ek6ok")
 
 [node name="04_secpers" type="TextureRect" parent="." unique_id=2038633763]
-offset_left = 1206.0
+offset_left = 1209.0
 offset_top = 280.0
 offset_right = 1456.0
-offset_bottom = 360.0
+offset_bottom = 368.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_yv368")
@@ -286,3 +286,9 @@ top_level = true
 position = Vector2(1206, 280)
 points = PackedVector2Array(0, 596, 0, 0)
 width = 3.0
+
+[node name="cal_border4" type="Line2D" parent="." unique_id=1807989735]
+top_level = true
+position = Vector2(1200.067, 277.255)
+scale = Vector2(0.99214154, 1)
+points = PackedVector2Array(-750, 96, 258, 96)

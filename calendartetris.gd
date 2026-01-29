@@ -17,7 +17,7 @@ func _init_cells() -> void:
 	for y in range(GRID_HEIGHT):
 		var row: Array = []
 		for x in range(GRID_WIDTH):
-			row.append(false)    # start empty
+			row.append(false)
 		cells.append(row)
 
 
@@ -26,18 +26,21 @@ func create_grid() -> void:
 	for row in range(GRID_HEIGHT):
 		var row_tiles: Array = []
 		for col in range(GRID_WIDTH):
-			var tile = create_tile()
+			var tile = create_tile(col)
 			tile.position = Vector2(col * TILE_SIZE, row * TILE_SIZE)
 			add_child(tile)
 			row_tiles.append(tile)
 		tile_nodes.append(row_tiles)
 
 
-func create_tile() -> Panel:
+func create_tile(col: int) -> Panel:
 	var tile = Panel.new()
 	tile.size = Vector2(TILE_SIZE, TILE_SIZE)
 	var stylebox = StyleBoxFlat.new()
-	stylebox.bg_color = Color(0.804, 0.854, 0.99, 0.4)
+	if col % 10 < 5:
+		stylebox.bg_color = Color(0.443, 0.686, 0.898, 0.5)
+	else:
+		stylebox.bg_color = Color(0.871, 0.925, 0.976, 0.5)
 	stylebox.border_color = Color(1.0, 1.0, 1.0, 0.7)
 	stylebox.border_width_left = 1
 	stylebox.border_width_top = 1
@@ -97,7 +100,7 @@ func place_piece(local_cells: Array, base_cell: Vector2i, shape_id: String) -> v
 		var cell: Vector2i = base_cell + offset
 		if cell_in_bounds(cell):
 			cells[cell.y][cell.x] = true
-			set_cell_color(cell, Color(0.8, 0.22, 0.543, 1.0))
+			set_cell_color(cell, Color(0.867, 0.463, 0.686, 0.792))
 			
 func set_cell_color(cell: Vector2i, color: Color) -> void:
 	if not cell_in_bounds(cell):
@@ -219,4 +222,4 @@ func place_piece_by_collision(area: Area2D, threshold: float) -> void:
 		var c: Vector2i = cell
 		if cell_in_bounds(c):
 			cells[c.y][c.x] = true
-			set_cell_color(c, Color(0.8, 0.22, 0.543, 1.0))
+			set_cell_color(c, Color(0.867, 0.463, 0.686, 0.792))
