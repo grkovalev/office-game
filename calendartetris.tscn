@@ -90,7 +90,7 @@ texture = SubResource("GradientTexture2D_4w1so")
 offset_left = 352.0
 offset_top = 280.0
 offset_right = 440.0
-offset_bottom = 875.0
+offset_bottom = 876.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_4w1so")
@@ -166,11 +166,49 @@ offset_left = 80.0
 offset_top = 566.0
 offset_right = 328.0
 offset_bottom = 627.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
 theme_override_fonts/font = ExtResource("2_5beks")
 theme_override_font_sizes/font_size = 28
 text = "NEXT MEETING TO SCHEDULE:"
 horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="makeitquick" type="Label" parent="." unique_id=960155255]
+offset_left = 80.0
+offset_top = 304.0
+offset_right = 328.0
+offset_bottom = 365.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 28
+text = "MAKE IT QUICK"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="makeitquick_label" type="Label" parent="." unique_id=953766103]
+offset_left = 80.0
+offset_top = 480.0
+offset_right = 328.0
+offset_bottom = 512.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("2_jwokj")
+theme_override_font_sizes/font_size = 20
+text = "limited superpower"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="piecesleft" type="Label" parent="." unique_id=1153280029]
+offset_left = 80.0
+offset_top = 840.0
+offset_right = 328.0
+offset_bottom = 875.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("2_jwokj")
+theme_override_font_sizes/font_size = 20
+text = "NN left"
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="datetext" type="Label" parent="." unique_id=1824845824]
@@ -267,7 +305,7 @@ scale = Vector2(1.0156913, 0.9910609)
 polygon = PackedVector2Array(-76.79498, 1.0090332, -27.567444, 0, -27.567505, -49.441956, 21.660034, -50.45099, 21.660095, 1.0090332, 70.887695, 1.0090332, 70.887695, 50.45099, -76.79501, 51.460052)
 
 [node name="spawn_slot_0" type="Node2D" parent="tetromino_lib" unique_id=1397780773]
-position = Vector2(200, 750)
+position = Vector2(200, 728)
 
 [node name="cal_border" type="Line2D" parent="." unique_id=1734831251]
 top_level = true
@@ -292,3 +330,125 @@ top_level = true
 position = Vector2(1200.067, 277.255)
 scale = Vector2(0.99214154, 1)
 points = PackedVector2Array(-750, 96, 258, 96)
+
+[node name="timescale" type="Node2D" parent="." unique_id=2095761498]
+
+[node name="09" type="Label" parent="timescale" unique_id=1430802931]
+offset_left = 392.0
+offset_top = 383.0
+offset_right = 432.0
+offset_bottom = 429.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "09"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="10" type="Label" parent="timescale" unique_id=1135834557]
+offset_left = 392.0
+offset_top = 429.0
+offset_right = 432.0
+offset_bottom = 477.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "10"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="11" type="Label" parent="timescale" unique_id=859251546]
+offset_left = 392.0
+offset_top = 477.0
+offset_right = 432.0
+offset_bottom = 525.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "11"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="12" type="Label" parent="timescale" unique_id=670917275]
+offset_left = 392.0
+offset_top = 525.0
+offset_right = 432.0
+offset_bottom = 573.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "12"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="13" type="Label" parent="timescale" unique_id=1025290633]
+offset_left = 392.0
+offset_top = 576.0
+offset_right = 432.0
+offset_bottom = 624.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "13"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="14" type="Label" parent="timescale" unique_id=21697479]
+offset_left = 392.0
+offset_top = 632.0
+offset_right = 432.0
+offset_bottom = 680.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "14"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="15" type="Label" parent="timescale" unique_id=1195965320]
+offset_left = 392.0
+offset_top = 680.0
+offset_right = 432.0
+offset_bottom = 728.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "15"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="16" type="Label" parent="timescale" unique_id=1262723714]
+offset_left = 392.0
+offset_top = 728.0
+offset_right = 432.0
+offset_bottom = 776.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "16"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="17" type="Label" parent="timescale" unique_id=580996626]
+offset_left = 392.0
+offset_top = 776.0
+offset_right = 432.0
+offset_bottom = 824.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "17"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="18" type="Label" parent="timescale" unique_id=80319507]
+offset_left = 392.0
+offset_top = 824.0
+offset_right = 432.0
+offset_bottom = 872.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "18"
+horizontal_alignment = 2
+autowrap_mode = 2
