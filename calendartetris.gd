@@ -168,9 +168,14 @@ func _tile_rect_world(col: int, row: int) -> PackedVector2Array:
 	return PackedVector2Array([a, b, c, d])
 
 
-## True if intersection area of tile with any shape polygon >= threshold * tile_area.
+## True if intersection area >= threshold * tile_area, OR tile center is inside any shape polygon.
 func _tile_covered_by_polygons(col: int, row: int, shape_polygons: Array, threshold: float) -> bool:
 	var tile_poly: PackedVector2Array = _tile_rect_world(col, row)
+	var tile_center := to_global(Vector2(col * TILE_SIZE + TILE_SIZE * 0.5, row * TILE_SIZE + TILE_SIZE * 0.5))
+	for shape_poly in shape_polygons:
+		var sp: PackedVector2Array = shape_poly
+		if Geometry2D.is_point_in_polygon(tile_center, sp):
+			return true
 	var tile_area := _polygon_area(tile_poly)
 	if tile_area <= 0.0:
 		return false
