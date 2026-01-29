@@ -144,40 +144,46 @@ func prefill_regions_with_random_shapes() -> void:
 		return
 	await get_tree().process_frame
 
+	const SHAPES_PER_REGION := 2
 	var num_regions := GRID_WIDTH / COLUMNS_PER_REGION
 	for region_index in range(num_regions):
 		var col_start := region_index * COLUMNS_PER_REGION
 		var col_end := col_start + COLUMNS_PER_REGION - 1
-		var placed := false
+		var shapes_placed := 0
 
-		for _attempt in range(80):
-			var shape_id: String = shape_ids[randi() % shape_ids.size()]
-			var rotation: int = randi() % 4
-			var local_cells: Array = tetromino_lib.SHAPES[shape_id][rotation]
+		while shapes_placed < SHAPES_PER_REGION:
+			var placed_this_attempt := false
+			for _attempt in range(80):
+				var shape_id: String = shape_ids[randi() % shape_ids.size()]
+				var rotation: int = randi() % 4
+				var local_cells: Array = tetromino_lib.SHAPES[shape_id][rotation]
 
-			var range_v: Array = _base_cell_range_in_region(local_cells, col_start, col_end)
-			var min_base_col: int = range_v[0]
-			var max_base_col: int = range_v[1]
-			var min_base_row: int = range_v[2]
-			var max_base_row: int = range_v[3]
-			if min_base_col > max_base_col or min_base_row > max_base_row:
-				continue
+				var range_v: Array = _base_cell_range_in_region(local_cells, col_start, col_end)
+				var min_base_col: int = range_v[0]
+				var max_base_col: int = range_v[1]
+				var min_base_row: int = range_v[2]
+				var max_base_row: int = range_v[3]
+				if min_base_col > max_base_col or min_base_row > max_base_row:
+					continue
 
-			var base_col := min_base_col + randi() % (max_base_col - min_base_col + 1)
-			var base_row := min_base_row + randi() % (max_base_row - min_base_row + 1)
-			var base_cell := Vector2i(base_col, base_row)
+				var base_col := min_base_col + randi() % (max_base_col - min_base_col + 1)
+				var base_row := min_base_row + randi() % (max_base_row - min_base_row + 1)
+				var base_cell := Vector2i(base_col, base_row)
 
-			if not can_place_piece(local_cells, base_cell):
-				continue
+				if not can_place_piece(local_cells, base_cell):
+					continue
 
-			for local in local_cells:
-				var offset: Vector2i = local
-				var cell: Vector2i = base_cell + offset
-				if cell_in_bounds(cell):
-					cells[cell.y][cell.x] = true
-					set_cell_color(cell, PREFILLED_TILE)
-			placed = true
-			break
+				for local in local_cells:
+					var offset: Vector2i = local
+					var cell: Vector2i = base_cell + offset
+					if cell_in_bounds(cell):
+						cells[cell.y][cell.x] = true
+						set_cell_color(cell, PREFILLED_TILE)
+				placed_this_attempt = true
+				shapes_placed += 1
+				break
+			if not placed_this_attempt:
+				break
 
 func cell_to_world(cell:Vector2i)->Vector2:
 	return to_global(Vector2(cell.x*TILE_SIZE+
