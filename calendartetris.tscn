@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://h3vuqnh2jtf3" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_l.png" id="8_xt0v1"]
 [ext_resource type="Texture2D" uid="uid://cubvjfydm27r6" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_j.png" id="9_sriha"]
 [ext_resource type="Texture2D" uid="uid://csu44dfogy51c" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_t.png" id="10_sriha"]
+[ext_resource type="Texture2D" uid="uid://bfofcsvh8v2vi" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_q_atlas.png" id="13_yv368"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
@@ -307,29 +308,13 @@ polygon = PackedVector2Array(-76.79498, 1.0090332, -27.567444, 0, -27.567505, -4
 [node name="spawn_slot_0" type="Node2D" parent="tetromino_lib" unique_id=1397780773]
 position = Vector2(200, 728)
 
-[node name="cal_border" type="Line2D" parent="." unique_id=1734831251]
-top_level = true
-position = Vector2(706, 280)
-points = PackedVector2Array(0, 596, 0, 0)
-width = 3.0
+[node name="quickshape" type="Node2D" parent="." unique_id=1553301594]
+position = Vector2(128, 365)
 
-[node name="cal_border2" type="Line2D" parent="." unique_id=938284024]
-top_level = true
-position = Vector2(956, 280)
-points = PackedVector2Array(0, 596, 0, 0)
-width = 3.0
-
-[node name="cal_border3" type="Line2D" parent="." unique_id=1507249782]
-top_level = true
-position = Vector2(1206, 280)
-points = PackedVector2Array(0, 596, 0, 0)
-width = 3.0
-
-[node name="cal_border4" type="Line2D" parent="." unique_id=1807989735]
-top_level = true
-position = Vector2(1200.067, 277.255)
-scale = Vector2(0.99214154, 1)
-points = PackedVector2Array(-750, 96, 258, 96)
+[node name="qshape_img" type="Sprite2D" parent="quickshape" unique_id=1530743556]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
 
 [node name="timescale" type="Node2D" parent="." unique_id=2095761498]
 
@@ -452,3 +437,29 @@ theme_override_font_sizes/font_size = 30
 text = "18"
 horizontal_alignment = 2
 autowrap_mode = 2
+
+[node name="borders" type="Node2D" parent="." unique_id=1502087538]
+
+[node name="cal_border" type="Line2D" parent="borders" unique_id=1734831251]
+top_level = true
+position = Vector2(706, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
+
+[node name="cal_border2" type="Line2D" parent="borders" unique_id=938284024]
+top_level = true
+position = Vector2(956, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
+
+[node name="cal_border3" type="Line2D" parent="borders" unique_id=1507249782]
+top_level = true
+position = Vector2(1206, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
+
+[node name="cal_border4" type="Line2D" parent="borders" unique_id=1807989735]
+top_level = true
+position = Vector2(1200.067, 277.255)
+scale = Vector2(0.99214154, 1)
+points = PackedVector2Array(-750, 96, 258, 96)
