@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://h3vuqnh2jtf3" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_l.png" id="8_xt0v1"]
 [ext_resource type="Texture2D" uid="uid://cubvjfydm27r6" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_j.png" id="9_sriha"]
 [ext_resource type="Texture2D" uid="uid://csu44dfogy51c" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_t.png" id="10_sriha"]
+[ext_resource type="Script" uid="uid://u7uf34hw715o" path="res://quickshapepack.gd" id="13_uq6hu"]
 [ext_resource type="Texture2D" uid="uid://bfofcsvh8v2vi" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_q_atlas.png" id="13_yv368"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
@@ -310,6 +311,7 @@ position = Vector2(200, 728)
 
 [node name="quickshapepack" type="Node2D" parent="." unique_id=1875822199]
 position = Vector2(-8, 8)
+script = ExtResource("13_uq6hu")
 
 [node name="quickshape" type="Node2D" parent="quickshapepack" unique_id=1553301594]
 position = Vector2(136, 365)

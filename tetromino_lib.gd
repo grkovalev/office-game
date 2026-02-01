@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var board = $"../grid_container"
 @onready var slots = [ $spawn_slot_0]
+@onready var quickshapepack = $"../quickshapepack"
+var quickshape_slots: Dictionary = {}
 
 @onready var TEMPLATE_SHAPES := {
 	"O": $shape_o_area,
@@ -12,6 +14,7 @@ extends Node2D
 	"J": $shape_j_area,
 	"T": $shape_t_area,
 }
+
 
 const TILE_SIZE := 50
 const SHAPES := {
@@ -135,14 +138,29 @@ func _start_drag() -> void:
 		if piece["placed"]:
 			continue
 
-		var area: Area2D = piece["area"]
-		var local_pos := area.to_local(mouse_pos)
-		var rect := Rect2(Vector2(-2 * TILE_SIZE, -2 * TILE_SIZE), Vector2(4 * TILE_SIZE, 4 * TILE_SIZE))
-		if rect.has_point(local_pos):
-			selected_slot = i
-			dragging = true
-			drag_offset = area.global_position - mouse_pos
-			break
+		if _is_quickshape_piece(piece):
+			var qs: Node2D = piece["quickshape"]
+			if not is_instance_valid(qs):
+				pieces[i] = null
+				quickshape_slots.erase(i)
+				continue
+			var dist := qs.global_position.distance_to(mouse_pos)
+			if dist < 40:
+				selected_slot = i
+				dragging = true
+				drag_offset = qs.global_position - mouse_pos
+				break
+		else:
+			var area: Area2D = piece["area"]
+			if not is_instance_valid(area):
+				continue
+			var local_pos := area.to_local(mouse_pos)
+			var rect := Rect2(Vector2(-2 * TILE_SIZE, -2 * TILE_SIZE), Vector2(4 * TILE_SIZE, 4 * TILE_SIZE))
+			if rect.has_point(local_pos):
+				selected_slot = i
+				dragging = true
+				drag_offset = area.global_position - mouse_pos
+				break
 
 
 func _update_drag() -> void:
@@ -152,18 +170,30 @@ func _update_drag() -> void:
 	if piece == null:
 		return
 
-	var area: Area2D = piece["area"]
 	var mouse_pos := get_global_mouse_position()
-	area.global_position = mouse_pos + drag_offset
+	if _is_quickshape_piece(piece):
+		var qs: Node2D = piece["quickshape"]
+		if is_instance_valid(qs):
+			qs.global_position = mouse_pos + drag_offset
+	else:
+		var area: Area2D = piece["area"]
+		if is_instance_valid(area):
+			area.global_position = mouse_pos + drag_offset
 
 
 func _finish_drag() -> void:
-	dragging = false
 	if selected_slot < 0:
+		dragging = false
 		return
 
-	_try_place_piece_on_board(selected_slot)
+	var piece = pieces[selected_slot]
+	if _is_quickshape_piece(piece):
+		_try_place_quickshape_on_board(selected_slot)
+	else:
+		_try_place_piece_on_board(selected_slot)
+
 	selected_slot = -1
+	dragging = false
 
 
 func _rotate_selected_piece() -> void:
@@ -171,6 +201,8 @@ func _rotate_selected_piece() -> void:
 		return
 	var piece = pieces[selected_slot]
 	if piece == null:
+		return
+	if _is_quickshape_piece(piece):
 		return
 
 	var shape_id: String = piece["shape_id"]
@@ -197,6 +229,31 @@ func get_rotated_pivot_offset(shape_id: String, rotation: int) -> Vector2:
 			return Vector2(base_offset.y, -base_offset.x)
 	return base_offset
 
+func _try_place_quickshape_on_board(slot_index: int) -> void:
+	var piece = pieces[slot_index]
+	if piece == null or not _is_quickshape_piece(piece):
+		return
+
+	var qs: Node2D = piece["quickshape"]
+	if not is_instance_valid(qs):
+		pieces[slot_index] = null
+		quickshape_slots.erase(slot_index)
+		return
+
+	var cell: Vector2i = board.world_to_cell(qs.global_position)
+	if not board.cell_in_bounds(cell):
+		qs.global_position = piece["original_pos"]
+		return
+	if board.is_cell_occupied(cell):
+		qs.global_position = piece["original_pos"]
+		return
+
+	board.place_quick_shape(cell)
+	qs.queue_free()
+	quickshape_slots.erase(slot_index)
+	pieces[slot_index] = null
+	spawn_piece(slot_index)
+
 func _try_place_piece_on_board(slot_index: int) -> void:
 	var piece = pieces[slot_index]
 	if piece == null:
@@ -214,3 +271,51 @@ func _try_place_piece_on_board(slot_index: int) -> void:
 		spawn_piece(slot_index)
 	else:
 		area.global_position = piece["original_pos"]
+
+func is_quickshape_assigned(qs: Node2D) -> bool:
+	for slot_i in quickshape_slots:
+		if quickshape_slots[slot_i] == qs:
+			return true
+	return false
+
+func assign_quickshape_to_slot(slot_index: int, qs: Node2D) -> void:
+	if slot_index < 0 or slot_index >= slots.size():
+		return
+	# Remove existing tetromino piece from slot
+	var old_piece = pieces[slot_index]
+	if old_piece != null:
+		var area: Area2D = old_piece["area"]
+		if is_instance_valid(area):
+			area.queue_free()
+		pieces[slot_index] = null
+	quickshape_slots[slot_index] = qs
+	_set_qshape_atlas(qs, 2)
+	qs.global_position = slots[slot_index].global_position
+	pieces[slot_index] = {
+		"shape_id": "Q",
+		"rotation": 0,
+		"area": null,
+		"quickshape": qs,
+		"slot": slot_index,
+		"placed": false,
+		"original_pos": qs.global_position,
+	}
+
+func _set_qshape_atlas(qs: Node2D, index: int) -> void:
+	var img: Sprite2D = qs.get_node_or_null("qshape_img")
+	if img == null:
+		return
+	match index:
+		0:
+			img.region_rect = Rect2(0, 0, 51, 51)
+		1:
+			img.region_rect = Rect2(51, 0, 51, 51)
+		2:
+			img.region_rect = Rect2(102, 0, 51, 51)
+		_:
+			img.region_rect = Rect2(0, 0, 51, 51)
+
+func _is_quickshape_piece(piece: Variant) -> bool:
+	if piece == null:
+		return false
+	return piece.get("quickshape", null) != null

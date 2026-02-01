@@ -60,6 +60,17 @@ func world_to_cell(world_pos: Vector2) -> Vector2i:
 func cell_in_bounds(cell: Vector2i) -> bool:
 	return cell.x >= 0 and cell.x < GRID_WIDTH and cell.y >= 0 and cell.y < GRID_HEIGHT
 
+func is_cell_occupied(cell: Vector2i) -> bool:
+	if not cell_in_bounds(cell):
+		return false
+	return cells[cell.y][cell.x]
+
+func place_quick_shape(cell: Vector2i) -> void:
+	if not cell_in_bounds(cell):
+		return
+	cells[cell.y][cell.x] = true
+	set_cell_color(cell, Color(0.769, 0.388, 0.0, 0.8))
+
 func clamp_base_cell_for_shape(local_cells: Array, base_cell: Vector2i) -> Vector2i:
 	var min_lx := 0
 	var max_lx := 0
@@ -118,7 +129,6 @@ func mark_cells_occupied(covered_cells: Array, color: Color) -> void:
 const PREFILLED_TILE := Color(0.0, 0.271, 0.471, 0.443)
 const COLUMNS_PER_REGION := 5
 
-## Returns [min_col, max_col, min_row, max_row] for base_cell so that base_cell + local stays in region and bounds.
 func _base_cell_range_in_region(local_cells: Array, col_start: int, col_end: int) -> Array:
 	var min_lx := 0
 	var max_lx := 0
