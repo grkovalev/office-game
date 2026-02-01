@@ -270,8 +270,13 @@ func get_cells_covered_by_piece(area: Area2D, threshold: float) -> Array:
 	return covered
 
 
+const TETROMINO_CELL_COUNT := 4  # piece must cover this many grid cells to count as placed
+
 func can_place_piece_by_collision(area: Area2D, threshold: float) -> bool:
 	var covered: Array = get_cells_covered_by_piece(area, threshold)
+	# Require piece to actually cover grid cells (reject drop outside grid or partial overlap)
+	if covered.is_empty() or covered.size() < TETROMINO_CELL_COUNT:
+		return false
 	for cell in covered:
 		var c: Vector2i = cell
 		if not cell_in_bounds(c):
