@@ -308,10 +308,53 @@ polygon = PackedVector2Array(-76.79498, 1.0090332, -27.567444, 0, -27.567505, -4
 [node name="spawn_slot_0" type="Node2D" parent="tetromino_lib" unique_id=1397780773]
 position = Vector2(200, 728)
 
-[node name="quickshape" type="Node2D" parent="." unique_id=1553301594]
-position = Vector2(128, 365)
+[node name="quickshapepack" type="Node2D" parent="." unique_id=1875822199]
+position = Vector2(-8, 8)
 
-[node name="qshape_img" type="Sprite2D" parent="quickshape" unique_id=1530743556]
+[node name="quickshape" type="Node2D" parent="quickshapepack" unique_id=1553301594]
+position = Vector2(136, 365)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape" unique_id=1530743556]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="quickshape2" type="Node2D" parent="quickshapepack" unique_id=669114111]
+position = Vector2(208, 365)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape2" unique_id=630627697]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="quickshape3" type="Node2D" parent="quickshapepack" unique_id=1479706139]
+position = Vector2(280, 365)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape3" unique_id=1650103411]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="quickshape4" type="Node2D" parent="quickshapepack" unique_id=1553664117]
+position = Vector2(136, 432)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape4" unique_id=644815235]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="quickshape5" type="Node2D" parent="quickshapepack" unique_id=71561657]
+position = Vector2(208, 432)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape5" unique_id=1250192509]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="quickshape6" type="Node2D" parent="quickshapepack" unique_id=448891436]
+position = Vector2(280, 432)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape6" unique_id=1233438144]
 texture = ExtResource("13_yv368")
 region_enabled = true
 region_rect = Rect2(0, 0, 51, 51)
