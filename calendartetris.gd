@@ -101,6 +101,7 @@ func _randomize_region_characters() -> void:
 		)
 const HOVER_ATLAS_COL := 0  # default: atlas column 0 (first column)
 const HOVER_ATLAS_COL_ACTIVE := 2  # hover on row 4/5: atlas column 2
+const HOVER_ATLAS_COL_ROW10 := 1  # hover on row 10: atlas column 1
 
 func _get_region_sprites_ordered() -> Array:
 	if calchars == null:
@@ -132,17 +133,24 @@ func _restore_all_region_characters_to_default() -> void:
 
 const HOVER_ROW_MIN := 3  # 0-based: rows 3–5 so row 4 and 5 both trigger (3 covers top of row 4)
 const HOVER_ROW_MAX := 5
+const HOVER_ROW_10 := 9  # 0-based: row 10 (last row)
 
 func _update_region_characters_for_hover(covered_cells: Array) -> void:
-	var regions_to_highlight: Dictionary = {}
+	# Per region: which atlas column to use (0 default, 1 row-10, 2 rows 4/5)
+	var regions_to_atlas_col: Dictionary = {}
 	for cell in covered_cells:
 		var c: Vector2i = cell
-		if c.y >= HOVER_ROW_MIN and c.y <= HOVER_ROW_MAX:
-			var region_index: int = c.x / COLUMNS_PER_REGION
-			regions_to_highlight[region_index] = true
+		var region_index: int = c.x / COLUMNS_PER_REGION
+		if c.y == HOVER_ROW_10:
+			regions_to_atlas_col[region_index] = HOVER_ATLAS_COL_ROW10
+		elif c.y >= HOVER_ROW_MIN and c.y <= HOVER_ROW_MAX:
+			# Only set if not already set to row-10 (row 10 takes precedence if we ever overlap)
+			if not regions_to_atlas_col.has(region_index):
+				regions_to_atlas_col[region_index] = HOVER_ATLAS_COL_ACTIVE
 	var sprites := _get_region_sprites_ordered()
 	for i in range(sprites.size()):
-		_set_region_sprite_atlas_column(i, HOVER_ATLAS_COL_ACTIVE if regions_to_highlight.has(i) else HOVER_ATLAS_COL)
+		var col: int = regions_to_atlas_col.get(i, HOVER_ATLAS_COL)
+		_set_region_sprite_atlas_column(i, col)
 
 func _process(_delta: float) -> void:
 	if calchars == null:
