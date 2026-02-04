@@ -15,6 +15,7 @@ const CHAR_TILE_H := 256
 
 var cells: Array = []
 var tile_nodes: Array = []
+var _region_default_atlas_row: Dictionary = {}
 
 func _ready() -> void:
 	randomize()
@@ -90,6 +91,7 @@ func _randomize_region_characters() -> void:
 		var row_idx: int = available_rows[i]
 		var col_idx: int = 0
 
+		_region_default_atlas_row[i] = row_idx
 		sprite.region_enabled = true
 		sprite.region_rect = Rect2(
 			col_idx * CHAR_TILE_W,
@@ -97,6 +99,60 @@ func _randomize_region_characters() -> void:
 			CHAR_TILE_W,
 			CHAR_TILE_H
 		)
+const HOVER_ATLAS_COL := 0  # default: atlas column 0 (first column)
+const HOVER_ATLAS_COL_ACTIVE := 2  # hover on row 4/5: atlas column 2
+
+func _get_region_sprites_ordered() -> Array:
+	if calchars == null:
+		return []
+	var sprites: Array = []
+	for child in calchars.get_children():
+		if child is Sprite2D:
+			sprites.append(child)
+	return sprites
+
+func _set_region_sprite_atlas_column(region_index: int, atlas_col: int) -> void:
+	var sprites := _get_region_sprites_ordered()
+	if region_index < 0 or region_index >= sprites.size():
+		return
+	var row: int = _region_default_atlas_row.get(region_index, 0)
+	var sprite: Sprite2D = sprites[region_index]
+	sprite.region_enabled = true
+	sprite.region_rect = Rect2(
+		atlas_col * CHAR_TILE_W,
+		row * CHAR_TILE_H,
+		CHAR_TILE_W,
+		CHAR_TILE_H
+	)
+
+func _restore_all_region_characters_to_default() -> void:
+	var sprites := _get_region_sprites_ordered()
+	for i in range(sprites.size()):
+		_set_region_sprite_atlas_column(i, HOVER_ATLAS_COL)
+
+func _update_region_characters_for_hover(covered_cells: Array) -> void:
+	var regions_to_highlight: Dictionary = {}
+	for cell in covered_cells:
+		var c: Vector2i = cell
+		if c.y == 4 or c.y == 5:
+			var region_index: int = c.x / COLUMNS_PER_REGION
+			regions_to_highlight[region_index] = true
+	var sprites := _get_region_sprites_ordered()
+	for i in range(sprites.size()):
+		_set_region_sprite_atlas_column(i, HOVER_ATLAS_COL_ACTIVE if regions_to_highlight.has(i) else HOVER_ATLAS_COL)
+
+func _process(_delta: float) -> void:
+	if calchars == null or tetromino_lib == null:
+		return
+	if tetromino_lib.dragging and tetromino_lib.selected_slot >= 0:
+		var piece = tetromino_lib.pieces[tetromino_lib.selected_slot]
+		if piece != null and not tetromino_lib._is_quickshape_piece(piece):
+			var area: Area2D = piece.get("area")
+			if is_instance_valid(area):
+				var covered := get_cells_covered_by_piece(area, PLACEMENT_COVERAGE_THRESHOLD)
+				_update_region_characters_for_hover(covered)
+				return
+	_restore_all_region_characters_to_default()
 
 func cell_in_bounds(cell: Vector2i) -> bool:
 	return cell.x >= 0 and cell.x < GRID_WIDTH and cell.y >= 0 and cell.y < GRID_HEIGHT
