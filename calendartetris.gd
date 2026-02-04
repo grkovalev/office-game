@@ -5,6 +5,8 @@ const GRID_HEIGHT := 10
 const TILE_SIZE   := 50
 
 @onready var tetromino_lib = $"../tetromino_lib"
+@onready var restartbtn: TextureButton = $"../restartbtn"
+@onready var quickshapepack = $"../quickshapepack"
 
 var cells: Array = []
 var tile_nodes: Array = []
@@ -13,6 +15,7 @@ func _ready() -> void:
 	_init_cells()
 	create_grid()
 	prefill_regions_with_random_shapes.call_deferred()
+	restartbtn.pressed.connect(_on_restartbtn_pressed)
 
 
 func _init_cells() -> void:
@@ -303,3 +306,19 @@ func place_piece_by_collision(area: Area2D, threshold: float) -> void:
 		if cell_in_bounds(c):
 			cells[c.y][c.x] = true
 			set_cell_color(c, Color(1.0, 0.502, 0.0, 0.718))
+
+func _on_restartbtn_pressed() -> void:
+	_restart_grid()
+
+
+func _restart_grid() -> void:
+	for child in get_children():
+		child.queue_free()
+
+	tile_nodes.clear()
+	_init_cells()
+	create_grid()
+	prefill_regions_with_random_shapes.call_deferred()
+
+	if is_instance_valid(quickshapepack):
+		quickshapepack.reset_quickshapes()

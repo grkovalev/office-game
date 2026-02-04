@@ -28,6 +28,15 @@ func _set_qshape_atlas(qs: Node2D, index: int) -> void:
 var dragging_quickshape: Node2D = null
 var drag_offset: Vector2 = Vector2.ZERO
 var quickshape_original_pos: Vector2 = Vector2.ZERO
+var _initial_positions: Array[Vector2] = []
+var _templates: Array[Node2D] = []
+
+func _ready() -> void:
+	_initial_positions.clear()
+	_templates.clear()
+	for qs in quickshapes:
+		_initial_positions.append(qs.position)
+		_templates.append(qs.duplicate())
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -98,3 +107,20 @@ func _is_over_spawn_slot(global_pos: Vector2) -> int:
 
 func _assign_quickshape_to_slot(slot_index: int, qs: Node2D) -> void:
 	tetromino_lib.assign_quickshape_to_slot(slot_index, qs)
+	
+func reset_quickshapes() -> void:
+	if tetromino_lib != null:
+		tetromino_lib.reset_quickshape_assignments()
+
+	for i in range(quickshapes.size()):
+		var qs: Node2D = quickshapes[i]
+		if not is_instance_valid(qs):
+			var template: Node2D = _templates[i]
+			if template != null:
+				qs = template.duplicate()
+				add_child(qs)
+				quickshapes[i] = qs
+
+		if is_instance_valid(qs):
+			qs.position = _initial_positions[i]
+			_set_qshape_atlas(qs, 0)

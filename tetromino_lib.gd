@@ -319,3 +319,17 @@ func _is_quickshape_piece(piece: Variant) -> bool:
 	if piece == null:
 		return false
 	return piece.get("quickshape", null) != null
+	
+func reset_quickshape_assignments() -> void:
+	quickshape_slots.clear()
+
+	for i in range(pieces.size()):
+		var piece = pieces[i]
+		if piece == null:
+			continue
+		if _is_quickshape_piece(piece):
+			pieces[i] = null
+
+	for i in range(slots.size()):
+		if pieces[i] == null:
+			spawn_piece(i)
