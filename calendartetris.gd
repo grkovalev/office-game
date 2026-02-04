@@ -3,18 +3,25 @@ extends Node2D
 const GRID_WIDTH  := 20
 const GRID_HEIGHT := 10
 const TILE_SIZE   := 50
+const CHAR_ATLAS_COLS := 3
+const CHAR_ATLAS_ROWS := 7
+const CHAR_TILE_W := 256
+const CHAR_TILE_H := 256
 
 @onready var tetromino_lib = $"../tetromino_lib"
 @onready var restartbtn: TextureButton = $"../restartbtn"
 @onready var quickshapepack = $"../quickshapepack"
+@onready var calchars: Node2D = $calchars
 
 var cells: Array = []
 var tile_nodes: Array = []
 
 func _ready() -> void:
+	randomize()
 	_init_cells()
 	create_grid()
 	prefill_regions_with_random_shapes.call_deferred()
+	_randomize_region_characters()
 	restartbtn.pressed.connect(_on_restartbtn_pressed)
 
 
@@ -59,6 +66,37 @@ func world_to_cell(world_pos: Vector2) -> Vector2i:
 	var col := int(floor(local_pos.x / TILE_SIZE))
 	var row := int(floor(local_pos.y / TILE_SIZE))
 	return Vector2i(col, row)
+
+func _randomize_region_characters() -> void:
+	if calchars == null:
+		return
+
+	# Collect all Sprite2D children under calchars (reg1_char, reg2_char, etc.)
+	var sprites: Array[Sprite2D] = []
+	for child in calchars.get_children():
+		if child is Sprite2D:
+			sprites.append(child)
+
+	if sprites.is_empty():
+		return
+
+	# First column only, rows 0..5; pick one per sprite, no duplicates
+	var available_rows: Array[int] = [0, 1, 2, 3, 4, 5]
+	available_rows.shuffle()
+
+	var count: int = min(sprites.size(), available_rows.size())
+	for i in range(count):
+		var sprite := sprites[i] as Sprite2D
+		var row_idx: int = available_rows[i]
+		var col_idx: int = 0
+
+		sprite.region_enabled = true
+		sprite.region_rect = Rect2(
+			col_idx * CHAR_TILE_W,
+			row_idx * CHAR_TILE_H,
+			CHAR_TILE_W,
+			CHAR_TILE_H
+		)
 
 func cell_in_bounds(cell: Vector2i) -> bool:
 	return cell.x >= 0 and cell.x < GRID_WIDTH and cell.y >= 0 and cell.y < GRID_HEIGHT
@@ -312,13 +350,18 @@ func _on_restartbtn_pressed() -> void:
 
 
 func _restart_grid() -> void:
-	for child in get_children():
-		child.queue_free()
-
+	# Only free grid tiles, not calchars (so region sprites stay and can be refreshed)
+	for row in tile_nodes:
+		for tile in row:
+			if is_instance_valid(tile):
+				tile.queue_free()
 	tile_nodes.clear()
+
 	_init_cells()
 	create_grid()
 	prefill_regions_with_random_shapes.call_deferred()
 
 	if is_instance_valid(quickshapepack):
 		quickshapepack.reset_quickshapes()
+
+	_randomize_region_characters()

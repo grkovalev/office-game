@@ -85,7 +85,7 @@ texture = SubResource("GradientTexture2D_ucthv")
 offset_left = 39.0
 offset_top = 256.0
 offset_right = 1481.0
-offset_bottom = 916.0
+offset_bottom = 943.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_ay14k")
@@ -155,9 +155,9 @@ texture = SubResource("GradientTexture2D_yv368")
 
 [node name="title" type="Label" parent="." unique_id=1520938463]
 offset_left = 80.0
-offset_top = 108.0
+offset_top = 62.0
 offset_right = 756.0
-offset_bottom = 177.0
+offset_bottom = 131.0
 theme_override_fonts/font = ExtResource("1_5l5t3")
 theme_override_font_sizes/font_size = 60
 text = "SCHEDULE A MEETING"
@@ -165,9 +165,9 @@ vertical_alignment = 1
 
 [node name="subtitle" type="Label" parent="." unique_id=890376252]
 offset_left = 776.0
-offset_top = 108.0
+offset_top = 62.0
 offset_right = 1438.0
-offset_bottom = 177.0
+offset_bottom = 131.0
 theme_override_fonts/font = ExtResource("2_jwokj")
 theme_override_font_sizes/font_size = 50
 text = "this tetris is not for the weak"
@@ -239,6 +239,37 @@ autowrap_mode = 2
 z_index = 4
 position = Vector2(456, 376)
 script = ExtResource("3_sriha")
+
+[node name="calchars" type="Node2D" parent="grid_container" unique_id=1730432560]
+position = Vector2(-456, -376)
+
+[node name="reg1_char" type="Sprite2D" parent="grid_container/calchars" unique_id=1280111830]
+position = Vector2(577, 321)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
+
+[node name="reg2_char" type="Sprite2D" parent="grid_container/calchars" unique_id=1050161660]
+position = Vector2(832, 322)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
+
+[node name="reg3_char" type="Sprite2D" parent="grid_container/calchars" unique_id=99780633]
+position = Vector2(1088, 322)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
+
+[node name="reg4_char" type="Sprite2D" parent="grid_container/calchars" unique_id=748199201]
+position = Vector2(1344, 322)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
 
 [node name="tetromino_lib" type="Node2D" parent="." unique_id=1185507880]
 script = ExtResource("4_ek6ok")
@@ -526,48 +557,19 @@ position = Vector2(1173.4513, 276.985)
 scale = Vector2(1.095331, 1)
 points = PackedVector2Array(-750, 96, 258, 96)
 
-[node name="calchars" type="Node2D" parent="." unique_id=1730432560]
-
-[node name="reg1_char" type="Sprite2D" parent="calchars" unique_id=1280111830]
-position = Vector2(577, 321)
-scale = Vector2(0.3232419, 0.3232419)
-texture = ExtResource("15_hhkx1")
-region_enabled = true
-region_rect = Rect2(56, 63, 256, 256)
-
-[node name="reg2_char" type="Sprite2D" parent="calchars" unique_id=1050161660]
-position = Vector2(832, 322)
-scale = Vector2(0.3232419, 0.3232419)
-texture = ExtResource("15_hhkx1")
-region_enabled = true
-region_rect = Rect2(56, 63, 256, 256)
-
-[node name="reg3_char" type="Sprite2D" parent="calchars" unique_id=99780633]
-position = Vector2(1088, 322)
-scale = Vector2(0.3232419, 0.3232419)
-texture = ExtResource("15_hhkx1")
-region_enabled = true
-region_rect = Rect2(56, 63, 256, 256)
-
-[node name="reg4_char" type="Sprite2D" parent="calchars" unique_id=748199201]
-position = Vector2(1344, 322)
-scale = Vector2(0.3232419, 0.3232419)
-texture = ExtResource("15_hhkx1")
-region_enabled = true
-region_rect = Rect2(56, 63, 256, 256)
-
 [node name="exitbtn" type="TextureButton" parent="." unique_id=192077378]
-offset_left = 1320.0
-offset_top = 1006.0
-offset_right = 1485.0
-offset_bottom = 1096.0
+visible = false
+offset_left = 121.0
+offset_top = 959.0
+offset_right = 286.0
+offset_bottom = 1049.0
 texture_normal = SubResource("AtlasTexture_67i7u")
 script = ExtResource("17_yy0dq")
 
 [node name="restartbtn" type="TextureButton" parent="." unique_id=1092848075]
-offset_left = 1320.0
-offset_top = 921.0
-offset_right = 1485.0
-offset_bottom = 1011.0
+offset_left = 1325.0
+offset_top = 155.0
+offset_right = 1490.0
+offset_bottom = 245.0
 texture_normal = SubResource("AtlasTexture_c63xa")
 script = ExtResource("17_yy0dq")
