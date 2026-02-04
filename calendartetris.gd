@@ -130,11 +130,14 @@ func _restore_all_region_characters_to_default() -> void:
 	for i in range(sprites.size()):
 		_set_region_sprite_atlas_column(i, HOVER_ATLAS_COL)
 
+const HOVER_ROW_MIN := 3  # 0-based: rows 3–5 so row 4 and 5 both trigger (3 covers top of row 4)
+const HOVER_ROW_MAX := 5
+
 func _update_region_characters_for_hover(covered_cells: Array) -> void:
 	var regions_to_highlight: Dictionary = {}
 	for cell in covered_cells:
 		var c: Vector2i = cell
-		if c.y == 4 or c.y == 5:
+		if c.y >= HOVER_ROW_MIN and c.y <= HOVER_ROW_MAX:
 			var region_index: int = c.x / COLUMNS_PER_REGION
 			regions_to_highlight[region_index] = true
 	var sprites := _get_region_sprites_ordered()
@@ -142,16 +145,37 @@ func _update_region_characters_for_hover(covered_cells: Array) -> void:
 		_set_region_sprite_atlas_column(i, HOVER_ATLAS_COL_ACTIVE if regions_to_highlight.has(i) else HOVER_ATLAS_COL)
 
 func _process(_delta: float) -> void:
-	if calchars == null or tetromino_lib == null:
+	if calchars == null:
 		return
-	if tetromino_lib.dragging and tetromino_lib.selected_slot >= 0:
+	# Quickshapepack: unassigned quickshape being dragged from "MAKE IT QUICK"
+	if quickshapepack != null and is_instance_valid(quickshapepack.dragging_quickshape):
+		var cell := world_to_cell(quickshapepack.dragging_quickshape.global_position)
+		if cell_in_bounds(cell):
+			_update_region_characters_for_hover([cell])
+		else:
+			_restore_all_region_characters_to_default()
+		return
+	# Tetromino_lib: piece from slot (tetromino Area2D or assigned quickshape)
+	if tetromino_lib != null and tetromino_lib.dragging and tetromino_lib.selected_slot >= 0:
 		var piece = tetromino_lib.pieces[tetromino_lib.selected_slot]
-		if piece != null and not tetromino_lib._is_quickshape_piece(piece):
-			var area: Area2D = piece.get("area")
-			if is_instance_valid(area):
-				var covered := get_cells_covered_by_piece(area, PLACEMENT_COVERAGE_THRESHOLD)
-				_update_region_characters_for_hover(covered)
+		if piece != null:
+			if tetromino_lib._is_quickshape_piece(piece):
+				var qs: Node2D = piece.get("quickshape")
+				if is_instance_valid(qs):
+					var cell := world_to_cell(qs.global_position)
+					if cell_in_bounds(cell):
+						_update_region_characters_for_hover([cell])
+					else:
+						_restore_all_region_characters_to_default()
+				else:
+					_restore_all_region_characters_to_default()
 				return
+			else:
+				var area: Area2D = piece.get("area")
+				if is_instance_valid(area):
+					var covered := get_cells_covered_by_piece(area, PLACEMENT_COVERAGE_THRESHOLD)
+					_update_region_characters_for_hover(covered)
+					return
 	_restore_all_region_characters_to_default()
 
 func cell_in_bounds(cell: Vector2i) -> bool:
