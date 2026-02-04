@@ -15,6 +15,7 @@ const CHAR_TILE_H := 256
 
 var cells: Array = []
 var tile_nodes: Array = []
+var cell_colors: Array = []  # [y][x] = Color or null, for neighbor-avoiding color pick
 var _region_default_atlas_row: Dictionary = {}
 
 func _ready() -> void:
@@ -28,11 +29,15 @@ func _ready() -> void:
 
 func _init_cells() -> void:
 	cells.clear()
+	cell_colors.clear()
 	for y in range(GRID_HEIGHT):
 		var row: Array = []
+		var color_row: Array = []
 		for x in range(GRID_WIDTH):
 			row.append(false)
+			color_row.append(null)
 		cells.append(row)
+		cell_colors.append(color_row)
 
 
 func create_grid() -> void:
@@ -200,8 +205,10 @@ func is_cell_occupied(cell: Vector2i) -> bool:
 func place_quick_shape(cell: Vector2i) -> void:
 	if not cell_in_bounds(cell):
 		return
+	var neighbor_colors := _get_neighbor_colors([cell])
+	var color: Color = _pick_color_avoiding(neighbor_colors)
 	cells[cell.y][cell.x] = true
-	set_cell_color(cell, Color(0.769, 0.388, 0.0, 0.8))
+	set_cell_color(cell, color)
 
 func clamp_base_cell_for_shape(local_cells: Array, base_cell: Vector2i) -> Vector2i:
 	var min_lx := 0
@@ -236,21 +243,69 @@ func can_place_piece(local_cells: Array, base_cell: Vector2i) -> bool:
 
 
 func place_piece(local_cells: Array, base_cell: Vector2i, shape_id: String) -> void:
+	var placed_cells: Array = []
 	for local in local_cells:
 		var offset: Vector2i = local
 		var cell: Vector2i = base_cell + offset
 		if cell_in_bounds(cell):
-			cells[cell.y][cell.x] = true
-			set_cell_color(cell, Color(1.0, 0.502, 0.0, 0.792))
+			placed_cells.append(cell)
+	var neighbor_colors := _get_neighbor_colors(placed_cells)
+	var color: Color = _pick_color_avoiding(neighbor_colors)
+	for cell in placed_cells:
+		var c: Vector2i = cell
+		if cell_in_bounds(c):
+			cells[c.y][c.x] = true
+			set_cell_color(c, color)
 			
 func set_cell_color(cell: Vector2i, color: Color) -> void:
 	if not cell_in_bounds(cell):
 		return
+	cell_colors[cell.y][cell.x] = color
 	var tile: Panel = tile_nodes[cell.y][cell.x]
 	var stylebox: StyleBoxFlat = tile.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
 	stylebox.bg_color = color
 	tile.add_theme_stylebox_override("panel", stylebox)
-	
+
+# Returns distinct colors of cells that are 4-adjacent to any of the given cells
+func _get_neighbor_colors(placed_cells: Array) -> Array:
+	var colors: Array = []
+	var seen: Dictionary = {}
+	for cell in placed_cells:
+		var c: Vector2i = cell
+		for dx in [ -1, 1 ]:
+			var nx: int = c.x + dx
+			if nx >= 0 and nx < GRID_WIDTH:
+				var col = cell_colors[c.y][nx]
+				if col != null:
+					var k: String = col.to_html(false)
+					if not seen.has(k):
+						seen[k] = true
+						colors.append(col)
+		for dy in [ -1, 1 ]:
+			var ny: int = c.y + dy
+			if ny >= 0 and ny < GRID_HEIGHT:
+				var col = cell_colors[ny][c.x]
+				if col != null:
+					var k: String = col.to_html(false)
+					if not seen.has(k):
+						seen[k] = true
+						colors.append(col)
+	return colors
+
+func _pick_color_avoiding(neighbor_colors: Array) -> Color:
+	var candidates: Array = []
+	for atlas_color in COLOR_ATLAS:
+		var ok := true
+		for n in neighbor_colors:
+			if atlas_color.is_equal_approx(n):
+				ok = false
+				break
+		if ok:
+			candidates.append(atlas_color)
+	if candidates.is_empty():
+		return COLOR_ATLAS[0]
+	return candidates[randi() % candidates.size()]
+
 func mark_cells_occupied(covered_cells: Array, color: Color) -> void:
 	for cell in covered_cells:
 		var c: Vector2i = cell
@@ -258,8 +313,21 @@ func mark_cells_occupied(covered_cells: Array, color: Color) -> void:
 			cells[c.y][c.x] = true
 			set_cell_color(c, color)
 
-const PREFILLED_TILE := Color(0.0, 0.271, 0.471, 0.443)
+const PREFILLED_TILE := Color(0.365, 0.098, 0.118, 1.0)
 const COLUMNS_PER_REGION := 5
+
+# Color atlas for placed tiles; same color is never picked for adjacent cells
+const COLOR_ATLAS: Array[Color] = [
+	Color(0.639, 0.322, 0.0, 1.0),
+	Color(0.8, 0.4, 0.0, 1.0), 
+	Color(0.949, 0.475, 0.0, 1.0), 
+	Color(1.0, 0.584, 0.0, 1.0),
+	Color(1.0, 0.671, 0.251, 1.0),
+	Color(1.0, 0.761, 0.502, 1.0),
+	Color(1.0, 0.847, 0.749, 1.0),
+]
+# Prefill count per region = PREFILLS_BY_ATLAS_ROW[atlas_row assigned to regN_char]. Index = atlas row 0..5.
+const PREFILLS_BY_ATLAS_ROW: Array[int] = [5, 3, 4, 2, 3, 1]
 
 func _base_cell_range_in_region(local_cells: Array, col_start: int, col_end: int) -> Array:
 	var min_lx := 0
@@ -286,14 +354,15 @@ func prefill_regions_with_random_shapes() -> void:
 		return
 	await get_tree().process_frame
 
-	const SHAPES_PER_REGION := 2
 	var num_regions := GRID_WIDTH / COLUMNS_PER_REGION
 	for region_index in range(num_regions):
+		var atlas_row: int = _region_default_atlas_row.get(region_index, 0)
+		var shapes_target: int = PREFILLS_BY_ATLAS_ROW[atlas_row] if atlas_row < PREFILLS_BY_ATLAS_ROW.size() else 0
 		var col_start := region_index * COLUMNS_PER_REGION
 		var col_end := col_start + COLUMNS_PER_REGION - 1
 		var shapes_placed := 0
 
-		while shapes_placed < SHAPES_PER_REGION:
+		while shapes_placed < shapes_target:
 			var placed_this_attempt := false
 			for _attempt in range(80):
 				var shape_id: String = shape_ids[randi() % shape_ids.size()]
@@ -430,11 +499,18 @@ func can_place_piece_by_collision(area: Area2D, threshold: float) -> bool:
 
 func place_piece_by_collision(area: Area2D, threshold: float) -> void:
 	var covered: Array = get_cells_covered_by_piece(area, threshold)
+	var placed_cells: Array = []
 	for cell in covered:
 		var c: Vector2i = cell
 		if cell_in_bounds(c):
-			cells[c.y][c.x] = true
-			set_cell_color(c, Color(1.0, 0.502, 0.0, 0.718))
+			placed_cells.append(c)
+	var neighbor_colors := _get_neighbor_colors(placed_cells)
+	var color: Color = _pick_color_avoiding(neighbor_colors)
+	for c in placed_cells:
+		var cell: Vector2i = c
+		if cell_in_bounds(cell):
+			cells[cell.y][cell.x] = true
+			set_cell_color(cell, color)
 
 func _on_restartbtn_pressed() -> void:
 	_restart_grid()
