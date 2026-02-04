@@ -108,6 +108,13 @@ func spawn_piece(slot_index: int) -> void:
 	pieces[slot_index] = piece
 
 
+func _input(event: InputEvent) -> void:
+	# Consume R/Space when dragging so restart button (or other focused control) doesn't get them
+	if event is InputEventKey and event.pressed and not event.is_echo():
+		if dragging and selected_slot != -1 and (event.keycode == KEY_R or event.keycode == KEY_SPACE):
+			_rotate_selected_piece()
+			get_viewport().set_input_as_handled()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
@@ -125,13 +132,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion:
 		if dragging and selected_slot != -1:
 			_update_drag()
-
-	elif event is InputEventKey and event.pressed and not event.is_echo():
-		# Keyboard rotate while dragging (for trackpad users who can't right-click mid-drag)
-		if dragging and selected_slot != -1:
-			if event.keycode == KEY_R or event.keycode == KEY_SPACE:
-				_rotate_selected_piece()
-				get_viewport().set_input_as_handled()
 
 
 func _start_drag() -> void:
