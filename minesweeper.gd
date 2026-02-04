@@ -72,8 +72,8 @@ func _on_button_hover(btn: TileTemplateButton):
 func _on_button_gui_input(event: InputEvent, btn: TileTemplateButton) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		# macOS trackpad: Control+left click is secondary click
-		var is_right_click := event.button_index == MOUSE_BUTTON_RIGHT or (event.button_index == MOUSE_BUTTON_LEFT and event.ctrl_pressed)
-		var is_left_click := event.button_index == MOUSE_BUTTON_LEFT and not event.ctrl_pressed
+		var is_right_click: bool = event.button_index == MOUSE_BUTTON_RIGHT or (event.button_index == MOUSE_BUTTON_LEFT and event.ctrl_pressed)
+		var is_left_click: bool = event.button_index == MOUSE_BUTTON_LEFT and not event.ctrl_pressed
 		if is_right_click:
 			_on_right_click(btn)
 			if gg:

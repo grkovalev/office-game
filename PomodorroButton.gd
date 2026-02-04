@@ -37,7 +37,7 @@ func _ready() -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		var is_right_click := event.button_index == MouseButton.MOUSE_BUTTON_RIGHT or (event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.ctrl_pressed)
+		var is_right_click: bool = event.button_index == MouseButton.MOUSE_BUTTON_RIGHT or (event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.ctrl_pressed)
 		if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and not event.ctrl_pressed:
 			handle_left_click()
 		elif is_right_click:
