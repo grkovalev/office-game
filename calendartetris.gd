@@ -137,9 +137,12 @@ const HOVER_ROW_10 := 9  # 0-based: row 10 (last row)
 
 func _update_region_characters_for_hover(covered_cells: Array) -> void:
 	# Per region: which atlas column to use (0 default, 1 row-10, 2 rows 4/5)
+	# Only consider unoccupied cells — hovering over filled tiles does not change the sprite
 	var regions_to_atlas_col: Dictionary = {}
 	for cell in covered_cells:
 		var c: Vector2i = cell
+		if is_cell_occupied(c):
+			continue
 		var region_index: int = c.x / COLUMNS_PER_REGION
 		if c.y == HOVER_ROW_10:
 			regions_to_atlas_col[region_index] = HOVER_ATLAS_COL_ROW10
