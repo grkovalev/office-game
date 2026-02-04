@@ -112,19 +112,26 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
 
-		if mb.button_index == MOUSE_BUTTON_LEFT:
+		if mb.button_index == MOUSE_BUTTON_LEFT and not mb.ctrl_pressed:
 			if mb.pressed:
 				_start_drag()
 			else:
 				if dragging and selected_slot != -1:
 					_finish_drag()
-		elif mb.button_index == MOUSE_BUTTON_RIGHT and mb.pressed:
+		elif (mb.button_index == MOUSE_BUTTON_RIGHT or (mb.button_index == MOUSE_BUTTON_LEFT and mb.ctrl_pressed)) and mb.pressed:
 			if dragging and selected_slot != -1:
 				_rotate_selected_piece()
 
 	elif event is InputEventMouseMotion:
 		if dragging and selected_slot != -1:
 			_update_drag()
+
+	elif event is InputEventKey and event.pressed and not event.is_echo():
+		# Keyboard rotate while dragging (for trackpad users who can't right-click mid-drag)
+		if dragging and selected_slot != -1:
+			if event.keycode == KEY_R or event.keycode == KEY_SPACE:
+				_rotate_selected_piece()
+				get_viewport().set_input_as_handled()
 
 
 func _start_drag() -> void:

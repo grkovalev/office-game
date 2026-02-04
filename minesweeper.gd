@@ -71,17 +71,19 @@ func _on_button_hover(btn: TileTemplateButton):
 
 func _on_button_gui_input(event: InputEvent, btn: TileTemplateButton) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
-		match event.button_index:
-			MOUSE_BUTTON_LEFT:
-				if gg:
-					_new_game()
-					return
-				_on_left_click(btn)
-			MOUSE_BUTTON_RIGHT:
-				_on_right_click(btn)
-				if gg:
-					_new_game()
-					return
+		# macOS trackpad: Control+left click is secondary click
+		var is_right_click := event.button_index == MOUSE_BUTTON_RIGHT or (event.button_index == MOUSE_BUTTON_LEFT and event.ctrl_pressed)
+		var is_left_click := event.button_index == MOUSE_BUTTON_LEFT and not event.ctrl_pressed
+		if is_right_click:
+			_on_right_click(btn)
+			if gg:
+				_new_game()
+				return
+		elif is_left_click:
+			if gg:
+				_new_game()
+				return
+			_on_left_click(btn)
 func _on_right_click(btn: TileTemplateButton) -> void:
 	if gg:
 		return
