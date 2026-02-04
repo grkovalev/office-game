@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://csu44dfogy51c" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_t.png" id="10_sriha"]
 [ext_resource type="Script" uid="uid://u7uf34hw715o" path="res://quickshapepack.gd" id="13_uq6hu"]
 [ext_resource type="Texture2D" uid="uid://bfofcsvh8v2vi" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_q_atlas.png" id="13_yv368"]
+[ext_resource type="Texture2D" uid="uid://cymohk4ylkana" path="res://ui_buttons/calendartetris/atlas_tetrischar.png" id="15_hhkx1"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
@@ -90,8 +91,8 @@ texture = SubResource("GradientTexture2D_4w1so")
 
 [node name="calendar_ui3" type="TextureRect" parent="." unique_id=969118720]
 offset_left = 352.0
-offset_top = 280.0
-offset_right = 440.0
+offset_top = 368.0
+offset_right = 456.0
 offset_bottom = 876.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -108,7 +109,7 @@ texture = SubResource("GradientTexture2D_4w1so")
 
 [node name="01_secpers" type="TextureRect" parent="." unique_id=811110673]
 offset_left = 456.0
-offset_top = 280.0
+offset_top = 373.0
 offset_right = 706.0
 offset_bottom = 876.0
 size_flags_horizontal = 4
@@ -117,7 +118,7 @@ texture = SubResource("GradientTexture2D_063xu")
 
 [node name="02_secpers" type="TextureRect" parent="." unique_id=458442044]
 offset_left = 706.0
-offset_top = 280.0
+offset_top = 368.0
 offset_right = 956.0
 offset_bottom = 876.0
 size_flags_horizontal = 4
@@ -126,7 +127,7 @@ texture = SubResource("GradientTexture2D_xt0v1")
 
 [node name="03_secpers" type="TextureRect" parent="." unique_id=2063164081]
 offset_left = 956.0
-offset_top = 280.0
+offset_top = 373.0
 offset_right = 1206.0
 offset_bottom = 876.0
 size_flags_horizontal = 4
@@ -135,7 +136,7 @@ texture = SubResource("GradientTexture2D_ek6ok")
 
 [node name="04_secpers" type="TextureRect" parent="." unique_id=2038633763]
 offset_left = 1206.0
-offset_top = 280.0
+offset_top = 368.0
 offset_right = 1456.0
 offset_bottom = 876.0
 size_flags_horizontal = 4
@@ -491,6 +492,12 @@ position = Vector2(706, 280)
 points = PackedVector2Array(0, 596, 0, 0)
 width = 3.0
 
+[node name="cal_border5" type="Line2D" parent="borders" unique_id=837515707]
+top_level = true
+position = Vector2(454.285, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
+
 [node name="cal_border2" type="Line2D" parent="borders" unique_id=938284024]
 top_level = true
 position = Vector2(956, 280)
@@ -505,6 +512,36 @@ width = 3.0
 
 [node name="cal_border4" type="Line2D" parent="borders" unique_id=1807989735]
 top_level = true
-position = Vector2(1200.067, 277.255)
-scale = Vector2(0.99214154, 1)
+position = Vector2(1173.4513, 276.985)
+scale = Vector2(1.095331, 1)
 points = PackedVector2Array(-750, 96, 258, 96)
+
+[node name="calchars" type="Node2D" parent="." unique_id=1730432560]
+
+[node name="reg1_char" type="Sprite2D" parent="calchars" unique_id=1280111830]
+position = Vector2(577, 321)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(56, 63, 256, 256)
+
+[node name="reg2_char" type="Sprite2D" parent="calchars" unique_id=1050161660]
+position = Vector2(832, 322)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(56, 63, 256, 256)
+
+[node name="reg3_char" type="Sprite2D" parent="calchars" unique_id=99780633]
+position = Vector2(1088, 322)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(56, 63, 256, 256)
+
+[node name="reg4_char" type="Sprite2D" parent="calchars" unique_id=748199201]
+position = Vector2(1344, 322)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(56, 63, 256, 256)
