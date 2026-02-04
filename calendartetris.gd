@@ -20,6 +20,11 @@ var _region_default_atlas_row: Dictionary = {}
 
 func _ready() -> void:
 	randomize()
+	# Draw pieces above the grid (grid_container has z_index 4) so hovering/dragged pieces are always on top
+	if tetromino_lib != null:
+		tetromino_lib.z_index = 10
+	if quickshapepack != null:
+		quickshapepack.z_index = 10
 	_init_cells()
 	create_grid()
 	prefill_regions_with_random_shapes.call_deferred()
@@ -190,6 +195,8 @@ func _process(_delta: float) -> void:
 				var area: Area2D = piece.get("area")
 				if is_instance_valid(area):
 					var covered := get_cells_covered_by_piece(area, PLACEMENT_COVERAGE_THRESHOLD)
+					#opacity when hovering over the grid, full opacity otherwise
+					area.modulate = Color(1.0, 1.0, 1.0, 0.9 if covered.size() > 0 else 1.0)
 					_update_region_characters_for_hover(covered)
 					return
 	_restore_all_region_characters_to_default()
@@ -313,7 +320,7 @@ func mark_cells_occupied(covered_cells: Array, color: Color) -> void:
 			cells[c.y][c.x] = true
 			set_cell_color(c, color)
 
-const PREFILLED_TILE := Color(0.365, 0.098, 0.118, 1.0)
+const PREFILLED_TILE := Color(0.053, 0.185, 0.485, 0.7)
 const COLUMNS_PER_REGION := 5
 
 # Color atlas for placed tiles; same color is never picked for adjacent cells

@@ -271,6 +271,7 @@ func _try_place_piece_on_board(slot_index: int) -> void:
 		spawn_piece(slot_index)
 	else:
 		area.global_position = piece["original_pos"]
+		area.modulate = Color(1.0, 1.0, 1.0, 1.0)  # restore full opacity when returning to slot
 
 func is_quickshape_assigned(qs: Node2D) -> bool:
 	for slot_i in quickshape_slots:
