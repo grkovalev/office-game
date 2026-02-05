@@ -11,6 +11,7 @@
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="9_iy517"]
 [ext_resource type="Texture2D" uid="uid://dktem4hvo45wn" path="res://ui_buttons/menugamepick/bookmarkbtn.png" id="10_kjn7q"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="11_vy2nc"]
+[ext_resource type="Texture2D" uid="uid://cgc2ig4irfg0b" path="res://ui_buttons/menugamepick/ghostbtn.png" id="12_vy2nc"]
 
 [sub_resource type="Gradient" id="Gradient_mxn5k"]
 colors = PackedColorArray(0.5897706, 0.686903, 0.71425915, 1, 0.44313726, 0.5411765, 0.5686275, 1)
@@ -138,3 +139,11 @@ theme_override_fonts/font = ExtResource("8_vamrj")
 theme_override_font_sizes/font_size = 25
 text = "schedule meetings"
 vertical_alignment = 1
+
+[node name="exitbtn" type="TextureButton" parent="." unique_id=1818713821]
+offset_left = 85.0
+offset_top = 974.0
+offset_right = 250.0
+offset_bottom = 1064.0
+texture_normal = ExtResource("12_vy2nc")
+script = ExtResource("11_vy2nc")
