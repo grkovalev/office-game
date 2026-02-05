@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://biwlhvk1ht1dn" path="res://ui_buttons/menugamepick/laptopcol_anim/0024.png" id="7_qnkh6"]
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="8_vamrj"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="9_iy517"]
+[ext_resource type="Texture2D" uid="uid://dktem4hvo45wn" path="res://ui_buttons/menugamepick/bookmarkbtn.png" id="10_kjn7q"]
+[ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="11_vy2nc"]
 
 [sub_resource type="Gradient" id="Gradient_mxn5k"]
 colors = PackedColorArray(0.5897706, 0.686903, 0.71425915, 1, 0.44313726, 0.5411765, 0.5686275, 1)
@@ -48,8 +50,10 @@ animations = [{
 [node name="main_menugamepick" type="Node2D" unique_id=527487234]
 
 [node name="bg_color" type="TextureRect" parent="." unique_id=902250154]
-offset_right = 1504.0
-offset_bottom = 1105.0
+offset_left = -15.0
+offset_top = -26.0
+offset_right = 1521.0
+offset_bottom = 1113.0
 texture = SubResource("GradientTexture2D_po4gl")
 
 [node name="laptopcol" type="AnimatedSprite2D" parent="." unique_id=1650086833]
@@ -73,7 +77,7 @@ vertical_alignment = 1
 [node name="subtitle" type="Label" parent="." unique_id=151072971]
 offset_left = 81.0
 offset_top = 254.0
-offset_right = 743.0
+offset_right = 827.0
 offset_bottom = 359.0
 theme_override_fonts/font = ExtResource("9_iy517")
 theme_override_font_sizes/font_size = 50
@@ -81,24 +85,54 @@ text = "select the task from the to-do list to help with"
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="minesweeper_text" type="Label" parent="." unique_id=971321631]
-offset_left = 675.4248
-offset_top = 584.8474
-offset_right = 911.0617
-offset_bottom = 632.801
-rotation = -0.15852994
+[node name="01_task" type="Node2D" parent="." unique_id=82774085]
+position = Vector2(85, 434)
+
+[node name="minesweeper_btn" type="Node2D" parent="01_task" unique_id=1638054596]
+position = Vector2(547, 160)
+scale = Vector2(0.08, 0.08)
+
+[node name="flagbtn" type="TextureButton" parent="01_task/minesweeper_btn" unique_id=685274804]
+offset_right = 394.0
+offset_bottom = 220.0
+texture_normal = ExtResource("10_kjn7q")
+script = ExtResource("11_vy2nc")
+
+[node name="textctrl" type="Node2D" parent="01_task" unique_id=1151377272]
+position = Vector2(594, 139)
+rotation = -0.17453294
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="minesweeper_text" type="Label" parent="01_task/textctrl" unique_id=1042095172]
+offset_right = 249.0
+offset_bottom = 71.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("8_vamrj")
 theme_override_font_sizes/font_size = 25
 text = "sort out work chats"
 vertical_alignment = 1
 
-[node name="tetris_text" type="Label" parent="." unique_id=1152727533]
-offset_left = 701.0
-offset_top = 743.00006
-offset_right = 1070.0
-offset_bottom = 814.00006
-rotation = -0.15852994
+[node name="02_task" type="Node2D" parent="." unique_id=497892029]
+position = Vector2(108, 606)
+
+[node name="tetris_btn" type="Node2D" parent="02_task" unique_id=86807584]
+position = Vector2(547, 160)
+scale = Vector2(0.08, 0.08)
+
+[node name="flagbtn" type="TextureButton" parent="02_task/tetris_btn" unique_id=697841277]
+offset_right = 394.0
+offset_bottom = 220.0
+texture_normal = ExtResource("10_kjn7q")
+script = ExtResource("11_vy2nc")
+
+[node name="textctrl" type="Node2D" parent="02_task" unique_id=1474758788]
+position = Vector2(594, 139)
+rotation = -0.17453294
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="tetris_text" type="Label" parent="02_task/textctrl" unique_id=1452558463]
+offset_right = 249.0
+offset_bottom = 71.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("8_vamrj")
 theme_override_font_sizes/font_size = 25
