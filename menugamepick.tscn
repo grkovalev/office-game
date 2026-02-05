@@ -95,7 +95,7 @@ position = Vector2(85, 434)
 position = Vector2(547, 160)
 scale = Vector2(0.08, 0.08)
 
-[node name="flagbtn" type="TextureButton" parent="01_task/minesweeper_btn" unique_id=685274804]
+[node name="01flagbtn" type="TextureButton" parent="01_task/minesweeper_btn" unique_id=685274804]
 offset_right = 394.0
 offset_bottom = 220.0
 texture_normal = ExtResource("10_kjn7q")
@@ -122,9 +122,9 @@ position = Vector2(108, 606)
 position = Vector2(547, 160)
 scale = Vector2(0.08, 0.08)
 
-[node name="flagbtn" type="TextureButton" parent="02_task/tetris_btn" unique_id=697841277]
-offset_right = 394.0
-offset_bottom = 220.0
+[node name="02flagbtn" type="TextureButton" parent="02_task/tetris_btn" unique_id=697841277]
+offset_right = 666.0
+offset_bottom = 465.0
 texture_normal = ExtResource("10_kjn7q")
 script = ExtResource("11_vy2nc")
 
