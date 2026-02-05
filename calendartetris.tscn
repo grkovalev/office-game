@@ -15,8 +15,11 @@
 [ext_resource type="Script" uid="uid://u7uf34hw715o" path="res://quickshapepack.gd" id="13_uq6hu"]
 [ext_resource type="Texture2D" uid="uid://bfofcsvh8v2vi" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_q_atlas.png" id="13_yv368"]
 [ext_resource type="Texture2D" uid="uid://cymohk4ylkana" path="res://ui_buttons/calendartetris/atlas_tetrischar.png" id="15_hhkx1"]
+[ext_resource type="Texture2D" uid="uid://pi0b741iy6dg" path="res://ui_buttons/calendartetris/meetings/1rowmeeting.png" id="16_c63xa"]
 [ext_resource type="Texture2D" uid="uid://c6s7i80ilubn4" path="res://ui_buttons/calendartetris/tetris_ui_atlas.png" id="16_ypi33"]
+[ext_resource type="Texture2D" uid="uid://cfk1bg1sdxffq" path="res://ui_buttons/calendartetris/meetings/2rowmeeting.png" id="17_kt4bn"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="17_yy0dq"]
+[ext_resource type="Texture2D" uid="uid://6wynh3qdhkl3" path="res://ui_buttons/calendartetris/meetings/3rowmeeting.png" id="18_w0kg2"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
@@ -402,6 +405,18 @@ position = Vector2(280, 432)
 texture = ExtResource("13_yv368")
 region_enabled = true
 region_rect = Rect2(0, 0, 51, 51)
+
+[node name="meeting_lib" type="Node2D" parent="." unique_id=127807202]
+position = Vector2(-631, 536)
+
+[node name="1rowmeeting" type="Sprite2D" parent="meeting_lib" unique_id=1404232816]
+texture = ExtResource("16_c63xa")
+
+[node name="2rowmeeting" type="Sprite2D" parent="meeting_lib" unique_id=1062957630]
+texture = ExtResource("17_kt4bn")
+
+[node name="3rowmeeting" type="Sprite2D" parent="meeting_lib" unique_id=1404297883]
+texture = ExtResource("18_w0kg2")
 
 [node name="timescale" type="Node2D" parent="." unique_id=2095761498]
 
