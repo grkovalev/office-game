@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bk08lfcueqr7m"]
+[gd_scene format=3 uid="uid://bk08lfcueqr7m"]
 
 [ext_resource type="Script" uid="uid://dbrimv525bas6" path="res://main.gd" id="1_sy5k4"]
 [ext_resource type="Texture2D" uid="uid://cfg1btb3xrrqu" path="res://button_help.png" id="2_e2u21"]
@@ -103,18 +103,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="main" type="Node2D"]
+[node name="main" type="Node2D" unique_id=1271320692]
 position = Vector2(-416, 512)
 script = ExtResource("1_sy5k4")
 
-[node name="anim_idlescreen" type="AnimatedSprite2D" parent="."]
+[node name="anim_idlescreen" type="AnimatedSprite2D" parent="." unique_id=1451927943]
 texture_repeat = 2
 position = Vector2(1616, 216)
 sprite_frames = SubResource("SpriteFrames_rl2iq")
 animation = &"nonanim_pause"
 autoplay = "anim_idle_default"
 
-[node name="btn_offer_help" type="TextureButton" parent="."]
+[node name="btn_offer_help" type="TextureButton" parent="." unique_id=1635866754]
 offset_left = 1367.0
 offset_top = 450.0
 offset_right = 1691.0
@@ -122,7 +122,7 @@ offset_bottom = 546.0
 texture_normal = ExtResource("2_e2u21")
 script = ExtResource("22_o6fs4")
 
-[node name="btn_tomat" type="TextureButton" parent="." node_paths=PackedStringArray("anim_sprite")]
+[node name="btn_tomat" type="TextureButton" parent="." unique_id=1076095239 node_paths=PackedStringArray("anim_sprite")]
 offset_left = 1695.0
 offset_top = 452.0
 offset_right = 1874.0
@@ -133,10 +133,10 @@ script = ExtResource("24_j31fo")
 cooldown_texture = ExtResource("23_8jewq")
 anim_sprite = NodePath("../anim_idlescreen")
 
-[node name="btn_tomat_toggle" type="Node" parent="btn_tomat"]
+[node name="btn_tomat_toggle" type="Node" parent="btn_tomat" unique_id=1352014683]
 script = ExtResource("22_qv2vy")
 
-[node name="Label" type="Label" parent="btn_tomat"]
+[node name="Label" type="Label" parent="btn_tomat" unique_id=434899220]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 23.0

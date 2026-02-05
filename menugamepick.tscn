@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dktem4hvo45wn" path="res://ui_buttons/menugamepick/bookmarkbtn.png" id="10_kjn7q"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="11_vy2nc"]
 [ext_resource type="Texture2D" uid="uid://cgc2ig4irfg0b" path="res://ui_buttons/menugamepick/ghostbtn.png" id="12_vy2nc"]
+[ext_resource type="Script" uid="uid://c6cjlthun3cct" path="res://menugamepick.gd" id="13_menupick"]
 
 [sub_resource type="Gradient" id="Gradient_mxn5k"]
 colors = PackedColorArray(0.5897706, 0.686903, 0.71425915, 1, 0.44313726, 0.5411765, 0.5686275, 1)
@@ -49,6 +50,7 @@ animations = [{
 }]
 
 [node name="main_menugamepick" type="Node2D" unique_id=527487234]
+script = ExtResource("13_menupick")
 
 [node name="bg_color" type="TextureRect" parent="." unique_id=902250154]
 offset_left = -15.0
