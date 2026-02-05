@@ -13,9 +13,12 @@ const CHAR_TILE_H := 256
 @onready var exitbtn: TextureButton = $"../exitbtn"
 @onready var quickshapepack = $"../quickshapepack"
 @onready var calchars: Node2D = $calchars
+@onready var meeting_lib: Node2D = $"../meeting_lib"
 
 var cells: Array = []
+var cell_player_placed: Array = []  # [y][x] = true if placed by player (not prefilled)
 var tile_nodes: Array = []
+var _meeting_sprites: Array = []  # Sprites created for each meeting (persist until restart)
 var cell_colors: Array = []  # [y][x] = Color or null, for neighbor-avoiding color pick
 var _region_default_atlas_row: Dictionary = {}
 
@@ -26,6 +29,19 @@ func _ready() -> void:
 		tetromino_lib.z_index = 10
 	if quickshapepack != null:
 		quickshapepack.z_index = 10
+	# Reparent meeting_lib under grid_container so it shares coords and draws above tiles
+	if meeting_lib != null:
+		var old_parent = meeting_lib.get_parent()
+		if old_parent != self:
+			old_parent.remove_child(meeting_lib)
+			add_child(meeting_lib)
+		meeting_lib.position = Vector2.ZERO
+		meeting_lib.z_index = 5
+		# Hide template sprites (we duplicate them for each meeting)
+		for name in ["1rowmeeting", "2rowmeeting", "3rowmeeting"]:
+			var t = meeting_lib.get_node_or_null(name)
+			if t != null:
+				t.visible = false
 	_init_cells()
 	create_grid()
 	prefill_regions_with_random_shapes.call_deferred()
@@ -37,14 +53,18 @@ func _ready() -> void:
 func _init_cells() -> void:
 	cells.clear()
 	cell_colors.clear()
+	cell_player_placed.clear()
 	for y in range(GRID_HEIGHT):
 		var row: Array = []
 		var color_row: Array = []
+		var placed_row: Array = []
 		for x in range(GRID_WIDTH):
 			row.append(false)
 			color_row.append(null)
+			placed_row.append(false)
 		cells.append(row)
 		cell_colors.append(color_row)
+		cell_player_placed.append(placed_row)
 
 
 func create_grid() -> void:
@@ -217,7 +237,9 @@ func place_quick_shape(cell: Vector2i) -> void:
 	var neighbor_colors := _get_neighbor_colors([cell])
 	var color: Color = _pick_color_avoiding(neighbor_colors)
 	cells[cell.y][cell.x] = true
+	cell_player_placed[cell.y][cell.x] = true
 	set_cell_color(cell, color)
+	_apply_full_row_meeting([cell])
 
 func clamp_base_cell_for_shape(local_cells: Array, base_cell: Vector2i) -> Vector2i:
 	var min_lx := 0
@@ -264,8 +286,10 @@ func place_piece(local_cells: Array, base_cell: Vector2i, shape_id: String) -> v
 		var c: Vector2i = cell
 		if cell_in_bounds(c):
 			cells[c.y][c.x] = true
+			cell_player_placed[c.y][c.x] = true
 			set_cell_color(c, color)
-			
+	_apply_full_row_meeting(placed_cells)
+
 func set_cell_color(cell: Vector2i, color: Color) -> void:
 	if not cell_in_bounds(cell):
 		return
@@ -519,7 +543,122 @@ func place_piece_by_collision(area: Area2D, threshold: float) -> void:
 		var cell: Vector2i = c
 		if cell_in_bounds(cell):
 			cells[cell.y][cell.x] = true
+			cell_player_placed[cell.y][cell.x] = true
 			set_cell_color(cell, color)
+	_apply_full_row_meeting(placed_cells)
+
+const MEETING_WHITE := Color(1.0, 1.0, 1.0, 1.0)
+
+# Returns true if cell was placed by player (not prefilled)
+func _is_cell_player_placed(cell: Vector2i) -> bool:
+	if not cell_in_bounds(cell):
+		return false
+	return cell_player_placed[cell.y][cell.x]
+
+# Check if a row in a region is fully filled by player-placed tiles only
+func _is_region_row_full(region_index: int, row: int) -> bool:
+	var col_start := region_index * COLUMNS_PER_REGION
+	for c in range(COLUMNS_PER_REGION):
+		var cell := Vector2i(col_start + c, row)
+		if not _is_cell_player_placed(cell):
+			return false
+	return true
+
+# Get list of rows in a region that became full from our last placement
+func _get_completed_rows_in_region(region_index: int, placed_cells: Array) -> Array:
+	var col_start := region_index * COLUMNS_PER_REGION
+	var col_end := col_start + COLUMNS_PER_REGION - 1
+	var candidate_rows: Dictionary = {}
+	for cell in placed_cells:
+		var c: Vector2i = cell
+		if c.x >= col_start and c.x <= col_end:
+			candidate_rows[c.y] = true
+	var result: Array = []
+	for row in candidate_rows.keys():
+		if _is_region_row_full(region_index, row):
+			result.append(row)
+	result.sort()
+	return result
+
+# Returns longest consecutive run including topmost completed row
+func _get_consecutive_completed_rows(rows: Array) -> Array:
+	if rows.is_empty():
+		return []
+	rows = rows.duplicate()
+	rows.sort()
+	var best_start: int = rows[0]
+	var best_len: int = 1
+	var start: int = rows[0]
+	var len: int = 1
+	for i in range(1, rows.size()):
+		if rows[i] == rows[i - 1] + 1:
+			len += 1
+		else:
+			if len > best_len:
+				best_len = len
+				best_start = start
+			start = rows[i]
+			len = 1
+	if len > best_len:
+		best_len = len
+		best_start = start
+	var out: Array = []
+	for r in range(best_len):
+		out.append(best_start + r)
+	return out
+
+func _apply_full_row_meeting(placed_cells: Array) -> void:
+	if meeting_lib == null or placed_cells.is_empty():
+		return
+
+	var num_regions := GRID_WIDTH / COLUMNS_PER_REGION
+	var regions_to_show: Array = []
+
+	for region_index in range(num_regions):
+		var completed := _get_completed_rows_in_region(region_index, placed_cells)
+		if completed.is_empty():
+			continue
+		var consecutive := _get_consecutive_completed_rows(completed)
+		var count := consecutive.size()
+		if count <= 0 or count > 3:
+			continue
+		# Turn tiles white
+		for row in consecutive:
+			var col_start := region_index * COLUMNS_PER_REGION
+			for c in range(COLUMNS_PER_REGION):
+				var cell := Vector2i(col_start + c, row)
+				set_cell_color(cell, MEETING_WHITE)
+		regions_to_show.append({
+			"region": region_index,
+			"rows": consecutive,
+			"count": count
+		})
+
+	# Create persistent meeting sprites (one per region completion)
+	var templates: Dictionary = {
+		1: meeting_lib.get_node_or_null("1rowmeeting"),
+		2: meeting_lib.get_node_or_null("2rowmeeting"),
+		3: meeting_lib.get_node_or_null("3rowmeeting")
+	}
+	for entry in regions_to_show:
+		var count: int = entry["count"]
+		var template: Sprite2D = templates.get(count, null)
+		if template == null or template.texture == null:
+			continue
+		var spr := Sprite2D.new()
+		spr.texture = template.texture
+		spr.centered = false
+		spr.z_index = 1  # Above tiles (default 0)
+		var reg: int = entry["region"]
+		var rows: Array = entry["rows"]
+		var r0: int = rows[0]
+		# Position = top-left of first tile in block; tiles use (col*TILE_SIZE, row*TILE_SIZE)
+		var left_col := reg * COLUMNS_PER_REGION
+		var left := left_col * TILE_SIZE
+		var top := r0 * TILE_SIZE
+		spr.position = Vector2(left, top)
+		add_child(spr)  # Direct child of grid_container, same as tiles
+		_meeting_sprites.append(spr)
 
 func _on_restartbtn_pressed() -> void:
 	_restart_grid()
@@ -545,3 +684,9 @@ func _restart_grid() -> void:
 		quickshapepack.reset_quickshapes()
 
 	_randomize_region_characters()
+
+	if meeting_lib != null:
+		for spr in _meeting_sprites:
+			if is_instance_valid(spr):
+				spr.queue_free()
+		_meeting_sprites.clear()
