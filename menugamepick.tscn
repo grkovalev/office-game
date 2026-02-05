@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://npp52jelwrh7"]
+
+[ext_resource type="Texture2D" uid="uid://b6uuyphxeobic" path="res://ui_buttons/menugamepick/laptopcol_anim/0018.png" id="1_0ufmf"]
+[ext_resource type="Texture2D" uid="uid://cx15xwhnok4wl" path="res://ui_buttons/menugamepick/laptopcol_anim/0019.png" id="2_b5aqe"]
+[ext_resource type="Texture2D" uid="uid://bdlgmdl7yp44i" path="res://ui_buttons/menugamepick/laptopcol_anim/0020.png" id="3_vamrj"]
+[ext_resource type="Texture2D" uid="uid://dfdb3jtqs2ych" path="res://ui_buttons/menugamepick/laptopcol_anim/0021.png" id="4_iy517"]
+[ext_resource type="Texture2D" uid="uid://bb5xex12wfxce" path="res://ui_buttons/menugamepick/laptopcol_anim/0022.png" id="5_kjn7q"]
+[ext_resource type="Texture2D" uid="uid://bpwyy516q3qot" path="res://ui_buttons/menugamepick/laptopcol_anim/0023.png" id="6_vy2nc"]
+[ext_resource type="Texture2D" uid="uid://bbhquy0g18k5d" path="res://ui_buttons/menugamepick/laptopcol_anim/0024.png" id="7_qnkh6"]
+[ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="8_vamrj"]
+[ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="9_iy517"]
+
+[sub_resource type="Gradient" id="Gradient_mxn5k"]
+colors = PackedColorArray(0.5897706, 0.686903, 0.71425915, 1, 0.44313726, 0.5411765, 0.5686275, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_po4gl"]
+gradient = SubResource("Gradient_mxn5k")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hf6jb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0ufmf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_b5aqe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vamrj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_iy517")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_kjn7q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_vy2nc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qnkh6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="main_menugamepick" type="Node2D" unique_id=527487234]
+
+[node name="bg_color" type="TextureRect" parent="." unique_id=902250154]
+offset_right = 1504.0
+offset_bottom = 1105.0
+texture = SubResource("GradientTexture2D_po4gl")
+
+[node name="laptopcol" type="AnimatedSprite2D" parent="." unique_id=1650086833]
+position = Vector2(870, 607)
+scale = Vector2(1.861328, 1.9404296)
+sprite_frames = SubResource("SpriteFrames_hf6jb")
+autoplay = "default"
+frame = 3
+frame_progress = 0.8390009
+
+[node name="title" type="Label" parent="." unique_id=277495536]
+offset_left = 78.0
+offset_top = 168.0
+offset_right = 942.0
+offset_bottom = 239.0
+theme_override_fonts/font = ExtResource("8_vamrj")
+theme_override_font_sizes/font_size = 70
+text = "HELP YOUR COLLEAGUE"
+vertical_alignment = 1
+
+[node name="subtitle" type="Label" parent="." unique_id=151072971]
+offset_left = 81.0
+offset_top = 254.0
+offset_right = 743.0
+offset_bottom = 359.0
+theme_override_fonts/font = ExtResource("9_iy517")
+theme_override_font_sizes/font_size = 50
+text = "select the task from the to-do list to help with"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="minesweeper_text" type="Label" parent="." unique_id=971321631]
+offset_left = 607.0
+offset_top = 564.0
+offset_right = 976.0
+offset_bottom = 635.0
+rotation = -0.15852994
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_vamrj")
+theme_override_font_sizes/font_size = 25
+text = "sort out work chats"
+vertical_alignment = 1
+
+[node name="tetris_text" type="Label" parent="." unique_id=1152727533]
+offset_left = 625.0
+offset_top = 672.00006
+offset_right = 994.0
+offset_bottom = 743.00006
+rotation = -0.15852994
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_vamrj")
+theme_override_font_sizes/font_size = 25
+text = "schedule meetings"
+vertical_alignment = 1
