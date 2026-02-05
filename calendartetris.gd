@@ -10,6 +10,7 @@ const CHAR_TILE_H := 256
 
 @onready var tetromino_lib = $"../tetromino_lib"
 @onready var restartbtn: TextureButton = $"../restartbtn"
+@onready var exitbtn: TextureButton = $"../exitbtn"
 @onready var quickshapepack = $"../quickshapepack"
 @onready var calchars: Node2D = $calchars
 
@@ -30,6 +31,7 @@ func _ready() -> void:
 	prefill_regions_with_random_shapes.call_deferred()
 	_randomize_region_characters()
 	restartbtn.pressed.connect(_on_restartbtn_pressed)
+	exitbtn.pressed.connect(_on_exitbtn_pressed)
 
 
 func _init_cells() -> void:
@@ -521,6 +523,10 @@ func place_piece_by_collision(area: Area2D, threshold: float) -> void:
 
 func _on_restartbtn_pressed() -> void:
 	_restart_grid()
+
+
+func _on_exitbtn_pressed() -> void:
+	get_parent().queue_free()
 
 
 func _restart_grid() -> void:

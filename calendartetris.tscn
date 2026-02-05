@@ -558,18 +558,17 @@ scale = Vector2(1.095331, 1)
 points = PackedVector2Array(-750, 96, 258, 96)
 
 [node name="exitbtn" type="TextureButton" parent="." unique_id=192077378]
-visible = false
-offset_left = 121.0
-offset_top = 959.0
-offset_right = 286.0
-offset_bottom = 1049.0
+offset_left = 39.0
+offset_top = 972.0
+offset_right = 204.0
+offset_bottom = 1062.0
 texture_normal = SubResource("AtlasTexture_67i7u")
 script = ExtResource("17_yy0dq")
 
 [node name="restartbtn" type="TextureButton" parent="." unique_id=1092848075]
-offset_left = 1325.0
-offset_top = 155.0
-offset_right = 1490.0
-offset_bottom = 245.0
+offset_left = 204.0
+offset_top = 972.0
+offset_right = 369.0
+offset_bottom = 1062.0
 texture_normal = SubResource("AtlasTexture_c63xa")
 script = ExtResource("17_yy0dq")
