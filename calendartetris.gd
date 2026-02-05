@@ -346,18 +346,14 @@ func mark_cells_occupied(covered_cells: Array, color: Color) -> void:
 			cells[c.y][c.x] = true
 			set_cell_color(c, color)
 
-const PREFILLED_TILE := Color(0.053, 0.185, 0.485, 0.7)
+const PREFILLED_TILE := Color(0.949, 0.475, 0.0, 0.7)
 const COLUMNS_PER_REGION := 5
 
 # Color atlas for placed tiles; same color is never picked for adjacent cells
 const COLOR_ATLAS: Array[Color] = [
-	Color(0.639, 0.322, 0.0, 1.0),
-	Color(0.8, 0.4, 0.0, 1.0), 
-	Color(0.949, 0.475, 0.0, 1.0), 
-	Color(1.0, 0.584, 0.0, 1.0),
-	Color(1.0, 0.671, 0.251, 1.0),
-	Color(1.0, 0.761, 0.502, 1.0),
-	Color(1.0, 0.847, 0.749, 1.0),
+	Color(0.493, 0.531, 0.56, 0.7),
+	Color(0.413, 0.449, 0.476, 0.7), 
+	Color(0.365, 0.399, 0.424, 0.7), 
 ]
 # Prefill count per region = PREFILLS_BY_ATLAS_ROW[atlas_row assigned to regN_char]. Index = atlas row 0..5.
 const PREFILLS_BY_ATLAS_ROW: Array[int] = [5, 3, 4, 2, 3, 1]
