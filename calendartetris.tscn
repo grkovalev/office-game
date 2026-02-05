@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="17_yy0dq"]
 [ext_resource type="Texture2D" uid="uid://6wynh3qdhkl3" path="res://ui_buttons/calendartetris/meetings/3rowmeeting.png" id="18_w0kg2"]
 [ext_resource type="Script" uid="uid://dpoetrsgflgl1" path="res://datetext.gd" id="19_dtxt"]
+[ext_resource type="Script" uid="uid://cuweajw4bfvdk" path="res://currenttime.gd" id="20_w0kg2"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
@@ -419,6 +420,15 @@ texture = ExtResource("17_kt4bn")
 
 [node name="3rowmeeting" type="Sprite2D" parent="meeting_lib" unique_id=1404297883]
 texture = ExtResource("18_w0kg2")
+
+[node name="timeline" type="Line2D" parent="." unique_id=63386075]
+top_level = true
+position = Vector2(1199.8052, 301.38)
+scale = Vector2(0.99311006, 1)
+points = PackedVector2Array(-750, 96, 258, 96)
+width = 4.0
+default_color = Color(1, 0.21568628, 0, 0.85490197)
+script = ExtResource("20_w0kg2")
 
 [node name="timescale" type="Node2D" parent="." unique_id=2095761498]
 
