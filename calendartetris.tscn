@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://cfk1bg1sdxffq" path="res://ui_buttons/calendartetris/meetings/2rowmeeting.png" id="17_kt4bn"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="17_yy0dq"]
 [ext_resource type="Texture2D" uid="uid://6wynh3qdhkl3" path="res://ui_buttons/calendartetris/meetings/3rowmeeting.png" id="18_w0kg2"]
+[ext_resource type="Script" uid="uid://dpoetrsgflgl1" path="res://datetext.gd" id="19_dtxt"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
@@ -230,13 +231,14 @@ autowrap_mode = 2
 [node name="datetext" type="Label" parent="." unique_id=1824845824]
 offset_left = 80.0
 offset_top = 210.0
-offset_right = 509.0
+offset_right = 953.0
 offset_bottom = 246.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_5beks")
 theme_override_font_sizes/font_size = 35
 text = "Today, NN Worktober 2026"
 autowrap_mode = 2
+script = ExtResource("19_dtxt")
 
 [node name="grid_container" type="Node2D" parent="." unique_id=144483308]
 z_index = 4
