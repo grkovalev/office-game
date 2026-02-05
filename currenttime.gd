@@ -12,6 +12,8 @@ var _timer: Timer
 
 
 func _ready() -> void:
+	z_index = 10  # draw on top of meeting_lib and grid
+	default_color.a = 0.5
 	_timer = Timer.new()
 	_timer.wait_time = UPDATE_INTERVAL_SEC
 	_timer.one_shot = false

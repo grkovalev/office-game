@@ -423,8 +423,8 @@ texture = ExtResource("18_w0kg2")
 
 [node name="timeline" type="Line2D" parent="." unique_id=63386075]
 top_level = true
-position = Vector2(1199.8052, 301.38)
-scale = Vector2(0.99311006, 1)
+position = Vector2(1200.063, 301.38)
+scale = Vector2(0.99212605, 1)
 points = PackedVector2Array(-750, 96, 258, 96)
 width = 4.0
 default_color = Color(1, 0.21568628, 0, 0.85490197)
