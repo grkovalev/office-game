@@ -662,6 +662,26 @@ func _on_restartbtn_pressed() -> void:
 
 func _on_exitbtn_pressed() -> void:
 	get_parent().queue_free()
+	
+func get_free_region_rows_count() -> int:
+	var total_free_rows := 0
+	var num_regions := GRID_WIDTH / COLUMNS_PER_REGION
+
+	for region_index in range(num_regions):
+		var col_start := region_index * COLUMNS_PER_REGION
+		var col_end := col_start + COLUMNS_PER_REGION - 1
+
+		for row in range(GRID_HEIGHT):
+			var has_prefilled := false
+			for col in range(col_start, col_end + 1):
+				if cells[row][col]:
+					has_prefilled = true
+					break
+			if not has_prefilled:
+				# This row segment in this region has 0 prefilled cells
+				total_free_rows += 1
+
+	return total_free_rows
 
 
 func _restart_grid() -> void:

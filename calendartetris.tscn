@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bg6kmco1mybb3" path="res://calendartetris.gd" id="3_sriha"]
 [ext_resource type="Texture2D" uid="uid://b8to1iqif083x" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_o.png" id="4_ay14k"]
 [ext_resource type="Script" uid="uid://rdwv8h8o3snh" path="res://tetromino_lib.gd" id="4_ek6ok"]
+[ext_resource type="Script" uid="uid://dkajlgno1prqv" path="res://piecesleft.gd" id="4_pacii"]
 [ext_resource type="Texture2D" uid="uid://jau56ifui51g" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_i.png" id="5_063xu"]
 [ext_resource type="Texture2D" uid="uid://bm5hum10g6a6s" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_s.png" id="6_bwdfo"]
 [ext_resource type="Texture2D" uid="uid://fvtmo37af6uq" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_z.png" id="7_xt0v1"]
@@ -228,6 +229,9 @@ text = "NN left"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+script = ExtResource("4_pacii")
+calendar_tetris_path = NodePath("../grid_container")
+restart_button_path = NodePath("../restartbtn")
 
 [node name="datetext" type="Label" parent="." unique_id=1824845824]
 offset_left = 80.0
