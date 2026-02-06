@@ -24,6 +24,7 @@
 [ext_resource type="Script" uid="uid://dpoetrsgflgl1" path="res://datetext.gd" id="19_dtxt"]
 [ext_resource type="Script" uid="uid://cuweajw4bfvdk" path="res://currenttime.gd" id="20_w0kg2"]
 [ext_resource type="Texture2D" uid="uid://cg1taxv4oi02y" path="res://ui_buttons/calendartetris/messages/messagebg.png" id="24_noytd"]
+[ext_resource type="Script" uid="uid://dmfewcml0dt1a" path="res://winlostmsgtetris.gd" id="24_spl0c"]
 [ext_resource type="Texture2D" uid="uid://djhc21lahjxli" path="res://ui_buttons/calendartetris/messages/gg_tetris.png" id="25_nhd1v"]
 [ext_resource type="Texture2D" uid="uid://7oprgqq6v84x" path="res://ui_buttons/calendartetris/messages/glost_tetris.png" id="26_b75ga"]
 [ext_resource type="FontFile" uid="uid://b558upd3cvld" path="res://fonts/helvetica-rounded-bold-5871d05ead8de.otf" id="27_spl0c"]
@@ -610,6 +611,7 @@ script = ExtResource("17_yy0dq")
 
 [node name="winlostmsg" type="Node2D" parent="." unique_id=994630684]
 position = Vector2(242, 858)
+script = ExtResource("24_spl0c")
 
 [node name="winlostmsgbg" type="Sprite2D" parent="winlostmsg" unique_id=1699634692]
 position = Vector2(775.8625, 130.68)
