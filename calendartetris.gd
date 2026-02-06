@@ -1,5 +1,8 @@
 extends Node2D
 
+signal rows_cleared(num_rows)
+signal free_rows_updated(total)
+
 const GRID_WIDTH  := 20
 const GRID_HEIGHT := 10
 const TILE_SIZE   := 50
@@ -21,6 +24,7 @@ var tile_nodes: Array = []
 var _meeting_sprites: Array = []  # Sprites created for each meeting (persist until restart)
 var cell_colors: Array = []  # [y][x] = Color or null, for neighbor-avoiding color pick
 var _region_default_atlas_row: Dictionary = {}
+var free_region_rows_remaining: int = 0
 
 func _ready() -> void:
 	randomize()
@@ -425,6 +429,10 @@ func prefill_regions_with_random_shapes() -> void:
 			if not placed_this_attempt:
 				break
 
+	# After all prefilled shapes are placed, compute initial free rows per region
+	free_region_rows_remaining = get_free_region_rows_count()
+	emit_signal("free_rows_updated", free_region_rows_remaining)
+
 func cell_to_world(cell:Vector2i)->Vector2:
 	return to_global(Vector2(cell.x*TILE_SIZE+
 	TILE_SIZE*0.5,cell.y*TILE_SIZE+TILE_SIZE*0.5))
@@ -609,6 +617,7 @@ func _apply_full_row_meeting(placed_cells: Array) -> void:
 
 	var num_regions := GRID_WIDTH / COLUMNS_PER_REGION
 	var regions_to_show: Array = []
+	var total_rows_cleared: int = 0
 
 	for region_index in range(num_regions):
 		var completed := _get_completed_rows_in_region(region_index, placed_cells)
@@ -629,6 +638,7 @@ func _apply_full_row_meeting(placed_cells: Array) -> void:
 			"rows": consecutive,
 			"count": count
 		})
+		total_rows_cleared += count
 
 	# Create persistent meeting sprites (one per region completion)
 	var templates: Dictionary = {
@@ -656,6 +666,12 @@ func _apply_full_row_meeting(placed_cells: Array) -> void:
 		add_child(spr)  # Direct child of grid_container, same as tiles
 		_meeting_sprites.append(spr)
 
+	if total_rows_cleared > 0:
+		# Update remaining free rows counter and notify listeners
+		free_region_rows_remaining = max(free_region_rows_remaining - total_rows_cleared, 0)
+		emit_signal("rows_cleared", total_rows_cleared)
+		emit_signal("free_rows_updated", free_region_rows_remaining)
+
 func _on_restartbtn_pressed() -> void:
 	_restart_grid()
 
@@ -664,6 +680,8 @@ func _on_exitbtn_pressed() -> void:
 	get_parent().queue_free()
 	
 func get_free_region_rows_count() -> int:
+	# Count, for each 5-column region, how many rows have zero *prefilled* cells.
+	# Prefilled = cells[y][x] is true AND cell_player_placed[y][x] is false.
 	var total_free_rows := 0
 	var num_regions := GRID_WIDTH / COLUMNS_PER_REGION
 
@@ -674,7 +692,7 @@ func get_free_region_rows_count() -> int:
 		for row in range(GRID_HEIGHT):
 			var has_prefilled := false
 			for col in range(col_start, col_end + 1):
-				if cells[row][col]:
+				if cells[row][col] and not cell_player_placed[row][col]:
 					has_prefilled = true
 					break
 			if not has_prefilled:
