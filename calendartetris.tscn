@@ -23,6 +23,10 @@
 [ext_resource type="Texture2D" uid="uid://6wynh3qdhkl3" path="res://ui_buttons/calendartetris/meetings/3rowmeeting.png" id="18_w0kg2"]
 [ext_resource type="Script" uid="uid://dpoetrsgflgl1" path="res://datetext.gd" id="19_dtxt"]
 [ext_resource type="Script" uid="uid://cuweajw4bfvdk" path="res://currenttime.gd" id="20_w0kg2"]
+[ext_resource type="Texture2D" uid="uid://cg1taxv4oi02y" path="res://ui_buttons/calendartetris/messages/messagebg.png" id="24_noytd"]
+[ext_resource type="Texture2D" uid="uid://djhc21lahjxli" path="res://ui_buttons/calendartetris/messages/gg_tetris.png" id="25_nhd1v"]
+[ext_resource type="Texture2D" uid="uid://7oprgqq6v84x" path="res://ui_buttons/calendartetris/messages/glost_tetris.png" id="26_b75ga"]
+[ext_resource type="FontFile" uid="uid://b558upd3cvld" path="res://fonts/helvetica-rounded-bold-5871d05ead8de.otf" id="27_spl0c"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
@@ -603,3 +607,46 @@ offset_right = 369.0
 offset_bottom = 1062.0
 texture_normal = SubResource("AtlasTexture_c63xa")
 script = ExtResource("17_yy0dq")
+
+[node name="winlostmsg" type="Node2D" parent="." unique_id=994630684]
+position = Vector2(242, 858)
+
+[node name="winlostmsgbg" type="Sprite2D" parent="winlostmsg" unique_id=1699634692]
+position = Vector2(775.8625, 130.68)
+scale = Vector2(0.64797443, 0.785)
+texture = ExtResource("24_noytd")
+
+[node name="gg_tetris" type="Sprite2D" parent="winlostmsg" unique_id=1872944943]
+position = Vector2(1061, -82)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("25_nhd1v")
+
+[node name="glost_tetris" type="Sprite2D" parent="winlostmsg" unique_id=912273527]
+position = Vector2(548.925, -82)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("26_b75ga")
+
+[node name="gg_text" type="Label" parent="winlostmsg" unique_id=1371793008]
+offset_left = 354.0
+offset_top = 28.0
+offset_right = 907.0
+offset_bottom = 223.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("27_spl0c")
+theme_override_font_sizes/font_size = 32
+text = "Fantastic! 
+Thank you for helping out!"
+vertical_alignment = 1
+
+[node name="glost_text" type="Label" parent="winlostmsg" unique_id=213178407]
+offset_left = 716.0
+offset_top = 28.0
+offset_right = 1239.0
+offset_bottom = 225.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("27_spl0c")
+theme_override_font_sizes/font_size = 32
+text = "Well, this is not ideal...
+But I will figure something out. As I always do."
+vertical_alignment = 1
+autowrap_mode = 2
