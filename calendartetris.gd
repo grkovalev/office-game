@@ -17,7 +17,9 @@ const CHAR_TILE_H := 256
 @onready var quickshapepack = $"../quickshapepack"
 @onready var calchars: Node2D = $calchars
 @onready var meeting_lib: Node2D = $"../meeting_lib"
+@onready var winlostmsg = $"../winlostmsg"
 
+var _game_over: bool = false
 var cells: Array = []
 var cell_player_placed: Array = []  # [y][x] = true if placed by player (not prefilled)
 var tile_nodes: Array = []
@@ -667,18 +669,28 @@ func _apply_full_row_meeting(placed_cells: Array) -> void:
 		_meeting_sprites.append(spr)
 
 	if total_rows_cleared > 0:
-		# Update remaining free rows counter and notify listeners
 		free_region_rows_remaining = max(free_region_rows_remaining - total_rows_cleared, 0)
 		emit_signal("rows_cleared", total_rows_cleared)
 		emit_signal("free_rows_updated", free_region_rows_remaining)
+		# NEW: check win
+		_check_game_over()
 
 func _on_restartbtn_pressed() -> void:
 	_restart_grid()
 
-
 func _on_exitbtn_pressed() -> void:
 	get_parent().queue_free()
 	
+func _check_game_over() -> void:
+	if _game_over or winlostmsg == null:
+		return
+	if free_region_rows_remaining <= 0:
+		_game_over = true
+		winlostmsg.show_win()
+	elif quickshapepack != null and quickshapepack.get_available_quickshape_count() == 0:
+		_game_over = true
+		winlostmsg.show_lose()
+
 func get_free_region_rows_count() -> int:
 	# Count, for each 5-column region, how many rows have zero *prefilled* cells.
 	# Prefilled = cells[y][x] is true AND cell_player_placed[y][x] is false.
@@ -703,7 +715,9 @@ func get_free_region_rows_count() -> int:
 
 
 func _restart_grid() -> void:
-	# Only free grid tiles, not calchars (so region sprites stay and can be refreshed)
+	_game_over = false
+	if winlostmsg != null:
+		winlostmsg.hide_msg()
 	for row in tile_nodes:
 		for tile in row:
 			if is_instance_valid(tile):

@@ -1,11 +1,36 @@
 extends Node2D
 
+@onready var winlostmsgbg: Sprite2D = $winlostmsgbg
+@onready var gg_tetris: Sprite2D = $gg_tetris
+@onready var glost_tetris: Sprite2D = $glost_tetris
+@onready var gg_text: Label = $gg_text
+@onready var glost_text: Label = $glost_text
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	hide_msg()
 
+func show_win() -> void:
+	z_index = 100  # On top of everything
+	winlostmsgbg.visible = true
+	gg_tetris.visible = true
+	gg_text.visible = true
+	glost_tetris.visible = false
+	glost_text.visible = false
+	show()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func show_lose() -> void:
+	z_index = 100  # On top of everything
+	winlostmsgbg.visible = true
+	glost_tetris.visible = true
+	glost_text.visible = true
+	gg_tetris.visible = false
+	gg_text.visible = false
+	show()
+
+func hide_msg() -> void:
+	winlostmsgbg.visible = false
+	gg_tetris.visible = false
+	glost_tetris.visible = false
+	gg_text.visible = false
+	glost_text.visible = false
+	hide()

@@ -124,3 +124,10 @@ func reset_quickshapes() -> void:
 		if is_instance_valid(qs):
 			qs.position = _initial_positions[i]
 			_set_qshape_atlas(qs, 0)
+			
+func get_available_quickshape_count() -> int:
+	var count := 0
+	for qs in quickshapes:
+		if is_instance_valid(qs) and not _is_quickshape_used(qs):
+			count += 1
+	return count
