@@ -597,11 +597,52 @@ func place_piece_by_collision(area: Area2D, threshold: float) -> void:
 
 const MEETING_WHITE := Color(1.0, 1.0, 1.0, 1.0)
 
-# Returns true if cell was placed by player (not prefilled)
-func _is_cell_player_placed(cell: Vector2i) -> bool:
+# Returns true if cell was placed by player (not prefilled). Public for tetromino_lib quickshape-on-quickshape handling.
+func is_cell_player_placed(cell: Vector2i) -> bool:
 	if not cell_in_bounds(cell):
 		return false
 	return cell_player_placed[cell.y][cell.x]
+
+func _is_cell_player_placed(cell: Vector2i) -> bool:
+	return is_cell_player_placed(cell)
+
+# Clears a single cell (occupied + player-placed) and resets tile to empty appearance. Used when placing quickshape on existing quickshape tile.
+func clear_cell(cell: Vector2i) -> void:
+	if not cell_in_bounds(cell):
+		return
+	cells[cell.y][cell.x] = false
+	cell_player_placed[cell.y][cell.x] = false
+	cell_colors[cell.y][cell.x] = null
+	var tile: Panel = tile_nodes[cell.y][cell.x]
+	if not is_instance_valid(tile):
+		return
+	# Reset tile to empty look using same style as create_tile
+	var stylebox := StyleBoxFlat.new()
+	if cell.x % 10 < 5:
+		stylebox.bg_color = Color(0.443, 0.686, 0.898, 0.5)
+	else:
+		stylebox.bg_color = Color(0.871, 0.925, 0.976, 0.5)
+	stylebox.border_color = Color(1.0, 1.0, 1.0, 0.7)
+	stylebox.border_width_left = 1
+	stylebox.border_width_top = 1
+	stylebox.border_width_right = 1
+	stylebox.border_width_bottom = 1
+	tile.add_theme_stylebox_override("panel", stylebox)
+
+enum QuickshapeDropResult { REJECTED, PLACED, REPLACED }
+
+# Single entry point for dropping a quickshape at a global position. Uses this board's world_to_cell so the correct cell is always used. Returns what happened so tetromino_lib can free quickshape and spawn.
+func try_drop_quickshape(global_pos: Vector2) -> QuickshapeDropResult:
+	var cell := world_to_cell(global_pos)
+	if not cell_in_bounds(cell):
+		return QuickshapeDropResult.REJECTED
+	if is_cell_occupied(cell):
+		if is_cell_player_placed(cell):
+			clear_cell(cell)
+			return QuickshapeDropResult.REPLACED
+		return QuickshapeDropResult.REJECTED
+	place_quick_shape(cell)
+	return QuickshapeDropResult.PLACED
 
 # Check if a row in a region is fully filled by player-placed tiles only
 func _is_region_row_full(region_index: int, row: int) -> bool:

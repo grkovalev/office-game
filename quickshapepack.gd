@@ -86,7 +86,12 @@ func _finish_quickshape_drag() -> void:
 	var mouse_pos := get_global_mouse_position()
 	var dropped_on_slot := _is_over_spawn_slot(mouse_pos)
 	if dropped_on_slot >= 0:
-		_assign_quickshape_to_slot(dropped_on_slot, dragging_quickshape)
+		# Spawn area is blocked until the current quickshape (1-tile) is placed and a new piece is spawned
+		if tetromino_lib.slot_has_quickshape_piece(dropped_on_slot):
+			_set_qshape_atlas(dragging_quickshape, 0)
+			dragging_quickshape.global_position = quickshape_original_pos
+		else:
+			_assign_quickshape_to_slot(dropped_on_slot, dragging_quickshape)
 	else:
 		_set_qshape_atlas(dragging_quickshape, 0)
 		dragging_quickshape.global_position = quickshape_original_pos

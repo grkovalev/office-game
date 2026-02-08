@@ -195,7 +195,7 @@ func _finish_drag() -> void:
 
 	var piece = pieces[selected_slot]
 	if _is_quickshape_piece(piece):
-		_try_place_quickshape_on_board(selected_slot)
+		_try_place_quickshape_on_board(selected_slot, get_global_mouse_position())
 	else:
 		_try_place_piece_on_board(selected_slot)
 
@@ -236,7 +236,7 @@ func get_rotated_pivot_offset(shape_id: String, rotation: int) -> Vector2:
 			return Vector2(base_offset.y, -base_offset.x)
 	return base_offset
 
-func _try_place_quickshape_on_board(slot_index: int) -> void:
+func _try_place_quickshape_on_board(slot_index: int, drop_world_pos: Vector2) -> void:
 	var piece = pieces[slot_index]
 	if piece == null or not _is_quickshape_piece(piece):
 		return
@@ -247,19 +247,15 @@ func _try_place_quickshape_on_board(slot_index: int) -> void:
 		quickshape_slots.erase(slot_index)
 		return
 
-	var cell: Vector2i = board.world_to_cell(qs.global_position)
-	if not board.cell_in_bounds(cell):
+	# Let the board handle drop in its own coordinate space; it returns what it did
+	var result = board.try_drop_quickshape(drop_world_pos)
+	if result == board.QuickshapeDropResult.PLACED or result == board.QuickshapeDropResult.REPLACED:
+		qs.queue_free()
+		quickshape_slots.erase(slot_index)
+		pieces[slot_index] = null
+		call_deferred("spawn_piece", slot_index)
+	else:
 		qs.global_position = piece["original_pos"]
-		return
-	if board.is_cell_occupied(cell):
-		qs.global_position = piece["original_pos"]
-		return
-
-	board.place_quick_shape(cell)
-	qs.queue_free()
-	quickshape_slots.erase(slot_index)
-	pieces[slot_index] = null
-	spawn_piece(slot_index)
 
 func _try_place_piece_on_board(slot_index: int) -> void:
 	var piece = pieces[slot_index]
@@ -285,6 +281,14 @@ func is_quickshape_assigned(qs: Node2D) -> bool:
 		if quickshape_slots[slot_i] == qs:
 			return true
 	return false
+
+# Returns true if the spawn slot already has a quickshape piece (1-tile) that hasn't been placed on the board yet.
+# When true, another quickshape from the pack cannot be dropped into this slot until the current one is placed.
+func slot_has_quickshape_piece(slot_index: int) -> bool:
+	if slot_index < 0 or slot_index >= pieces.size():
+		return false
+	var piece = pieces[slot_index]
+	return piece != null and _is_quickshape_piece(piece)
 
 func assign_quickshape_to_slot(slot_index: int, qs: Node2D) -> void:
 	if slot_index < 0 or slot_index >= slots.size():
