@@ -586,32 +586,22 @@ func _get_completed_rows_in_region(region_index: int, placed_cells: Array) -> Ar
 	result.sort()
 	return result
 
-# Returns longest consecutive run including topmost completed row
-func _get_consecutive_completed_rows(rows: Array) -> Array:
+# Returns array of arrays: each inner array is a consecutive run of row numbers (for non-adjacent full rows)
+func _get_all_consecutive_row_groups(rows: Array) -> Array:
 	if rows.is_empty():
 		return []
-	rows = rows.duplicate()
-	rows.sort()
-	var best_start: int = rows[0]
-	var best_len: int = 1
-	var start: int = rows[0]
-	var len: int = 1
-	for i in range(1, rows.size()):
-		if rows[i] == rows[i - 1] + 1:
-			len += 1
+	var sorted := rows.duplicate()
+	sorted.sort()
+	var groups: Array = []
+	var current: Array = [sorted[0]]
+	for i in range(1, sorted.size()):
+		if sorted[i] == sorted[i - 1] + 1:
+			current.append(sorted[i])
 		else:
-			if len > best_len:
-				best_len = len
-				best_start = start
-			start = rows[i]
-			len = 1
-	if len > best_len:
-		best_len = len
-		best_start = start
-	var out: Array = []
-	for r in range(best_len):
-		out.append(best_start + r)
-	return out
+			groups.append(current)
+			current = [sorted[i]]
+	groups.append(current)
+	return groups
 
 func _apply_full_row_meeting(placed_cells: Array) -> void:
 	if meeting_lib == null or placed_cells.is_empty():
@@ -625,22 +615,23 @@ func _apply_full_row_meeting(placed_cells: Array) -> void:
 		var completed := _get_completed_rows_in_region(region_index, placed_cells)
 		if completed.is_empty():
 			continue
-		var consecutive := _get_consecutive_completed_rows(completed)
-		var count := consecutive.size()
-		if count <= 0 or count > 3:
-			continue
-		# Turn tiles white
-		for row in consecutive:
-			var col_start := region_index * COLUMNS_PER_REGION
-			for c in range(COLUMNS_PER_REGION):
-				var cell := Vector2i(col_start + c, row)
-				set_cell_color(cell, MEETING_WHITE)
-		regions_to_show.append({
-			"region": region_index,
-			"rows": consecutive,
-			"count": count
-		})
-		total_rows_cleared += count
+		var groups := _get_all_consecutive_row_groups(completed)
+		for consecutive in groups:
+			var count: int = consecutive.size()
+			if count <= 0 or count > 3:
+				continue
+			# Turn tiles white for this group only
+			for row in consecutive:
+				var col_start := region_index * COLUMNS_PER_REGION
+				for c in range(COLUMNS_PER_REGION):
+					var cell := Vector2i(col_start + c, row)
+					set_cell_color(cell, MEETING_WHITE)
+			regions_to_show.append({
+				"region": region_index,
+				"rows": consecutive,
+				"count": count
+			})
+			total_rows_cleared += count
 
 	# Create persistent meeting sprites (one per region completion)
 	var templates: Dictionary = {
