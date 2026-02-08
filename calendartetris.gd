@@ -278,6 +278,48 @@ func can_place_piece(local_cells: Array, base_cell: Vector2i) -> bool:
 			return false
 	return true
 
+# Returns true if the current spawn piece in tetromino_lib can be placed in at least one empty spot.
+# Used for game-over: we only lose when this is false AND no quickshapes left AND calendar not full.
+func _current_piece_can_fit_somewhere() -> bool:
+	if tetromino_lib == null or tetromino_lib.pieces.is_empty():
+		return true
+	var piece = tetromino_lib.pieces[0]
+	if piece == null:
+		return true
+	# Quickshape piece: can "fit" if there is any empty cell
+	if piece.get("quickshape", null) != null:
+		for y in range(GRID_HEIGHT):
+			for x in range(GRID_WIDTH):
+				if not cells[y][x]:
+					return true
+		return false
+	# Tetromino: try every rotation and every valid base cell
+	var shape_id: String = piece.get("shape_id", "")
+	if shape_id.is_empty() or not tetromino_lib.SHAPES.has(shape_id):
+		return true
+	var rotations: Array = tetromino_lib.SHAPES[shape_id]
+	for rot in range(rotations.size()):
+		var local_cells: Array = rotations[rot]
+		var min_lx := 0
+		var max_lx := 0
+		var min_ly := 0
+		var max_ly := 0
+		for local in local_cells:
+			var o: Vector2i = local
+			min_lx = mini(min_lx, o.x)
+			max_lx = maxi(max_lx, o.x)
+			min_ly = mini(min_ly, o.y)
+			max_ly = maxi(max_ly, o.y)
+		var base_col_min := maxi(0, -min_lx)
+		var base_col_max := mini(GRID_WIDTH - 1 - max_lx, GRID_WIDTH - 1)
+		var base_row_min := maxi(0, -min_ly)
+		var base_row_max := mini(GRID_HEIGHT - 1 - max_ly, GRID_HEIGHT - 1)
+		for base_col in range(base_col_min, base_col_max + 1):
+			for base_row in range(base_row_min, base_row_max + 1):
+				if can_place_piece(local_cells, Vector2i(base_col, base_row)):
+					return true
+	return false
+
 
 func place_piece(local_cells: Array, base_cell: Vector2i, shape_id: String) -> void:
 	var placed_cells: Array = []
@@ -663,8 +705,8 @@ func _apply_full_row_meeting(placed_cells: Array) -> void:
 		free_region_rows_remaining = max(free_region_rows_remaining - total_rows_cleared, 0)
 		emit_signal("rows_cleared", total_rows_cleared)
 		emit_signal("free_rows_updated", free_region_rows_remaining)
-		# NEW: check win
-		_check_game_over()
+	# Check win/lose after every placement (deferred so tetromino_lib has already spawned the new piece)
+	_check_game_over.call_deferred()
 
 func _on_restartbtn_pressed() -> void:
 	_restart_grid()
@@ -678,7 +720,10 @@ func _check_game_over() -> void:
 	if free_region_rows_remaining <= 0:
 		_game_over = true
 		winlostmsg.show_win()
-	elif quickshapepack != null and quickshapepack.get_available_quickshape_count() == 0:
+		return
+	# Lose: calendar still has empty rows, current spawn piece can't fit anywhere, and no quickshapes left
+	var no_quickshapes: bool = quickshapepack != null and quickshapepack.get_available_quickshape_count() == 0
+	if no_quickshapes and not _current_piece_can_fit_somewhere():
 		_game_over = true
 		winlostmsg.show_lose()
 
