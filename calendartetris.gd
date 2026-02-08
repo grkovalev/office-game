@@ -399,9 +399,7 @@ const COLUMNS_PER_REGION := 5
 
 # Color atlas for placed tiles; same color is never picked for adjacent cells
 const COLOR_ATLAS: Array[Color] = [
-	Color(0.493, 0.531, 0.56, 0.7),
-	Color(0.413, 0.449, 0.476, 0.7), 
-	Color(0.365, 0.399, 0.424, 0.7), 
+	Color(0.294, 0.254, 0.309, 0.7),
 ]
 # Prefill count per region = PREFILLS_BY_ATLAS_ROW[atlas_row assigned to regN_char]. Index = atlas row 0..5.
 const PREFILLS_BY_ATLAS_ROW: Array[int] = [5, 3, 4, 2, 3, 1]
