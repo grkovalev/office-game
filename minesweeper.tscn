@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://6brnunq6a06k"]
+[gd_scene format=3 uid="uid://6brnunq6a06k"]
 
 [ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="1_7nxku"]
 [ext_resource type="Script" uid="uid://iixic5s2ny1f" path="res://minesweeper.gd" id="1_k6kum"]
@@ -108,21 +108,21 @@ region = Rect2(7, 92, 155, 77)
 atlas = ExtResource("16_8neyo")
 region = Rect2(7, 177, 155, 77)
 
-[node name="main_minesweeper" type="Node2D"]
+[node name="main_minesweeper" type="Node2D" unique_id=565247984]
 position = Vector2(200, 128)
 script = ExtResource("1_k6kum")
 
-[node name="Window" type="Window" parent="."]
+[node name="Window" type="Window" parent="." unique_id=163818136]
 oversampling_override = 1.0
 initial_position = 1
 size = Vector2i(1500, 1100)
 
-[node name="bg_color" type="TextureRect" parent="Window"]
+[node name="bg_color" type="TextureRect" parent="Window" unique_id=825087767]
 offset_right = 1504.0
 offset_bottom = 1105.0
 texture = SubResource("GradientTexture2D_8neyo")
 
-[node name="bg_undermines" type="TextureRect" parent="Window"]
+[node name="bg_undermines" type="TextureRect" parent="Window" unique_id=1212475607]
 offset_left = 470.0
 offset_top = 240.0
 offset_right = 976.0
@@ -131,7 +131,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_crrax")
 
-[node name="title" type="Label" parent="Window"]
+[node name="title" type="Label" parent="Window" unique_id=790049520]
 offset_left = 376.0
 offset_top = 40.0
 offset_right = 808.0
@@ -140,7 +140,7 @@ theme_override_fonts/font = ExtResource("1_xrf8k")
 theme_override_font_sizes/font_size = 32
 text = "WORK CHATS NAVIGATION"
 
-[node name="subtitle" type="Label" parent="Window"]
+[node name="subtitle" type="Label" parent="Window" unique_id=1576355404]
 offset_left = 808.0
 offset_top = 24.0
 offset_right = 1088.0
@@ -150,7 +150,7 @@ theme_override_font_sizes/font_size = 29
 text = "escape extra workload at all costs"
 autowrap_mode = 2
 
-[node name="calendar blocks left" type="Label" parent="Window"]
+[node name="calendar blocks left" type="Label" parent="Window" unique_id=139679807]
 offset_left = 526.0
 offset_top = 755.0
 offset_right = 720.0
@@ -160,7 +160,7 @@ theme_override_fonts/font = ExtResource("1_7nxku")
 theme_override_font_sizes/font_size = 22
 text = "calendar blocks left:"
 
-[node name="number_calblocks" type="Label" parent="Window"]
+[node name="number_calblocks" type="Label" parent="Window" unique_id=848892757]
 offset_left = 728.0
 offset_top = 745.0
 offset_right = 768.0
@@ -173,19 +173,19 @@ theme_override_font_sizes/font_size = 29
 text = "10"
 script = ExtResource("5_cf5gv")
 
-[node name="avatar_slack" type="AnimatedSprite2D" parent="Window"]
+[node name="avatar_slack" type="AnimatedSprite2D" parent="Window" unique_id=1445727432]
 position = Vector2(736, 167.5)
 sprite_frames = SubResource("SpriteFrames_nlm7j")
 animation = &"shock"
 
-[node name="calblock" type="Sprite2D" parent="Window"]
+[node name="calblock" type="Sprite2D" parent="Window" unique_id=280681937]
 position = Vector2(502, 766)
 scale = Vector2(0.88, 0.88)
 texture = ExtResource("10_m1acp")
 
-[node name="tiles_minesweeper" type="CanvasLayer" parent="Window"]
+[node name="tiles_minesweeper" type="CanvasLayer" parent="Window" unique_id=18033034]
 
-[node name="grid9x9" type="GridContainer" parent="Window/tiles_minesweeper"]
+[node name="grid9x9" type="GridContainer" parent="Window/tiles_minesweeper" unique_id=684862086]
 offset_left = 480.0
 offset_top = 248.5
 offset_right = 560.0
@@ -194,7 +194,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 columns = 9
 
-[node name="tile" type="TextureButton" parent="Window/tiles_minesweeper/grid9x9"]
+[node name="tile" type="TextureButton" parent="Window/tiles_minesweeper/grid9x9" unique_id=1847972777]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -202,7 +202,7 @@ texture_normal = SubResource("AtlasTexture_k6kum")
 texture_pressed = SubResource("AtlasTexture_8neyo")
 script = ExtResource("12_1xtce")
 
-[node name="exitbtn" type="TextureButton" parent="Window"]
+[node name="exitbtn" type="TextureButton" parent="Window" unique_id=1708339141]
 offset_left = 472.0
 offset_top = 119.5
 offset_right = 637.0
@@ -210,7 +210,7 @@ offset_bottom = 209.5
 texture_normal = SubResource("AtlasTexture_crrax")
 script = ExtResource("18_2so26")
 
-[node name="restartbtn" type="TextureButton" parent="Window"]
+[node name="restartbtn" type="TextureButton" parent="Window" unique_id=62399398]
 offset_left = 832.0
 offset_top = 119.5
 offset_right = 997.0
@@ -218,26 +218,26 @@ offset_bottom = 209.5
 texture_normal = SubResource("AtlasTexture_2so26")
 script = ExtResource("18_2so26")
 
-[node name="TextureSwitch" type="Node" parent="Window/restartbtn"]
+[node name="TextureSwitch" type="Node" parent="Window/restartbtn" unique_id=1191319022]
 script = ExtResource("19_r43nf")
 normal_texture = SubResource("AtlasTexture_mxn5k")
 try_again_texture = SubResource("AtlasTexture_ldu3r")
 
-[node name="winlostmsg" type="Node2D" parent="Window"]
+[node name="winlostmsg" type="Node2D" parent="Window" unique_id=2085122784]
 position = Vector2(352, 0)
 script = ExtResource("20_ldu3r")
 
-[node name="winlostimg_canvas" type="CanvasLayer" parent="Window/winlostmsg"]
+[node name="winlostimg_canvas" type="CanvasLayer" parent="Window/winlostmsg" unique_id=40503087]
 layer = 2
 
-[node name="winlostimg" type="Sprite2D" parent="Window/winlostmsg/winlostimg_canvas"]
+[node name="winlostimg" type="Sprite2D" parent="Window/winlostmsg/winlostimg_canvas" unique_id=140886046]
 position = Vector2(944, 832)
 scale = Vector2(0.9960934, 0.9960934)
 texture = ExtResource("20_mxn5k")
 region_enabled = true
 region_rect = Rect2(0, 0, 256, 512)
 
-[node name="wintext" type="Label" parent="Window/winlostmsg"]
+[node name="wintext" type="Label" parent="Window/winlostmsg" unique_id=140860089]
 offset_left = 120.0
 offset_top = 832.0
 offset_right = 392.0
@@ -250,7 +250,7 @@ All extra workload
 was dodged 
 successfully!"
 
-[node name="losttext" type="Label" parent="Window/winlostmsg"]
+[node name="losttext" type="Label" parent="Window/winlostmsg" unique_id=164406146]
 offset_left = 120.0
 offset_top = 832.0
 offset_right = 401.0
