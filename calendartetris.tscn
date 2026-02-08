@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="2_5beks"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_jwokj"]
 [ext_resource type="Script" uid="uid://bg6kmco1mybb3" path="res://calendartetris.gd" id="3_sriha"]
+[ext_resource type="Script" uid="uid://pl32vauyjkv1" path="res://outofstock.gd" id="4_40fng"]
 [ext_resource type="Texture2D" uid="uid://b8to1iqif083x" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_o.png" id="4_ay14k"]
 [ext_resource type="Script" uid="uid://rdwv8h8o3snh" path="res://tetromino_lib.gd" id="4_ek6ok"]
 [ext_resource type="Script" uid="uid://dkajlgno1prqv" path="res://piecesleft.gd" id="4_pacii"]
@@ -221,6 +222,7 @@ text = "limited superpower"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+script = ExtResource("4_40fng")
 
 [node name="piecesleft" type="Label" parent="." unique_id=1153280029]
 offset_left = 80.0
