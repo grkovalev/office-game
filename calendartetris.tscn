@@ -30,11 +30,11 @@
 [ext_resource type="Texture2D" uid="uid://7oprgqq6v84x" path="res://ui_buttons/calendartetris/messages/glost_tetris.png" id="26_b75ga"]
 [ext_resource type="FontFile" uid="uid://b558upd3cvld" path="res://fonts/helvetica-rounded-bold-5871d05ead8de.otf" id="27_spl0c"]
 
-[sub_resource type="Gradient" id="Gradient_k6kum"]
+[sub_resource type="Gradient" id="Gradient_40fng"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ucthv"]
-gradient = SubResource("Gradient_k6kum")
+gradient = SubResource("Gradient_40fng")
 
 [sub_resource type="Gradient" id="Gradient_5l5t3"]
 colors = PackedColorArray(0.5921569, 0.7647059, 0.9137255, 0.40784314, 0.5921569, 0.7647059, 0.9137255, 0.40784314)
