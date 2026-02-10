@@ -1,3 +1,63 @@
 [gd_scene format=3 uid="uid://lrhho2uoixru"]
 
-[node name="Node2D" type="Node2D" unique_id=1372382565]
+[ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_u1qfo"]
+[ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_2qx1n"]
+
+[sub_resource type="Gradient" id="Gradient_k6kum"]
+colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n0iij"]
+gradient = SubResource("Gradient_k6kum")
+
+[sub_resource type="Gradient" id="Gradient_hlmdn"]
+colors = PackedColorArray(1, 1, 1, 0.6666667, 1, 1, 1, 0.6666667)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_djpl0"]
+gradient = SubResource("Gradient_hlmdn")
+
+[node name="main_backlogarkanoid" type="Node2D" unique_id=1372382565]
+
+[node name="bg" type="Node2D" parent="." unique_id=330567833]
+
+[node name="bg_color" type="TextureRect" parent="bg" unique_id=567311458]
+offset_right = 1504.0
+offset_bottom = 1105.0
+texture = SubResource("GradientTexture2D_n0iij")
+
+[node name="bg_tiles" type="TextureRect" parent="bg" unique_id=468958868]
+offset_left = 72.0
+offset_top = 192.0
+offset_right = 1440.0
+offset_bottom = 768.0
+texture = SubResource("GradientTexture2D_djpl0")
+
+[node name="title" type="Label" parent="bg" unique_id=1727008019]
+offset_left = 80.0
+offset_top = 62.0
+offset_right = 756.0
+offset_bottom = 131.0
+theme_override_fonts/font = ExtResource("1_u1qfo")
+theme_override_font_sizes/font_size = 60
+text = "BACKLOG SURVIVOR"
+vertical_alignment = 1
+
+[node name="subtitle" type="Label" parent="bg" unique_id=1276248157]
+offset_left = 776.0
+offset_top = 62.0
+offset_right = 1438.0
+offset_bottom = 131.0
+theme_override_fonts/font = ExtResource("2_2qx1n")
+theme_override_font_sizes/font_size = 50
+text = "finish them tasks"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="env" type="Node2D" parent="." unique_id=9009023]
+
+[node name="player" type="Node2D" parent="." unique_id=1610125567]
+
+[node name="ball" type="Node2D" parent="." unique_id=630147723]
+
+[node name="bricks" type="Node2D" parent="." unique_id=572188888]
+
+[node name="powerups" type="Node2D" parent="." unique_id=1707368126]
