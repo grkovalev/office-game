@@ -44,6 +44,12 @@ func _ready() -> void:
 
 	_stick_to_paddle()
 
+func reset_ball() -> void:
+	attached = true
+	current_speed = ball_speed
+	velocity = Vector2.ZERO
+	_stick_to_paddle()
+
 func _physics_process(delta: float) -> void:
 	if attached:
 		_stick_to_paddle()
