@@ -79,6 +79,8 @@ script = ExtResource("3_n4sgu")
 brick_atlas = ExtResource("4_facmc")
 brick_display_size = Vector2(99, 46.2)
 brick_gap = Vector2(6, 6)
+variant0_probability = 0.3
+variant1_probability = 0.7
 
 [node name="player" type="Node2D" parent="." unique_id=1610125567]
 
@@ -99,7 +101,7 @@ shape = SubResource("RectangleShape2D_n0iij")
 [node name="ball" type="Node2D" parent="." unique_id=630147723]
 
 [node name="ballctrl" type="Node2D" parent="ball" unique_id=687998390]
-position = Vector2(747, 968)
+position = Vector2(756, 968)
 scale = Vector2(0.2, 0.2)
 
 [node name="ball_char" type="CharacterBody2D" parent="ball/ballctrl" unique_id=775356162]
