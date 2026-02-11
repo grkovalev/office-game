@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://lrhho2uoixru"]
 
+[ext_resource type="Script" uid="uid://cwtdw3hukate3" path="res://main_backlogarkanoid.gd" id="1_7afv6"]
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_u1qfo"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_2qx1n"]
 [ext_resource type="Texture2D" uid="uid://njex5bdrw0jq" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/keyboard_def.png" id="3_2qx1n"]
@@ -35,6 +36,7 @@ atlas = ExtResource("5_djpl0")
 region = Rect2(16, 111, 155, 77)
 
 [node name="main_backlogarkanoid" type="Node2D" unique_id=1372382565]
+script = ExtResource("1_7afv6")
 
 [node name="bg" type="Node2D" parent="." unique_id=330567833]
 
@@ -47,11 +49,11 @@ texture = SubResource("GradientTexture2D_n0iij")
 offset_left = 72.0
 offset_top = 248.0
 offset_right = 1464.0
-offset_bottom = 960.0
+offset_bottom = 1050.0
 texture = SubResource("GradientTexture2D_djpl0")
 
 [node name="title" type="Label" parent="bg" unique_id=1727008019]
-offset_left = 80.0
+offset_left = 72.0
 offset_top = 62.0
 offset_right = 756.0
 offset_bottom = 131.0
