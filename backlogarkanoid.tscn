@@ -2,6 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_u1qfo"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_2qx1n"]
+[ext_resource type="Texture2D" uid="uid://cxjbr825rergh" path="res://ui_buttons/backlogarkanoid/keyboard_atlas.png" id="3_2qx1n"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
@@ -55,6 +56,13 @@ autowrap_mode = 2
 [node name="env" type="Node2D" parent="." unique_id=9009023]
 
 [node name="player" type="Node2D" parent="." unique_id=1610125567]
+
+[node name="keyboard_ctrl" type="Sprite2D" parent="player" unique_id=1970693421]
+position = Vector2(632, 928)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_2qx1n")
+region_enabled = true
+region_rect = Rect2(57, 128, 2080, 263)
 
 [node name="ball" type="Node2D" parent="." unique_id=630147723]
 
