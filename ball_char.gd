@@ -105,7 +105,14 @@ func _physics_process(delta: float) -> void:
 			if brick_speed_boost > 0.0:
 				var cap: float = max_ball_speed if max_ball_speed > 0.0 else ball_speed * 3.0
 				current_speed = min(current_speed + brick_speed_boost, cap)
-			brick.queue_free()
+			if brick.has_method("take_hit"):
+				if brick.take_hit():
+					brick.queue_free()
+				elif brick_normal != Vector2.ZERO:
+					# 2-hit brick: push ball out so it doesn't collide again next frame
+					global_position += brick_normal * (ball_radius * 2.5)
+			else:
+				brick.queue_free()
 	elif first_bounce_normal != Vector2.ZERO:
 		velocity = velocity.bounce(first_bounce_normal)
 		velocity = _ensure_not_too_flat(velocity, current_speed)

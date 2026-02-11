@@ -69,8 +69,9 @@ func generate_grid() -> void:
 			if tex == null:
 				continue
 
-			# Create a StaticBody2D brick with sprite + collision
+			# Create a brick (backlog_brick.gd holds hits_left and cracked_texture)
 			var brick := StaticBody2D.new()
+			brick.set_script(preload("res://backlog_brick.gd"))
 			brick.collision_layer = 1
 			brick.collision_mask = 0
 			add_child(brick)
@@ -79,6 +80,14 @@ func generate_grid() -> void:
 				row * (brick_display_size.y + brick_gap.y)
 			)
 			brick.add_to_group("brick")
+
+			if variant_index == 0:
+				brick.hits_left = 2
+				var cracked_tex: Texture2D = _create_variant_texture(1)
+				if cracked_tex != null:
+					brick.cracked_texture = cracked_tex
+			else:
+				brick.hits_left = 1
 
 			# Visual
 			var sprite := Sprite2D.new()
