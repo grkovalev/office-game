@@ -46,7 +46,7 @@ texture = SubResource("GradientTexture2D_n0iij")
 [node name="bg_tiles" type="TextureRect" parent="bg" unique_id=468958868]
 offset_left = 72.0
 offset_top = 248.0
-offset_right = 1440.0
+offset_right = 1464.0
 offset_bottom = 960.0
 texture = SubResource("GradientTexture2D_djpl0")
 
@@ -74,9 +74,11 @@ autowrap_mode = 2
 [node name="env" type="Node2D" parent="." unique_id=9009023]
 
 [node name="grid" type="Node2D" parent="env" unique_id=45948306]
-position = Vector2(136, 304)
+position = Vector2(136, 296)
 script = ExtResource("3_n4sgu")
 brick_atlas = ExtResource("4_facmc")
+brick_display_size = Vector2(99, 46.2)
+brick_gap = Vector2(6, 6)
 
 [node name="player" type="Node2D" parent="." unique_id=1610125567]
 

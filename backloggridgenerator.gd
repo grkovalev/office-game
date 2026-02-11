@@ -3,23 +3,23 @@ extends Node2D
 @export var columns: int = 13
 @export var rows: int = 10
 
-# Distance between brick centers in the grid
-@export var cell_size: Vector2 = Vector2(70, 35)
-
 # Atlas and brick settings
-@export var brick_atlas: Texture2D        # assign your 800x400 brick_atlas here
-@export var brick_source_size := Vector2i(400, 200)  # each variant in atlas
-@export var brick_display_size := Vector2(75, 35)    # on-screen size
-@export var brick_variants := Vector2i(2, 2)         # 2x2 = 4 variants
+@export var brick_atlas: Texture2D                # assign your 800x400 brick_atlas here
+@export var brick_source_size := Vector2i(400, 200)
+@export var brick_display_size := Vector2(75, 35) # on-screen size of each brick
+
+# New: spacing between bricks (in pixels)
+@export var brick_gap := Vector2(5, 5)            # horizontal / vertical gap
+
+@export var brick_variants := Vector2i(2, 2)      # 2x2 = 4 variants
 @export var use_random_variant: bool = true
-@export var default_variant_index: int = 0           # 0–3
+@export var default_variant_index: int = 0        # 0–3
 
 func _ready() -> void:
 	randomize()
 	generate_grid()
 
 func generate_grid() -> void:
-	# Clear any old children
 	for child in get_children():
 		child.queue_free()
 
@@ -37,24 +37,21 @@ func generate_grid() -> void:
 			var sprite := Sprite2D.new()
 			add_child(sprite)
 
-			# Grid placement
+			# Use brick size + gap for spacing
 			sprite.position = Vector2(
-				col * cell_size.x,
-				row * cell_size.y
+				col * (brick_display_size.x + brick_gap.x),
+				row * (brick_display_size.y + brick_gap.y)
 			)
 
-			# Pick variant index
 			var variant_index := default_variant_index
 			if use_random_variant:
 				variant_index = randi() % total_variants
 
-			# Apply atlas region
 			var tex := _create_variant_texture(variant_index)
 			if tex == null:
 				continue
 
 			sprite.texture = tex
-			# Scale from 400x200 to 75x35 (or whatever you set)
 			sprite.scale = Vector2(
 				brick_display_size.x / float(brick_source_size.x),
 				brick_display_size.y / float(brick_source_size.y)
