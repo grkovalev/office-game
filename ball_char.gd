@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
-const BALL_SPEED := 900.0
+@export var ball_speed: float = 900.0
+@export var brick_speed_boost: float = 0.0
+@export var max_ball_speed: float = 0.0
 const MAX_PADDLE_BOUNCE_ANGLE := deg_to_rad(60.0)
 const MIN_VERTICAL_ANGLE := deg_to_rad(10.0) # minimum angle away from horizontal
 
@@ -19,6 +21,7 @@ var ball_radius: float
 var bounds_rect: Rect2
 
 var attached := true
+var current_speed: float = 900.0
 
 func _ready() -> void:
 	var p_shape := paddle_coll.shape as RectangleShape2D
@@ -30,6 +33,7 @@ func _ready() -> void:
 
 	var r := bounds_rect_node.get_global_rect()
 	bounds_rect = Rect2(r.position, r.size)
+	current_speed = ball_speed
 
 	_stick_to_paddle()
 
@@ -38,10 +42,11 @@ func _physics_process(delta: float) -> void:
 		_stick_to_paddle()
 		if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("move_up"):
 			attached = false
-			velocity = Vector2.UP * BALL_SPEED
+			current_speed = ball_speed
+			velocity = Vector2.UP * ball_speed
 		return
 
-	velocity = _ensure_not_too_flat(velocity)
+	velocity = _ensure_not_too_flat(velocity, current_speed)
 	move_and_slide()
 
 	var bounced := false
@@ -64,17 +69,20 @@ func _physics_process(delta: float) -> void:
 			bounced = true
 
 			if collider != null and collider.is_in_group("brick"):
+				if brick_speed_boost > 0.0:
+					var cap: float = max_ball_speed if max_ball_speed > 0.0 else ball_speed * 3.0
+					current_speed = min(current_speed + brick_speed_boost, cap)
 				collider.queue_free()
 				# After hitting a brick, don't process more collisions this frame
 				break
 
 	if bounced:
-		velocity = _ensure_not_too_flat(velocity)
+		velocity = _ensure_not_too_flat(velocity, current_speed)
 
 	# Manual walls using bg_tiles rectangle
 	_handle_bounds()
 
-	velocity = _ensure_not_too_flat(velocity)
+	velocity = _ensure_not_too_flat(velocity, current_speed)
 
 func _stick_to_paddle() -> void:
 	var p := paddle.global_position
@@ -91,7 +99,8 @@ func _bounce_on_paddle() -> void:
 
 	var angle := offset * MAX_PADDLE_BOUNCE_ANGLE
 	var dir := Vector2(sin(angle), -cos(angle)) # straight up at center, more diagonal at edges
-	velocity = _ensure_not_too_flat(dir * BALL_SPEED)
+	current_speed = ball_speed
+	velocity = _ensure_not_too_flat(dir * ball_speed, current_speed)
 
 func _handle_bounds() -> void:
 	var pos := global_position
@@ -119,10 +128,11 @@ func _handle_bounds() -> void:
 
 	global_position = pos
 
-func _ensure_not_too_flat(v: Vector2) -> Vector2:
+func _ensure_not_too_flat(v: Vector2, speed: float = -1.0) -> Vector2:
+	var use_speed: float = speed if speed > 0.0 else ball_speed
 	# If the vector is almost zero, reset to straight up
 	if v.length_squared() < 0.0001:
-		return Vector2(0, -1) * BALL_SPEED
+		return Vector2(0, -1) * use_speed
 
 	var n: Vector2 = v.normalized()
 
@@ -135,4 +145,4 @@ func _ensure_not_too_flat(v: Vector2) -> Vector2:
 		var sx: float = sqrt(max(0.0, 1.0 - n.y * n.y))
 		n.x = (sign(n.x) if n.x != 0.0 else 1.0) * sx
 
-	return n.normalized() * BALL_SPEED
+	return n.normalized() * use_speed

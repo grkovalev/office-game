@@ -79,6 +79,7 @@ autowrap_mode = 2
 [node name="grid" type="Node2D" parent="env" unique_id=45948306]
 position = Vector2(136, 296)
 script = ExtResource("3_n4sgu")
+rows = 9
 brick_atlas = ExtResource("4_facmc")
 brick_display_size = Vector2(97.5, 45.5)
 brick_gap = Vector2(6, 6)
@@ -108,6 +109,7 @@ scale = Vector2(0.2, 0.2)
 [node name="ball_char" type="CharacterBody2D" parent="ball/ballctrl" unique_id=775356162]
 scale = Vector2(0.99999994, 0.99999994)
 script = ExtResource("6_7afv6")
+ball_speed = 300.0
 paddle_path = NodePath("../../../player/playctrl/play_char")
 paddle_collision_path = NodePath("../../../player/playctrl/play_char/play_coll")
 bounds_path = NodePath("../../../bg/bg_tiles")
