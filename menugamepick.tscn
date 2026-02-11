@@ -116,7 +116,7 @@ text = "sort out work chats"
 vertical_alignment = 1
 
 [node name="02_task" type="Node2D" parent="." unique_id=497892029]
-position = Vector2(108, 606)
+position = Vector2(97, 496)
 
 [node name="tetris_btn" type="Node2D" parent="02_task" unique_id=86807584]
 position = Vector2(547, 160)
@@ -140,6 +140,33 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("8_vamrj")
 theme_override_font_sizes/font_size = 25
 text = "schedule meetings"
+vertical_alignment = 1
+
+[node name="03_task" type="Node2D" parent="." unique_id=2144468165]
+position = Vector2(107, 558)
+
+[node name="tetris_btn" type="Node2D" parent="03_task" unique_id=305832314]
+position = Vector2(547, 160)
+scale = Vector2(0.08, 0.08)
+
+[node name="03flagbtn" type="TextureButton" parent="03_task/tetris_btn" unique_id=1873064926]
+offset_right = 666.0
+offset_bottom = 465.0
+texture_normal = ExtResource("10_kjn7q")
+script = ExtResource("11_vy2nc")
+
+[node name="textctrl" type="Node2D" parent="03_task" unique_id=923352635]
+position = Vector2(594, 139)
+rotation = -0.17453294
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="arkanoid_text" type="Label" parent="03_task/textctrl" unique_id=1532540044]
+offset_right = 249.0
+offset_bottom = 71.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_vamrj")
+theme_override_font_sizes/font_size = 25
+text = "deal with backlog"
 vertical_alignment = 1
 
 [node name="exitbtn" type="TextureButton" parent="." unique_id=1818713821]
