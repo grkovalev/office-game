@@ -77,12 +77,16 @@ autowrap_mode = 2
 [node name="env" type="Node2D" parent="." unique_id=9009023]
 
 [node name="grid" type="Node2D" parent="env" unique_id=45948306]
-position = Vector2(136, 296)
+position = Vector2(200, 318)
 script = ExtResource("3_n4sgu")
-rows = 9
+columns = 8
+rows = 7
 brick_atlas = ExtResource("4_facmc")
-brick_display_size = Vector2(97.5, 45.5)
-brick_gap = Vector2(6, 6)
+brick_display_size = Vector2(154.159, 71.941)
+brick_gap = Vector2(9, 9)
+empty_probability = 0.3
+variant0_probability = 0.7
+variant1_probability = 0.3
 
 [node name="player" type="Node2D" parent="." unique_id=1610125567]
 
