@@ -19,9 +19,12 @@ var paddle_half_width: float
 var paddle_half_height: float
 var ball_radius: float
 var bounds_rect: Rect2
+var overlap_shape: CircleShape2D
 
 var attached := true
 var current_speed: float = 900.0
+var paddle_ignore_time: float = 0.0
+var _prev_global_position: Vector2
 
 func _ready() -> void:
 	var p_shape := paddle_coll.shape as RectangleShape2D
@@ -31,9 +34,13 @@ func _ready() -> void:
 	var b_shape := ball_coll.shape as CircleShape2D
 	ball_radius = b_shape.radius * ball_coll.global_scale.x
 
+	overlap_shape = CircleShape2D.new()
+	overlap_shape.radius = ball_radius * 2.0
+
 	var r := bounds_rect_node.get_global_rect()
 	bounds_rect = Rect2(r.position, r.size)
 	current_speed = ball_speed
+	collision_mask = 1
 
 	_stick_to_paddle()
 
@@ -44,14 +51,24 @@ func _physics_process(delta: float) -> void:
 			attached = false
 			current_speed = ball_speed
 			velocity = Vector2.UP * ball_speed
+			paddle_ignore_time = 0.12
+			_prev_global_position = global_position
 		return
+
+	if paddle_ignore_time > 0.0:
+		paddle_ignore_time -= delta
 
 	velocity = _ensure_not_too_flat(velocity, current_speed)
 	move_and_slide()
 
-	var bounced := false
+	var hit_paddle := false
+	var first_bounce_normal := Vector2.ZERO
+	var bricks_hit: Array[Node] = []
 
-	# Handle physics collisions (paddle + bricks), but only ONE meaningful bounce per frame
+	# Sample overlap along path (prev -> current) so we never miss a brick (tunneling or grazing)
+	var path_normal: Vector2 = _collect_bricks_along_path(bricks_hit)
+
+	# Collect all slide collisions this frame
 	for i in range(get_slide_collision_count()):
 		var col := get_slide_collision(i)
 		var collider := col.get_collider()
@@ -60,29 +77,96 @@ func _physics_process(delta: float) -> void:
 		if normal == Vector2.ZERO:
 			continue
 
-		if collider == paddle:
-			_bounce_on_paddle()
-			bounced = true
-			break
+		if collider == paddle and paddle_ignore_time <= 0.0:
+			hit_paddle = true
 		else:
-			velocity = velocity.bounce(normal)
-			bounced = true
+			var brick_node: Node = _get_brick_node(collider)
+			if brick_node != null:
+				if brick_node not in bricks_hit:
+					bricks_hit.append(brick_node)
+				if first_bounce_normal == Vector2.ZERO:
+					first_bounce_normal = normal
+			elif first_bounce_normal == Vector2.ZERO:
+				first_bounce_normal = normal
 
-			if collider != null and collider.is_in_group("brick"):
-				if brick_speed_boost > 0.0:
-					var cap: float = max_ball_speed if max_ball_speed > 0.0 else ball_speed * 3.0
-					current_speed = min(current_speed + brick_speed_boost, cap)
-				collider.queue_free()
-				# After hitting a brick, don't process more collisions this frame
-				break
+	if first_bounce_normal == Vector2.ZERO and path_normal != Vector2.ZERO:
+		first_bounce_normal = path_normal
 
-	if bounced:
+	if hit_paddle:
+		_bounce_on_paddle()
+	elif bricks_hit.size() > 0:
+		# One brick per hit: bounce off the brick face we hit (use velocity to pick entry face), then destroy only that brick
+		var brick: Node = bricks_hit[0]
+		var brick_normal: Vector2 = _get_brick_face_normal_from_velocity(brick, velocity)
+		if brick_normal != Vector2.ZERO:
+			velocity = velocity.bounce(brick_normal)
+			velocity = _ensure_not_too_flat(velocity, current_speed)
+		if is_instance_valid(brick):
+			if brick_speed_boost > 0.0:
+				var cap: float = max_ball_speed if max_ball_speed > 0.0 else ball_speed * 3.0
+				current_speed = min(current_speed + brick_speed_boost, cap)
+			brick.queue_free()
+	elif first_bounce_normal != Vector2.ZERO:
+		velocity = velocity.bounce(first_bounce_normal)
 		velocity = _ensure_not_too_flat(velocity, current_speed)
 
 	# Manual walls using bg_tiles rectangle
 	_handle_bounds()
 
 	velocity = _ensure_not_too_flat(velocity, current_speed)
+
+	_prev_global_position = global_position
+
+func _collect_bricks_along_path(bricks_hit: Array[Node]) -> Vector2:
+	var from_pos: Vector2 = _prev_global_position
+	var to_pos: Vector2 = global_position
+	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = overlap_shape
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+	query.exclude = [get_rid()]
+	query.collision_mask = 0xFFFFFFFF
+	var first_normal := Vector2.ZERO
+	var sample_positions: Array[Vector2] = [from_pos, (from_pos + to_pos) * 0.5, to_pos]
+	for sample_pos in sample_positions:
+		query.transform = Transform2D(0.0, sample_pos)
+		var results: Array[Dictionary] = space_state.intersect_shape(query)
+		for result in results:
+			var body: Node = result.collider
+			var brick_node: Node = _get_brick_node(body)
+			if brick_node != null and brick_node not in bricks_hit:
+				bricks_hit.append(brick_node)
+				if first_normal == Vector2.ZERO:
+					var brick_pos: Vector2 = brick_node.global_position
+					first_normal = (sample_pos - brick_pos).normalized()
+	return first_normal
+
+func _get_brick_face_normal_from_velocity(brick_node: Node, vel: Vector2) -> Vector2:
+	# Pick the brick face we're moving toward (entry face). Its outward normal n should satisfy vel · n < 0.
+	if vel.length_squared() < 0.0001:
+		return Vector2.ZERO
+	var v: Vector2 = vel.normalized()
+	var best_normal := Vector2.ZERO
+	var best_dot: float = 1.0
+	for n in [Vector2(0.0, 1.0), Vector2(0.0, -1.0), Vector2(1.0, 0.0), Vector2(-1.0, 0.0)]:
+		var d: float = v.dot(n)
+		if d < best_dot:
+			best_dot = d
+			best_normal = n
+	if best_dot >= 0.0:
+		return Vector2.ZERO
+	return best_normal
+
+func _get_brick_node(collider: Node) -> Node:
+	if collider == null:
+		return null
+	if collider.is_in_group("brick"):
+		return collider
+	var parent: Node = collider.get_parent()
+	if parent != null and parent.is_in_group("brick"):
+		return parent
+	return null
 
 func _stick_to_paddle() -> void:
 	var p := paddle.global_position

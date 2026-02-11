@@ -109,7 +109,7 @@ scale = Vector2(0.2, 0.2)
 [node name="ball_char" type="CharacterBody2D" parent="ball/ballctrl" unique_id=775356162]
 scale = Vector2(0.99999994, 0.99999994)
 script = ExtResource("6_7afv6")
-ball_speed = 300.0
+ball_speed = 600.0
 paddle_path = NodePath("../../../player/playctrl/play_char")
 paddle_collision_path = NodePath("../../../player/playctrl/play_char/play_coll")
 bounds_path = NodePath("../../../bg/bg_tiles")

@@ -55,10 +55,6 @@ func generate_grid() -> void:
 	p0 /= sum_p
 	p1 /= sum_p
 
-	# Reusable collision shape for all bricks
-	var brick_shape := RectangleShape2D.new()
-	brick_shape.size = brick_display_size
-
 	for row in range(rows):
 		for col in range(columns):
 			# Decide if this cell is empty
@@ -75,6 +71,8 @@ func generate_grid() -> void:
 
 			# Create a StaticBody2D brick with sprite + collision
 			var brick := StaticBody2D.new()
+			brick.collision_layer = 1
+			brick.collision_mask = 0
 			add_child(brick)
 			brick.position = Vector2(
 				col * (brick_display_size.x + brick_gap.x),
@@ -91,7 +89,9 @@ func generate_grid() -> void:
 				brick_display_size.y / float(brick_source_size.y)
 			)
 
-			# Collision
+			# Collision: each brick gets its own shape so collisions are reliable
+			var brick_shape := RectangleShape2D.new()
+			brick_shape.size = brick_display_size
 			var coll := CollisionShape2D.new()
 			coll.shape = brick_shape
 			brick.add_child(coll)
