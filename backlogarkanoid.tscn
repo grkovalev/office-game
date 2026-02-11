@@ -3,6 +3,8 @@
 [ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_u1qfo"]
 [ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_2qx1n"]
 [ext_resource type="Texture2D" uid="uid://njex5bdrw0jq" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/keyboard_def.png" id="3_2qx1n"]
+[ext_resource type="Script" uid="uid://x8bg1dlp680v" path="res://backloggridgenerator.gd" id="3_n4sgu"]
+[ext_resource type="Texture2D" uid="uid://cppheeihxeb37" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/bricks_atlas.png" id="4_facmc"]
 [ext_resource type="Texture2D" uid="uid://ctgf464eioxks" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/ball_img.png" id="4_n0iij"]
 [ext_resource type="Texture2D" uid="uid://c6s7i80ilubn4" path="res://ui_buttons/calendartetris/tetris_ui_atlas.png" id="5_djpl0"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="6_n4sgu"]
@@ -72,6 +74,9 @@ autowrap_mode = 2
 [node name="env" type="Node2D" parent="." unique_id=9009023]
 
 [node name="grid" type="Node2D" parent="env" unique_id=45948306]
+position = Vector2(136, 304)
+script = ExtResource("3_n4sgu")
+brick_atlas = ExtResource("4_facmc")
 
 [node name="player" type="Node2D" parent="." unique_id=1610125567]
 
