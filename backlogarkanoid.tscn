@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cppheeihxeb37" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/bricks_atlas.png" id="4_facmc"]
 [ext_resource type="Texture2D" uid="uid://ctgf464eioxks" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/ball_img.png" id="4_n0iij"]
 [ext_resource type="Texture2D" uid="uid://c6s7i80ilubn4" path="res://ui_buttons/calendartetris/tetris_ui_atlas.png" id="5_djpl0"]
+[ext_resource type="Script" uid="uid://dntcmvvn6xo4c" path="res://ball_char.gd" id="6_7afv6"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="6_n4sgu"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
@@ -79,10 +80,8 @@ autowrap_mode = 2
 position = Vector2(136, 296)
 script = ExtResource("3_n4sgu")
 brick_atlas = ExtResource("4_facmc")
-brick_display_size = Vector2(99, 46.2)
+brick_display_size = Vector2(97.5, 45.5)
 brick_gap = Vector2(6, 6)
-variant0_probability = 0.3
-variant1_probability = 0.7
 
 [node name="player" type="Node2D" parent="." unique_id=1610125567]
 
@@ -108,6 +107,10 @@ scale = Vector2(0.2, 0.2)
 
 [node name="ball_char" type="CharacterBody2D" parent="ball/ballctrl" unique_id=775356162]
 scale = Vector2(0.99999994, 0.99999994)
+script = ExtResource("6_7afv6")
+paddle_path = NodePath("../../../player/playctrl/play_char")
+paddle_collision_path = NodePath("../../../player/playctrl/play_char/play_coll")
+bounds_path = NodePath("../../../bg/bg_tiles")
 
 [node name="ball_img" type="Sprite2D" parent="ball/ballctrl/ball_char" unique_id=1378949881]
 scale = Vector2(1.0000002, 1.0000002)

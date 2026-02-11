@@ -29,6 +29,7 @@ func _ready() -> void:
 	generate_grid()
 
 func generate_grid() -> void:
+	# Clear previous bricks
 	for child in get_children():
 		child.queue_free()
 
@@ -54,19 +55,14 @@ func generate_grid() -> void:
 	p0 /= sum_p
 	p1 /= sum_p
 
+	# Reusable collision shape for all bricks
+	var brick_shape := RectangleShape2D.new()
+	brick_shape.size = brick_display_size
+
 	for row in range(rows):
 		for col in range(columns):
-			var sprite := Sprite2D.new()
-			add_child(sprite)
-
-			sprite.position = Vector2(
-				col * (brick_display_size.x + brick_gap.x),
-				row * (brick_display_size.y + brick_gap.y)
-			)
-
 			# Decide if this cell is empty
 			if randf() < empty_probability:
-				# Leave sprite without a texture
 				continue
 
 			# Pick between variant 0 and 1 using normalized probabilities
@@ -77,11 +73,28 @@ func generate_grid() -> void:
 			if tex == null:
 				continue
 
+			# Create a StaticBody2D brick with sprite + collision
+			var brick := StaticBody2D.new()
+			add_child(brick)
+			brick.position = Vector2(
+				col * (brick_display_size.x + brick_gap.x),
+				row * (brick_display_size.y + brick_gap.y)
+			)
+			brick.add_to_group("brick")
+
+			# Visual
+			var sprite := Sprite2D.new()
+			brick.add_child(sprite)
 			sprite.texture = tex
 			sprite.scale = Vector2(
 				brick_display_size.x / float(brick_source_size.x),
 				brick_display_size.y / float(brick_source_size.y)
 			)
+
+			# Collision
+			var coll := CollisionShape2D.new()
+			coll.shape = brick_shape
+			brick.add_child(coll)
 
 func _create_variant_texture(variant_index: int) -> Texture2D:
 	if brick_atlas == null:
