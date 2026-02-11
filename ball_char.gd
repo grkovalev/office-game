@@ -107,7 +107,10 @@ func _physics_process(delta: float) -> void:
 				current_speed = min(current_speed + brick_speed_boost, cap)
 			if brick.has_method("take_hit"):
 				if brick.take_hit():
-					brick.queue_free()
+					if brick.has_method("play_destroy_animation"):
+						brick.play_destroy_animation()
+					else:
+						brick.queue_free()
 				elif brick_normal != Vector2.ZERO:
 					# 2-hit brick: push ball out so it doesn't collide again next frame
 					global_position += brick_normal * (ball_radius * 2.5)

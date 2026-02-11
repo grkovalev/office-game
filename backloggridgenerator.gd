@@ -55,6 +55,9 @@ func generate_grid() -> void:
 	p0 /= sum_p
 	p1 /= sum_p
 
+	var blink_tex_2: Texture2D = _create_variant_texture(2)
+	var blink_tex_3: Texture2D = _create_variant_texture(3)
+
 	for row in range(rows):
 		for col in range(columns):
 			# Decide if this cell is empty
@@ -88,6 +91,10 @@ func generate_grid() -> void:
 					brick.cracked_texture = cracked_tex
 			else:
 				brick.hits_left = 1
+			if blink_tex_2 != null:
+				brick.blink_texture_2 = blink_tex_2
+			if blink_tex_3 != null:
+				brick.blink_texture_3 = blink_tex_3
 
 			# Visual
 			var sprite := Sprite2D.new()
