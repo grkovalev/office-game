@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal hit_bottom
+
 @export var ball_speed: float = 900.0
 @export var brick_speed_boost: float = 0.0
 @export var max_ball_speed: float = 0.0
@@ -25,6 +27,7 @@ var attached := true
 var current_speed: float = 900.0
 var paddle_ignore_time: float = 0.0
 var _prev_global_position: Vector2
+var _bottom_hit_emitted_this_frame: bool = false
 
 func _ready() -> void:
 	var p_shape := paddle_coll.shape as RectangleShape2D
@@ -48,7 +51,23 @@ func reset_ball() -> void:
 	attached = true
 	current_speed = ball_speed
 	velocity = Vector2.ZERO
+	_bottom_hit_emitted_this_frame = false
+	show()
+	set_physics_process(true)
 	_stick_to_paddle()
+
+func stick_to_paddle() -> void:
+	attached = true
+	current_speed = ball_speed
+	velocity = Vector2.ZERO
+	_bottom_hit_emitted_this_frame = false
+	_stick_to_paddle()
+
+func disappear() -> void:
+	# Game over: ball leaves the play area
+	velocity = Vector2.ZERO
+	hide()
+	set_physics_process(false)
 
 func _physics_process(delta: float) -> void:
 	if attached:
@@ -139,6 +158,7 @@ func _physics_process(delta: float) -> void:
 	velocity = _ensure_not_too_flat(velocity, current_speed)
 
 	_prev_global_position = global_position
+	_bottom_hit_emitted_this_frame = false
 
 func _collect_bricks_along_path(bricks_hit: Array[Node]) -> Vector2:
 	var from_pos: Vector2 = _prev_global_position
@@ -165,7 +185,7 @@ func _collect_bricks_along_path(bricks_hit: Array[Node]) -> Vector2:
 					first_normal = (sample_pos - brick_pos).normalized()
 	return first_normal
 
-func _get_brick_face_normal_from_velocity(brick_node: Node, vel: Vector2) -> Vector2:
+func _get_brick_face_normal_from_velocity(_brick_node: Node, vel: Vector2) -> Vector2:
 	# Pick the brick face we're moving toward (entry face). Its outward normal n should satisfy vel · n < 0.
 	if vel.length_squared() < 0.0001:
 		return Vector2.ZERO
@@ -225,13 +245,16 @@ func _handle_bounds() -> void:
 		pos.x = right
 		velocity.x = -abs(velocity.x)
 
-	# Top / bottom (bottom currently bounces; you can turn this into "lose ball" later)
+	# Top wall bounces; bottom = lose life (main script handles stick or game over)
 	if pos.y < top:
 		pos.y = top
 		velocity.y = abs(velocity.y)
 	elif pos.y > bottom:
 		pos.y = bottom
-		velocity.y = -abs(velocity.y)
+		velocity = Vector2.ZERO
+		if not _bottom_hit_emitted_this_frame:
+			_bottom_hit_emitted_this_frame = true
+			hit_bottom.emit()
 
 	global_position = pos
 
