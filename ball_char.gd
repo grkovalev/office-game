@@ -104,13 +104,15 @@ func _physics_process(delta: float) -> void:
 		# Only one brick per hit
 		var brick: Node = bricks_hit[0]
 
-		# Decide which face we bounced on (entry face from velocity)
+		# Optional: still compute a normal for nudging out 2‑hit bricks
 		var brick_normal: Vector2 = _get_brick_face_normal_from_velocity(brick, velocity)
-		if brick_normal != Vector2.ZERO:
-			velocity = velocity.bounce(brick_normal)
-			velocity = _ensure_not_too_flat(velocity, current_speed)
+
+		# Bounce strictly opposite to current trajectory
+		velocity = -velocity
+		velocity = _ensure_not_too_flat(velocity, current_speed)
 
 		if is_instance_valid(brick):
+			# Speed boost logic stays as before
 			if brick_speed_boost > 0.0:
 				var cap: float = max_ball_speed if max_ball_speed > 0.0 else ball_speed * 3.0
 				current_speed = min(current_speed + brick_speed_boost, cap)
@@ -122,7 +124,7 @@ func _physics_process(delta: float) -> void:
 					else:
 						brick.queue_free()
 				elif brick_normal != Vector2.ZERO:
-					# 2‑hit brick: push ball out so it doesn't collide again next frame
+					# 2‑hit brick: push ball out so it doesn't immediately collide again
 					global_position += brick_normal * (ball_radius * 2.5)
 			else:
 				brick.queue_free()
