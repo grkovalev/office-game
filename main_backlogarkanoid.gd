@@ -29,10 +29,12 @@ const HEALTHCUP_REGION_FRAME_1 := Rect2(500, 0, 500, 500)
 
 var paddle_half_width: float
 var paddle_half_height: float
+var _paddle_fixed_y: float  # Lock paddle to X-only movement
 var bounds_rect: Rect2
 var _initial_player_position: Vector2
 var lives_remaining: int = 3
 var _health_animation_running: bool = false
+var _pending_blink_cup_index: int = -1
 var is_paused: bool = false
 var _pause_base_scale: Vector2 = Vector2.ONE
 
@@ -41,6 +43,7 @@ func _ready() -> void:
 	exitbtn.pressed.connect(_on_exitbtn_pressed)
 	restartbtn.pressed.connect(_on_restartbtn_pressed)
 	ball_char.hit_bottom.connect(_on_ball_hit_bottom)
+	ball_char.emergence_finished.connect(_on_ball_emergence_finished)
 	_pause_base_scale = pause_node.scale
 	pause_node.hide()
 	# Restart/exit only on left click, not Space/Enter
@@ -50,6 +53,7 @@ func _ready() -> void:
 	var paddle_shape := paddle_coll.shape as RectangleShape2D
 	paddle_half_width = 0.5 * paddle_shape.size.x * paddle_coll.global_scale.x
 	paddle_half_height = 0.5 * paddle_shape.size.y * paddle_coll.global_scale.y
+	_paddle_fixed_y = paddle.global_position.y
 
 	var r := tiles.get_global_rect()
 	bounds_rect = Rect2(r.position, r.size)
@@ -111,6 +115,7 @@ func _update_paddle(_delta: float) -> void:
 	paddle.move_and_slide()
 
 	var p := paddle.global_position
+	p.y = _paddle_fixed_y  # Keep paddle on fixed Y (X-only movement)
 	var left_limit := bounds_rect.position.x + paddle_half_width
 	var right_limit := bounds_rect.position.x + bounds_rect.size.x - paddle_half_width
 	p.x = clamp(p.x, left_limit, right_limit)
@@ -129,7 +134,7 @@ func _on_ball_hit_bottom() -> void:
 		var cup_index: int = 3 - lives_remaining
 		_lose_health_cup(cup_index)
 		lives_remaining -= 1
-		ball_char.stick_to_paddle()
+		ball_char.return_to_paddle_after_delay(1.0)
 	else:
 		ball_char.disappear()
 
@@ -139,11 +144,12 @@ func _lose_health_cup(cup_index: int) -> void:
 	var sprite: Sprite2D = health_cup_sprites[cup_index]
 	var cup_parent: Node2D = health_cup_parents[cup_index]
 	_health_animation_running = true
+	_pending_blink_cup_index = cup_index
 
 	# 1) Switch texture atlas to frame 1 (broken)
 	sprite.region_rect = HEALTHCUP_REGION_FRAME_1
 
-	# 2) Enlarge then shrink (like exitbtn/restartbtn)
+	# 2) Enlarge then shrink (like exitbtn/restartbtn); blink phase starts after ball emergence + 0.5s
 	var base_scale: Vector2 = cup_parent.scale
 	var tween := create_tween()
 	tween.set_parallel(false)
@@ -153,8 +159,22 @@ func _lose_health_cup(cup_index: int) -> void:
 	tween.tween_property(cup_parent, "scale", base_scale, 0.15)
 	tween.set_trans(Tween.TRANS_BACK)
 	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_interval(1.5)  # Show index 1 texture a bit longer before blinking
-	# Blink: dim and back (3 times)
+
+func _on_ball_emergence_finished() -> void:
+	if not _health_animation_running or _pending_blink_cup_index < 0:
+		return
+	var cup_index: int = _pending_blink_cup_index
+	var sprite: Sprite2D = health_cup_sprites[cup_index]
+	var cup_parent: Node2D = health_cup_parents[cup_index]
+	var timer := get_tree().create_timer(0.5)
+	timer.timeout.connect(func() -> void:
+		_run_health_cup_blink(cup_index, sprite, cup_parent)
+		_pending_blink_cup_index = -1
+	, CONNECT_ONE_SHOT)
+
+func _run_health_cup_blink(cup_index: int, sprite: Sprite2D, cup_parent: Node2D) -> void:
+	var tween := create_tween()
+	tween.set_parallel(false)
 	for _i in range(3):
 		tween.tween_property(sprite, "modulate:a", 0.35, 0.08)
 		tween.tween_property(sprite, "modulate:a", 1.0, 0.08)
@@ -173,6 +193,7 @@ func _restart_game() -> void:
 		pause_node.hide()
 	lives_remaining = 3
 	_health_animation_running = false
+	_pending_blink_cup_index = -1
 	# Restore all health cups: visible, frame 0, full opacity
 	for i in range(health_cup_parents.size()):
 		var parent_node: Node2D = health_cup_parents[i]

@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal hit_bottom
+signal emergence_finished
 
 @export var ball_speed: float = 900.0
 @export var brick_speed_boost: float = 0.0
@@ -16,6 +17,7 @@ const MIN_VERTICAL_ANGLE := deg_to_rad(10.0) # minimum angle away from horizonta
 @onready var paddle_coll: CollisionShape2D = get_node(paddle_collision_path)
 @onready var bounds_rect_node: TextureRect = get_node(bounds_path)
 @onready var ball_coll: CollisionShape2D = $ball_coll
+@onready var ball_img: Sprite2D = $ball_img
 
 var paddle_half_width: float
 var paddle_half_height: float
@@ -62,6 +64,29 @@ func stick_to_paddle() -> void:
 	velocity = Vector2.ZERO
 	_bottom_hit_emitted_this_frame = false
 	_stick_to_paddle()
+
+## Call after ball hit bottom and a life was lost: hide ball, wait delay_sec, then stick to paddle and long fade-in; emits emergence_finished when done.
+func return_to_paddle_after_delay(delay_sec: float) -> void:
+	attached = true
+	current_speed = ball_speed
+	velocity = Vector2.ZERO
+	_bottom_hit_emitted_this_frame = false
+	hide()
+	set_physics_process(false)
+	var timer := get_tree().create_timer(delay_sec)
+	timer.timeout.connect(_emerge_on_paddle, CONNECT_ONE_SHOT)
+
+func _emerge_on_paddle() -> void:
+	_stick_to_paddle()
+	show()
+	set_physics_process(true)
+	ball_img.modulate.a = 0.0
+	var tween := create_tween()
+	tween.tween_property(ball_img, "modulate:a", 1.0, 1.0)  # Long fade-in only
+	tween.tween_callback(func() -> void:
+		ball_img.modulate.a = 1.0
+		emergence_finished.emit()
+	)
 
 func disappear() -> void:
 	# Game over: ball leaves the play area
