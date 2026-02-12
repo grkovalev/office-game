@@ -21,8 +21,14 @@ gradient = SubResource("Gradient_k6kum")
 [sub_resource type="Gradient" id="Gradient_hlmdn"]
 colors = PackedColorArray(1, 1, 1, 0.6666667, 1, 1, 1, 0.6666667)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_djpl0"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qovi6"]
 gradient = SubResource("Gradient_hlmdn")
+
+[sub_resource type="Gradient" id="Gradient_7qgsj"]
+colors = PackedColorArray(1, 1, 1, 0.6666667, 1, 1, 1, 0.6666667)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4uiv1"]
+gradient = SubResource("Gradient_7qgsj")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0iij"]
 size = Vector2(161.80478, 20.225632)
@@ -48,11 +54,19 @@ offset_bottom = 1105.0
 texture = SubResource("GradientTexture2D_n0iij")
 
 [node name="bg_tiles" type="TextureRect" parent="bg" unique_id=468958868]
+visible = false
 offset_left = 72.0
 offset_top = 248.0
 offset_right = 1464.0
 offset_bottom = 1050.0
-texture = SubResource("GradientTexture2D_djpl0")
+texture = SubResource("GradientTexture2D_qovi6")
+
+[node name="bg_tiles_visual" type="TextureRect" parent="bg" unique_id=339751930]
+offset_left = 72.0
+offset_top = 248.0
+offset_right = 1464.0
+offset_bottom = 888.0
+texture = SubResource("GradientTexture2D_4uiv1")
 
 [node name="title" type="Label" parent="bg" unique_id=1727008019]
 offset_left = 72.0
