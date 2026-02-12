@@ -96,9 +96,16 @@ func _lose_health_cup(cup_index: int) -> void:
 	# 1) Switch texture atlas to frame 1 (broken)
 	sprite.region_rect = HEALTHCUP_REGION_FRAME_1
 
-	# 2) Hold broken texture a moment, then blink and fade out
+	# 2) Enlarge then shrink (like exitbtn/restartbtn)
+	var base_scale: Vector2 = cup_parent.scale
 	var tween := create_tween()
 	tween.set_parallel(false)
+	tween.tween_property(cup_parent, "scale", base_scale * 1.15, 0.15)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(cup_parent, "scale", base_scale, 0.15)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_interval(1.5)  # Show index 1 texture a bit longer before blinking
 	# Blink: dim and back (3 times)
 	for _i in range(3):
