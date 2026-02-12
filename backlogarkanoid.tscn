@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://dntcmvvn6xo4c" path="res://ball_char.gd" id="6_7afv6"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="6_n4sgu"]
 [ext_resource type="Texture2D" uid="uid://wa2lfcxynxf5" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/mug_atlas.png" id="9_qovi6"]
+[ext_resource type="Texture2D" uid="uid://dyay3bbq4tuoo" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/pauseimg.png" id="12_7qgsj"]
+[ext_resource type="Script" uid="uid://b6vpfbirj0xb3" path="res://pause_input_handler.gd" id="13_pausein"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
@@ -188,3 +190,10 @@ offset_right = 397.0
 offset_bottom = 242.0
 texture_normal = SubResource("AtlasTexture_7afv6")
 script = ExtResource("6_n4sgu")
+
+[node name="pause" type="Node2D" parent="." unique_id=1480605835]
+position = Vector2(776, 536)
+script = ExtResource("13_pausein")
+
+[node name="Sprite2D" type="Sprite2D" parent="pause" unique_id=988406068]
+texture = ExtResource("12_7qgsj")

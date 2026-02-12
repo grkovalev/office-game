@@ -25,6 +25,7 @@ const HEALTHCUP_REGION_FRAME_1 := Rect2(500, 0, 500, 500)
 	get_node("health/02_heathcup"),
 	get_node("health/03_heathcup")
 ]
+@onready var pause_node: Node2D = $pause
 
 var paddle_half_width: float
 var paddle_half_height: float
@@ -32,12 +33,20 @@ var bounds_rect: Rect2
 var _initial_player_position: Vector2
 var lives_remaining: int = 3
 var _health_animation_running: bool = false
+var is_paused: bool = false
+var _pause_base_scale: Vector2 = Vector2.ONE
 
 func _ready() -> void:
 	_initial_player_position = player_ctrl.position
 	exitbtn.pressed.connect(_on_exitbtn_pressed)
 	restartbtn.pressed.connect(_on_restartbtn_pressed)
 	ball_char.hit_bottom.connect(_on_ball_hit_bottom)
+	_pause_base_scale = pause_node.scale
+	pause_node.hide()
+	# Restart/exit only on left click, not Space/Enter
+	exitbtn.focus_mode = Control.FOCUS_NONE
+	restartbtn.focus_mode = Control.FOCUS_NONE
+
 	var paddle_shape := paddle_coll.shape as RectangleShape2D
 	paddle_half_width = 0.5 * paddle_shape.size.x * paddle_coll.global_scale.x
 	paddle_half_height = 0.5 * paddle_shape.size.y * paddle_coll.global_scale.y
@@ -48,7 +57,45 @@ func _ready() -> void:
 	for i in range(health_cup_sprites.size()):
 		health_cup_sprites[i].region_rect = HEALTHCUP_REGION_FRAME_0
 
+func _input(event: InputEvent) -> void:
+	# Only runs when game is not paused; when paused, PauseInputHandler handles Space
+	if event is InputEventKey:
+		var key_ev: InputEventKey = event
+		if key_ev.pressed and not key_ev.echo and key_ev.keycode == KEY_SPACE:
+			_toggle_pause()
+			get_viewport().set_input_as_handled()
+
+func _toggle_pause() -> void:
+	if is_paused:
+		_unpause_game()
+	else:
+		_pause_game()
+
+func _pause_game() -> void:
+	is_paused = true
+	get_tree().paused = true
+	pause_node.show()
+	pause_node.scale = _pause_base_scale * 0.3  # Start small for pop
+	# Tween must run on pause node so it keeps playing while tree is paused (pause node has PROCESS_MODE_ALWAYS)
+	var tween := pause_node.create_tween()
+	tween.set_parallel(false)
+	# Burst: scale up past 1
+	tween.tween_property(pause_node, "scale", _pause_base_scale * 1.18, 0.12)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+	# Squeeze: settle to normal
+	tween.tween_property(pause_node, "scale", _pause_base_scale, 0.15)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+
+func _unpause_game() -> void:
+	is_paused = false
+	get_tree().paused = false
+	pause_node.hide()
+
 func _physics_process(delta: float) -> void:
+	if is_paused:
+		return
 	_update_paddle(delta)
 
 func _update_paddle(_delta: float) -> void:
@@ -119,6 +166,11 @@ func _lose_health_cup(cup_index: int) -> void:
 	)
 
 func _restart_game() -> void:
+	# Clear pause so pause node hides and game unfreezes
+	if is_paused:
+		is_paused = false
+		get_tree().paused = false
+		pause_node.hide()
 	lives_remaining = 3
 	_health_animation_running = false
 	# Restore all health cups: visible, frame 0, full opacity
