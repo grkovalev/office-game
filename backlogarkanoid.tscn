@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c6s7i80ilubn4" path="res://ui_buttons/calendartetris/tetris_ui_atlas.png" id="5_djpl0"]
 [ext_resource type="Script" uid="uid://dntcmvvn6xo4c" path="res://ball_char.gd" id="6_7afv6"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="6_n4sgu"]
+[ext_resource type="Texture2D" uid="uid://c2tdkscl63ujn" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/keyboard_pressed.png" id="7_o1l3h"]
 [ext_resource type="Texture2D" uid="uid://wa2lfcxynxf5" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/mug_atlas.png" id="9_qovi6"]
 [ext_resource type="Texture2D" uid="uid://dyay3bbq4tuoo" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/pauseimg.png" id="12_7qgsj"]
 [ext_resource type="Script" uid="uid://b6vpfbirj0xb3" path="res://pause_input_handler.gd" id="13_pausein"]
@@ -33,7 +34,7 @@ colors = PackedColorArray(1, 1, 1, 0.6666667, 1, 1, 1, 0.6666667)
 gradient = SubResource("Gradient_7qgsj")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0iij"]
-size = Vector2(161.80478, 20.225632)
+size = Vector2(161.80478, 19.447716)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n0iij"]
 
@@ -94,7 +95,7 @@ autowrap_mode = 2
 [node name="env" type="Node2D" parent="." unique_id=9009023]
 
 [node name="grid" type="Node2D" parent="env" unique_id=45948306]
-position = Vector2(200, 318)
+position = Vector2(200, 296)
 script = ExtResource("3_n4sgu")
 columns = 8
 rows = 7
@@ -112,6 +113,7 @@ position = Vector2(756, 1024)
 scale = Vector2(0.2, 0.2)
 
 [node name="play_char" type="CharacterBody2D" parent="player/playctrl" unique_id=1286823422]
+visible = false
 
 [node name="play_img" type="Sprite2D" parent="player/playctrl/play_char" unique_id=637106822]
 scale = Vector2(0.99999994, 0.99999994)
@@ -119,6 +121,17 @@ texture = ExtResource("3_2qx1n")
 
 [node name="play_coll" type="CollisionShape2D" parent="player/playctrl/play_char" unique_id=1317528701]
 scale = Vector2(12.854998, 12.854998)
+shape = SubResource("RectangleShape2D_n0iij")
+
+[node name="play_char_pressed" type="CharacterBody2D" parent="player/playctrl" unique_id=1224536583]
+
+[node name="playpressed_img" type="Sprite2D" parent="player/playctrl/play_char_pressed" unique_id=231617932]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("7_o1l3h")
+
+[node name="playpressed_coll" type="CollisionShape2D" parent="player/playctrl/play_char_pressed" unique_id=1895988526]
+position = Vector2(0, 5)
+scale = Vector2(12.854997, 12.854997)
 shape = SubResource("RectangleShape2D_n0iij")
 
 [node name="ball" type="Node2D" parent="." unique_id=630147723]
@@ -133,6 +146,8 @@ script = ExtResource("6_7afv6")
 ball_speed = 600.0
 paddle_path = NodePath("../../../player/playctrl/play_char")
 paddle_collision_path = NodePath("../../../player/playctrl/play_char/play_coll")
+paddle_pressed_path = NodePath("../../../player/playctrl/play_char_pressed")
+paddle_pressed_collision_path = NodePath("../../../player/playctrl/play_char_pressed/playpressed_coll")
 bounds_path = NodePath("../../../bg/bg_tiles")
 
 [node name="ball_img" type="Sprite2D" parent="ball/ballctrl/ball_char" unique_id=1378949881]

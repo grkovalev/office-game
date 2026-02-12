@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 signal hit_bottom
 signal emergence_finished
+signal paddle_bounced
 
 @export var ball_speed: float = 900.0
 @export var brick_speed_boost: float = 0.0
@@ -11,6 +12,8 @@ const MIN_VERTICAL_ANGLE := deg_to_rad(10.0) # minimum angle away from horizonta
 
 @export var paddle_path: NodePath
 @export var paddle_collision_path: NodePath
+@export var paddle_pressed_path: NodePath
+@export var paddle_pressed_collision_path: NodePath
 @export var bounds_path: NodePath
 
 @onready var paddle: CharacterBody2D = get_node(paddle_path)
@@ -19,8 +22,13 @@ const MIN_VERTICAL_ANGLE := deg_to_rad(10.0) # minimum angle away from horizonta
 @onready var ball_coll: CollisionShape2D = $ball_coll
 @onready var ball_img: Sprite2D = $ball_img
 
+var paddle_pressed: CharacterBody2D = null
+var paddle_pressed_coll: CollisionShape2D = null
 var paddle_half_width: float
 var paddle_half_height: float
+var paddle_pressed_half_width: float
+var paddle_pressed_half_height: float
+var _last_paddle_collider: Node = null
 var ball_radius: float
 var bounds_rect: Rect2
 var overlap_shape: CircleShape2D
@@ -35,6 +43,19 @@ func _ready() -> void:
 	var p_shape := paddle_coll.shape as RectangleShape2D
 	paddle_half_width = 0.5 * p_shape.size.x * paddle_coll.global_scale.x
 	paddle_half_height = 0.5 * p_shape.size.y * paddle_coll.global_scale.y
+	if paddle_pressed_path != NodePath("") and paddle_pressed_collision_path != NodePath(""):
+		paddle_pressed = get_node_or_null(paddle_pressed_path) as CharacterBody2D
+		paddle_pressed_coll = get_node_or_null(paddle_pressed_collision_path) as CollisionShape2D
+		if paddle_pressed_coll != null and paddle_pressed_coll.shape is RectangleShape2D:
+			var pp_shape: RectangleShape2D = paddle_pressed_coll.shape as RectangleShape2D
+			paddle_pressed_half_width = 0.5 * pp_shape.size.x * paddle_pressed_coll.global_scale.x
+			paddle_pressed_half_height = 0.5 * pp_shape.size.y * paddle_pressed_coll.global_scale.y
+		else:
+			paddle_pressed_half_width = paddle_half_width
+			paddle_pressed_half_height = paddle_half_height
+	else:
+		paddle_pressed_half_width = paddle_half_width
+		paddle_pressed_half_height = paddle_half_height
 
 	var b_shape := ball_coll.shape as CircleShape2D
 	ball_radius = b_shape.radius * ball_coll.global_scale.x
@@ -127,8 +148,10 @@ func _physics_process(delta: float) -> void:
 		if normal == Vector2.ZERO:
 			continue
 
-		if collider == paddle and paddle_ignore_time <= 0.0:
+		var is_paddle := (collider == paddle) or (paddle_pressed != null and collider == paddle_pressed)
+		if is_paddle and paddle_ignore_time <= 0.0:
 			hit_paddle = true
+			_last_paddle_collider = collider
 		else:
 			var brick_node: Node = _get_brick_node(collider)
 			if brick_node != null:
@@ -144,6 +167,7 @@ func _physics_process(delta: float) -> void:
 
 	if hit_paddle:
 		_bounce_on_paddle()
+		paddle_bounced.emit()
 	elif bricks_hit.size() > 0:
 		# Only one brick per hit
 		var brick: Node = bricks_hit[0]
@@ -238,15 +262,23 @@ func _get_brick_node(collider: Node) -> Node:
 
 func _stick_to_paddle() -> void:
 	var p := paddle.global_position
+	var half_h := paddle_pressed_half_height if paddle_pressed_coll != null else paddle_half_height
 	global_position = Vector2(
 		p.x,
-		p.y - paddle_half_height - ball_radius - 2.0
+		p.y - half_h - ball_radius - 2.0
 	)
 	velocity = Vector2.ZERO
 
 func _bounce_on_paddle() -> void:
+	var paddle_pos: Vector2 = paddle.global_position
+	var half_w := paddle_half_width
+	var half_h := paddle_half_height
+	if _last_paddle_collider == paddle_pressed and paddle_pressed != null:
+		paddle_pos = paddle_pressed.global_position
+		half_w = paddle_pressed_half_width
+		half_h = paddle_pressed_half_height
 	# -1 = far left, 0 = center, +1 = far right
-	var offset := (global_position.x - paddle.global_position.x) / paddle_half_width
+	var offset := (global_position.x - paddle_pos.x) / half_w
 	offset = clamp(offset, -1.0, 1.0)
 
 	var angle := offset * MAX_PADDLE_BOUNCE_ANGLE

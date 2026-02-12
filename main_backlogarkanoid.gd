@@ -7,6 +7,8 @@ const HEALTHCUP_REGION_FRAME_1 := Rect2(500, 0, 500, 500)
 
 @onready var paddle: CharacterBody2D = $player/playctrl/play_char
 @onready var paddle_coll: CollisionShape2D = $player/playctrl/play_char/play_coll
+@onready var paddle_pressed: CharacterBody2D = $player/playctrl/play_char_pressed
+@onready var paddle_pressed_coll: CollisionShape2D = $player/playctrl/play_char_pressed/playpressed_coll
 @onready var tiles: TextureRect = $bg/bg_tiles
 @onready var exitbtn: TextureButton = $exitbtn
 @onready var restartbtn: TextureButton = $restartbtn
@@ -37,6 +39,8 @@ var _health_animation_running: bool = false
 var _pending_blink_cup_index: int = -1
 var is_paused: bool = false
 var _pause_base_scale: Vector2 = Vector2.ONE
+var _paddle_pressed_timer: float = 0.0
+const PADDLE_PRESSED_DURATION := 0.12
 
 func _ready() -> void:
 	_initial_player_position = player_ctrl.position
@@ -44,6 +48,7 @@ func _ready() -> void:
 	restartbtn.pressed.connect(_on_restartbtn_pressed)
 	ball_char.hit_bottom.connect(_on_ball_hit_bottom)
 	ball_char.emergence_finished.connect(_on_ball_emergence_finished)
+	ball_char.paddle_bounced.connect(_on_ball_paddle_bounced)
 	_pause_base_scale = pause_node.scale
 	pause_node.hide()
 	# Restart/exit only on left click, not Space/Enter
@@ -60,6 +65,22 @@ func _ready() -> void:
 	# Use correct 500x500 regions for 1000x500 atlas at start
 	for i in range(health_cup_sprites.size()):
 		health_cup_sprites[i].region_rect = HEALTHCUP_REGION_FRAME_0
+	_update_paddle_visual(ball_char.attached)
+
+func _on_ball_paddle_bounced() -> void:
+	_paddle_pressed_timer = PADDLE_PRESSED_DURATION
+
+func _update_paddle_visual(use_pressed: bool) -> void:
+	if use_pressed:
+		paddle.visible = false
+		paddle_coll.disabled = true
+		paddle_pressed.visible = true
+		paddle_pressed_coll.disabled = false
+	else:
+		paddle.visible = true
+		paddle_coll.disabled = false
+		paddle_pressed.visible = false
+		paddle_pressed_coll.disabled = true
 
 func _input(event: InputEvent) -> void:
 	# Only runs when game is not paused; when paused, PauseInputHandler handles Space
@@ -120,6 +141,10 @@ func _update_paddle(_delta: float) -> void:
 	var right_limit := bounds_rect.position.x + bounds_rect.size.x - paddle_half_width
 	p.x = clamp(p.x, left_limit, right_limit)
 	paddle.global_position = p
+	paddle_pressed.global_position = p
+	if _paddle_pressed_timer > 0.0:
+		_paddle_pressed_timer -= _delta
+	_update_paddle_visual(ball_char.attached or _paddle_pressed_timer > 0.0)
 
 func _on_exitbtn_pressed() -> void:
 	queue_free()
