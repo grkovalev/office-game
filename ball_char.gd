@@ -186,7 +186,7 @@ func _physics_process(delta: float) -> void:
 				current_speed = min(current_speed + brick_speed_boost, cap)
 
 			if brick.has_method("take_hit"):
-				if brick.take_hit():
+				if brick.take_hit(brick_normal):
 					if brick.has_method("play_destroy_animation"):
 						brick.play_destroy_animation()
 					else:
