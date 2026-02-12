@@ -9,9 +9,16 @@ var blink_texture_2: Texture2D = null
 var blink_texture_3: Texture2D = null
 ## Duration per blink frame in seconds (~0.06–0.08 feels good).
 var blink_duration: float = 0.07
+## Impact tween: scale punch duration in seconds.
+var impact_duration: float = 0.08
+## Impact tween: max scale (e.g. 1.2 = 20% bigger at peak).
+var impact_scale: float = 1.2
+## Impact tween: modulate flash (e.g. 1.4 = brief brighten). 0 = no flash.
+var impact_modulate_peak: float = 1.35
 
 ## Call when the ball hits this brick. Returns true if the brick should be removed, false if it only got damaged.
 func take_hit() -> bool:
+	_play_impact_tween()
 	hits_left -= 1
 	if hits_left <= 0:
 		return true
@@ -21,6 +28,23 @@ func take_hit() -> bool:
 				(child as Sprite2D).texture = cracked_texture
 				break
 	return false
+
+func _play_impact_tween() -> void:
+	var sprite: Sprite2D = _get_sprite()
+	if sprite == null:
+		return
+	var start_scale: Vector2 = sprite.scale
+	var start_mod: Color = sprite.modulate
+	var tween := create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_BACK)
+	# Scale punch: grow then back
+	tween.tween_property(sprite, "scale", start_scale * impact_scale, impact_duration * 0.4)
+	tween.tween_property(sprite, "scale", start_scale, impact_duration * 0.6).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	if impact_modulate_peak > 0.0:
+		var peak_mod := Color(start_mod.r * impact_modulate_peak, start_mod.g * impact_modulate_peak, start_mod.b * impact_modulate_peak, start_mod.a)
+		tween.parallel().tween_property(sprite, "modulate", peak_mod, impact_duration * 0.25)
+		tween.parallel().tween_property(sprite, "modulate", start_mod, impact_duration * 0.75).set_delay(impact_duration * 0.25)
 
 ## Play blink (frame 2 → frame 3) then queue_free. Call when brick is being removed.
 func play_destroy_animation() -> void:
