@@ -101,16 +101,20 @@ func _physics_process(delta: float) -> void:
 	if hit_paddle:
 		_bounce_on_paddle()
 	elif bricks_hit.size() > 0:
-		# One brick per hit: bounce off the brick face we hit (use velocity to pick entry face), then destroy only that brick
+		# Only one brick per hit
 		var brick: Node = bricks_hit[0]
+
+		# Decide which face we bounced on (entry face from velocity)
 		var brick_normal: Vector2 = _get_brick_face_normal_from_velocity(brick, velocity)
 		if brick_normal != Vector2.ZERO:
 			velocity = velocity.bounce(brick_normal)
 			velocity = _ensure_not_too_flat(velocity, current_speed)
+
 		if is_instance_valid(brick):
 			if brick_speed_boost > 0.0:
 				var cap: float = max_ball_speed if max_ball_speed > 0.0 else ball_speed * 3.0
 				current_speed = min(current_speed + brick_speed_boost, cap)
+
 			if brick.has_method("take_hit"):
 				if brick.take_hit():
 					if brick.has_method("play_destroy_animation"):
@@ -118,7 +122,7 @@ func _physics_process(delta: float) -> void:
 					else:
 						brick.queue_free()
 				elif brick_normal != Vector2.ZERO:
-					# 2-hit brick: push ball out so it doesn't collide again next frame
+					# 2‑hit brick: push ball out so it doesn't collide again next frame
 					global_position += brick_normal * (ball_radius * 2.5)
 			else:
 				brick.queue_free()
