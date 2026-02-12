@@ -53,7 +53,7 @@ func reset_ball() -> void:
 func _physics_process(delta: float) -> void:
 	if attached:
 		_stick_to_paddle()
-		if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("move_up"):
+		if Input.is_action_just_pressed("ui_up"):
 			attached = false
 			current_speed = ball_speed
 			velocity = Vector2.UP * ball_speed
@@ -123,11 +123,12 @@ func _physics_process(delta: float) -> void:
 						brick.play_destroy_animation()
 					else:
 						brick.queue_free()
-				elif brick_normal != Vector2.ZERO:
-					# 2‑hit brick: push ball out so it doesn't immediately collide again
-					global_position += brick_normal * (ball_radius * 2.5)
 			else:
 				brick.queue_free()
+
+			# Always nudge ball out after any brick hit so it doesn't register an adjacent brick next frame
+			if brick_normal != Vector2.ZERO:
+				global_position += brick_normal * (ball_radius * 2.5)
 	elif first_bounce_normal != Vector2.ZERO:
 		velocity = velocity.bounce(first_bounce_normal)
 		velocity = _ensure_not_too_flat(velocity, current_speed)

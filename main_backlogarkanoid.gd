@@ -30,16 +30,12 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_update_paddle(delta)
 
-func _update_paddle(delta: float) -> void:
+func _update_paddle(_delta: float) -> void:
 	var move_dir := 0.0
 
 	if Input.is_action_pressed("ui_left"):
 		move_dir -= 1.0
 	if Input.is_action_pressed("ui_right"):
-		move_dir += 1.0
-	if Input.is_action_pressed("move_left"):
-		move_dir -= 1.0
-	if Input.is_action_pressed("move_right"):
 		move_dir += 1.0
 
 	paddle.velocity.x = move_dir * PADDLE_SPEED

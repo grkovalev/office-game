@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c6s7i80ilubn4" path="res://ui_buttons/calendartetris/tetris_ui_atlas.png" id="5_djpl0"]
 [ext_resource type="Script" uid="uid://dntcmvvn6xo4c" path="res://ball_char.gd" id="6_7afv6"]
 [ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="6_n4sgu"]
+[ext_resource type="Texture2D" uid="uid://wa2lfcxynxf5" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/mug_atlas.png" id="9_qovi6"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
@@ -127,7 +128,34 @@ scale = Vector2(13.75, 13.75)
 shape = SubResource("CircleShape2D_n0iij")
 debug_color = Color(0, 0.6, 0.69803923, 0.4392157)
 
-[node name="bricks" type="Node2D" parent="." unique_id=572188888]
+[node name="health" type="Node2D" parent="." unique_id=572188888]
+
+[node name="01_heathcup" type="Node2D" parent="health" unique_id=6384622]
+position = Vector2(1232, 88)
+scale = Vector2(0.205, 0.205)
+
+[node name="01_healthcupimg" type="Sprite2D" parent="health/01_heathcup" unique_id=1528352656]
+texture = ExtResource("9_qovi6")
+region_enabled = true
+region_rect = Rect2(76, 74, 395, 381)
+
+[node name="01_heathcup2" type="Node2D" parent="health" unique_id=601012356]
+position = Vector2(1328, 88)
+scale = Vector2(0.205, 0.205)
+
+[node name="01_healthcupimg" type="Sprite2D" parent="health/01_heathcup2" unique_id=204800706]
+texture = ExtResource("9_qovi6")
+region_enabled = true
+region_rect = Rect2(76, 74, 395, 381)
+
+[node name="01_heathcup3" type="Node2D" parent="health" unique_id=660931817]
+position = Vector2(1424, 88)
+scale = Vector2(0.205, 0.205)
+
+[node name="01_healthcupimg" type="Sprite2D" parent="health/01_heathcup3" unique_id=1895412749]
+texture = ExtResource("9_qovi6")
+region_enabled = true
+region_rect = Rect2(76, 74, 395, 381)
 
 [node name="powerups" type="Node2D" parent="." unique_id=1707368126]
 
