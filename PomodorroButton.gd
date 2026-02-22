@@ -37,9 +37,10 @@ func _ready() -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
+		var is_right_click: bool = event.button_index == MouseButton.MOUSE_BUTTON_RIGHT or (event.button_index == MouseButton.MOUSE_BUTTON_LEFT and event.ctrl_pressed)
+		if event.button_index == MouseButton.MOUSE_BUTTON_LEFT and not event.ctrl_pressed:
 			handle_left_click()
-		elif event.button_index == MouseButton.MOUSE_BUTTON_RIGHT:
+		elif is_right_click:
 			handle_right_click()
 
 func handle_left_click():
@@ -51,8 +52,12 @@ func handle_left_click():
 		timer_paused = false
 
 func handle_right_click():
-	if timer_running and timer_paused:
+	if timer_running:
 		reset_button()
+
+func pause_if_running() -> void:
+	if timer_running and not timer_paused:
+		timer_paused = true
 
 func animate_to(target_scale: Vector2):
 	if _tween:
@@ -109,6 +114,8 @@ func reset_button():
 
 	label.text = ""
 	label.visible = false
+	if toggle_mode:
+		set_pressed_no_signal(false)
 	animate_to(Vector2.ONE)
 
 func update_label():

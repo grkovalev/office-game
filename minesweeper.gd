@@ -5,26 +5,38 @@ extends Node2D
 @onready var avaAnim: AnimatedSprite2D = $Window/avatar_slack
 @onready var number_calblocks: Label = $Window/number_calblocks
 @onready var restartbtn: TextureButton = $Window/restartbtn
-
+@onready var exitbtn: TextureButton = $Window/exitbtn
+@onready var winlostmsg = get_node_or_null("Window/winlostmsg")
 
 signal game_over_signal
 signal new_game_signal
+signal game_won_signal
 
 
 var board:Board
 var buttons:={}
 var gg:bool = false
 var max_flags:int = 10
+var clicked_bomb_tile: TileTemplateButton = null
+var bomb_animation_timer: Timer = null
+var bomb_animation_speed: float = 0.2
+var current_bomb_texture_index: int = 8
 
 func _ready() -> void:
 	restartbtn.pressed.connect(_new_game)
+	exitbtn.pressed.connect(_on_exitbtn_pressed)
 	if tiles == null:
 		push_error("Tiles are not defined")
 	
 	if tile == null:
 		push_error("Tile is not defined")
 	
-
+	bomb_animation_timer = Timer.new()
+	bomb_animation_timer.wait_time = bomb_animation_speed
+	bomb_animation_timer.one_shot = false
+	bomb_animation_timer.timeout.connect(_on_bomb_animation_tick)
+	add_child(bomb_animation_timer)
+	
 	board = Board.new()
 	for i in range(board.cells_count):
 		var row := int(i / board.columns)
@@ -59,17 +71,22 @@ func _on_button_hover(btn: TileTemplateButton):
 
 func _on_button_gui_input(event: InputEvent, btn: TileTemplateButton) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
-		match event.button_index:
-			MOUSE_BUTTON_LEFT:
-				if gg:
-					_new_game()
-					return
-				_on_left_click(btn)
-			MOUSE_BUTTON_RIGHT:
-				_on_right_click(btn)
-				if gg:
-					_new_game()
-					return
+		# macOS trackpad: Control+left click is secondary click
+		var is_right_click: bool = (
+	event.button_index == MOUSE_BUTTON_RIGHT or
+	(event.button_index == MOUSE_BUTTON_LEFT and event.ctrl_pressed) or
+	(event.button_index == MOUSE_BUTTON_LEFT and event.shift_pressed))
+		var is_left_click: bool = event.button_index == MOUSE_BUTTON_LEFT and not event.ctrl_pressed
+		if is_right_click:
+			_on_right_click(btn)
+			if gg:
+				_new_game()
+				return
+		elif is_left_click:
+			if gg:
+				_new_game()
+				return
+			_on_left_click(btn)
 func _on_right_click(btn: TileTemplateButton) -> void:
 	if gg:
 		return
@@ -100,16 +117,23 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 		number_calblocks.text = str(max_flags - board.flags)
 	state.open = true
 	if state.has_mine:
-		btn.set_tile(7)
+		clicked_bomb_tile = btn
+		current_bomb_texture_index = 8
+		btn.set_tile(8)
+		bomb_animation_timer.start()
 		_game_over()
 		number_calblocks.text = str(max_flags - board.flags)
 		return
 	var danger_level = board._get_danger_level(btn.column_index, btn.row_index)
 	if danger_level > 0:
+		if danger_level == 3 or danger_level == 4:
+			avaAnim.play("shock")
+
 		btn.set_tile(danger_level + 1)
 		number_calblocks.text = str(max_flags - board.flags)
+		if _check_win():
+			_game_won()
 		return
-
 	var opened = board.open_adjacent_cells(btn.column_index, btn.row_index)
 	for v in opened:
 		var cell = buttons[v]
@@ -118,8 +142,15 @@ func _on_left_click(btn: TileTemplateButton) -> void:
 			cell.set_tile(1)
 			continue
 		cell.set_tile(c_danger_level + 1)
+	if _check_win():
+		_game_won()
 
 func _game_over():
+	var flagged_bomb_count := 0
+	for cell in board.cells:
+		if cell.has_mine and cell.has_flag:
+			flagged_bomb_count += 1
+	var unflagged_bomb_count := board.mines_count - flagged_bomb_count
 	for c in range(board.columns):
 		for r in range(board.rows):
 			var cell = board._get_cell_state(c,r)
@@ -127,22 +158,51 @@ func _game_over():
 				continue
 			var btn = buttons[Vector2i(c,r)]
 			if cell.has_mine:
-				btn.set_tile(7)
-				continue
-			var danger_level = board._get_danger_level(c,r)
-			btn.set_tile(danger_level + 1)
+				if cell.has_flag:
+					btn.set_tile(7)
+				else:
+					btn.set_tile(8)
 	avaAnim.play("lost")
 	gg = true
+	if winlostmsg:
+		winlostmsg.show_lose(flagged_bomb_count, unflagged_bomb_count)
 	emit_signal("game_over_signal")
 	
+func _game_won() -> void:
+	gg = true
+	avaAnim.play("win")
+	if winlostmsg:
+		winlostmsg.show_win()
+	emit_signal("game_won_signal")
+
+func _check_win() -> bool:
+	return board.is_won()
+	
+func _on_exitbtn_pressed() -> void:
+	queue_free()
+
 func _new_game():
 	gg = false
+	if winlostmsg:
+		winlostmsg.hide_msg()
+	number_calblocks.text = str(max_flags)
 	avaAnim.play("def_center")
+	if bomb_animation_timer != null:
+		bomb_animation_timer.stop()
+	clicked_bomb_tile = null
 	board = Board.new()
 	for btn_key in buttons:
 		var btn = buttons[btn_key]
 		btn.set_tile(0)
 	emit_signal("new_game_signal")
+	
+func _on_bomb_animation_tick() -> void:
+	if clicked_bomb_tile != null:
+		if current_bomb_texture_index == 8:
+			current_bomb_texture_index = 9
+		else:
+			current_bomb_texture_index = 8
+		clicked_bomb_tile.set_tile(current_bomb_texture_index)
 
 
 
@@ -224,6 +284,12 @@ class Board:
 			_get_cell_state(column_index - 1, row_index + 1).has_mine)
 		)
 		return int(row_has_mines) + int(column_has_mines) + int(diag1_has_mines) + int(diag2_has_mines)
+
+	func is_won() -> bool:
+		for cell in cells:
+			if not cell.has_mine and not cell.open:
+				return false
+		return true
 
 	func _is_inside_board(column_index: int, row_index:int) -> bool:
 		return !_is_outside_board(column_index, row_index)

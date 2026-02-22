@@ -1,0 +1,656 @@
+[gd_scene format=3 uid="uid://dvdkj6gr6sny"]
+
+[ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_5l5t3"]
+[ext_resource type="FontFile" uid="uid://btw2ewpxr30d1" path="res://fonts/Helvetica.ttf" id="2_5beks"]
+[ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_jwokj"]
+[ext_resource type="Script" uid="uid://bg6kmco1mybb3" path="res://calendartetris.gd" id="3_sriha"]
+[ext_resource type="Script" uid="uid://pl32vauyjkv1" path="res://outofstock.gd" id="4_40fng"]
+[ext_resource type="Texture2D" uid="uid://b8to1iqif083x" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_o.png" id="4_ay14k"]
+[ext_resource type="Script" uid="uid://rdwv8h8o3snh" path="res://tetromino_lib.gd" id="4_ek6ok"]
+[ext_resource type="Script" uid="uid://dkajlgno1prqv" path="res://piecesleft.gd" id="4_pacii"]
+[ext_resource type="Texture2D" uid="uid://jau56ifui51g" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_i.png" id="5_063xu"]
+[ext_resource type="Texture2D" uid="uid://bm5hum10g6a6s" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_s.png" id="6_bwdfo"]
+[ext_resource type="Texture2D" uid="uid://fvtmo37af6uq" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_z.png" id="7_xt0v1"]
+[ext_resource type="Texture2D" uid="uid://h3vuqnh2jtf3" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_l.png" id="8_xt0v1"]
+[ext_resource type="Texture2D" uid="uid://cubvjfydm27r6" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_j.png" id="9_sriha"]
+[ext_resource type="Texture2D" uid="uid://csu44dfogy51c" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_t.png" id="10_sriha"]
+[ext_resource type="Script" uid="uid://u7uf34hw715o" path="res://quickshapepack.gd" id="13_uq6hu"]
+[ext_resource type="Texture2D" uid="uid://bfofcsvh8v2vi" path="res://ui_buttons/calendartetris/tetromino_pieces/shape_q_atlas.png" id="13_yv368"]
+[ext_resource type="Texture2D" uid="uid://cymohk4ylkana" path="res://ui_buttons/calendartetris/atlas_tetrischar.png" id="15_hhkx1"]
+[ext_resource type="Texture2D" uid="uid://pi0b741iy6dg" path="res://ui_buttons/calendartetris/meetings/1rowmeeting.png" id="16_c63xa"]
+[ext_resource type="Texture2D" uid="uid://c6s7i80ilubn4" path="res://ui_buttons/calendartetris/tetris_ui_atlas.png" id="16_ypi33"]
+[ext_resource type="Texture2D" uid="uid://cfk1bg1sdxffq" path="res://ui_buttons/calendartetris/meetings/2rowmeeting.png" id="17_kt4bn"]
+[ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="17_yy0dq"]
+[ext_resource type="Texture2D" uid="uid://6wynh3qdhkl3" path="res://ui_buttons/calendartetris/meetings/3rowmeeting.png" id="18_w0kg2"]
+[ext_resource type="Script" uid="uid://dpoetrsgflgl1" path="res://datetext.gd" id="19_dtxt"]
+[ext_resource type="Script" uid="uid://cuweajw4bfvdk" path="res://currenttime.gd" id="20_w0kg2"]
+[ext_resource type="Texture2D" uid="uid://cg1taxv4oi02y" path="res://ui_buttons/calendartetris/messages/messagebg.png" id="24_noytd"]
+[ext_resource type="Script" uid="uid://dmfewcml0dt1a" path="res://winlostmsgtetris.gd" id="24_spl0c"]
+[ext_resource type="Texture2D" uid="uid://djhc21lahjxli" path="res://ui_buttons/calendartetris/messages/gg_tetris.png" id="25_nhd1v"]
+[ext_resource type="Texture2D" uid="uid://7oprgqq6v84x" path="res://ui_buttons/calendartetris/messages/glost_tetris.png" id="26_b75ga"]
+[ext_resource type="FontFile" uid="uid://b558upd3cvld" path="res://fonts/helvetica-rounded-bold-5871d05ead8de.otf" id="27_spl0c"]
+
+[sub_resource type="Gradient" id="Gradient_40fng"]
+colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ucthv"]
+gradient = SubResource("Gradient_40fng")
+
+[sub_resource type="Gradient" id="Gradient_5l5t3"]
+colors = PackedColorArray(0.5921569, 0.7647059, 0.9137255, 0.40784314, 0.5921569, 0.7647059, 0.9137255, 0.40784314)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ay14k"]
+gradient = SubResource("Gradient_5l5t3")
+
+[sub_resource type="Gradient" id="Gradient_jwokj"]
+colors = PackedColorArray(0.87058824, 0.9254902, 0.9764706, 1, 0.87058824, 0.9254902, 0.9764706, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4w1so"]
+gradient = SubResource("Gradient_jwokj")
+
+[sub_resource type="Gradient" id="Gradient_pl1es"]
+colors = PackedColorArray(0.42745098, 0.627451, 0.8, 1, 0.42745098, 0.627451, 0.8, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_063xu"]
+gradient = SubResource("Gradient_pl1es")
+
+[sub_resource type="Gradient" id="Gradient_bwdfo"]
+colors = PackedColorArray(0.6392157, 0.7490196, 0.8392157, 1, 0.6392157, 0.7490196, 0.8392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xt0v1"]
+gradient = SubResource("Gradient_bwdfo")
+
+[sub_resource type="Gradient" id="Gradient_sriha"]
+colors = PackedColorArray(0.42745098, 0.627451, 0.8, 1, 0.42745098, 0.627451, 0.8, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ek6ok"]
+gradient = SubResource("Gradient_sriha")
+
+[sub_resource type="Gradient" id="Gradient_5beks"]
+colors = PackedColorArray(0.6392157, 0.7490196, 0.8392157, 1, 0.6392157, 0.7490196, 0.8392157, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yv368"]
+gradient = SubResource("Gradient_5beks")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4w1so"]
+size = Vector2(100, 101)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sriha"]
+size = Vector2(50, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67i7u"]
+atlas = ExtResource("16_ypi33")
+region = Rect2(16, 19, 155, 77)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c63xa"]
+atlas = ExtResource("16_ypi33")
+region = Rect2(16, 111, 155, 77)
+
+[node name="main_calendartetris" type="Node2D" unique_id=1567789064]
+
+[node name="bg_color" type="TextureRect" parent="." unique_id=163175786]
+offset_right = 1504.0
+offset_bottom = 1105.0
+texture = SubResource("GradientTexture2D_ucthv")
+
+[node name="bg_undercalendar" type="TextureRect" parent="." unique_id=976245915]
+offset_left = 39.0
+offset_top = 256.0
+offset_right = 1481.0
+offset_bottom = 943.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_ay14k")
+
+[node name="calendar_ui" type="TextureRect" parent="." unique_id=730144622]
+offset_left = 80.0
+offset_top = 280.0
+offset_right = 328.0
+offset_bottom = 512.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_4w1so")
+
+[node name="calendar_ui3" type="TextureRect" parent="." unique_id=969118720]
+offset_left = 352.0
+offset_top = 368.0
+offset_right = 456.0
+offset_bottom = 876.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_4w1so")
+
+[node name="calendar_ui2" type="TextureRect" parent="." unique_id=499924150]
+offset_left = 80.0
+offset_top = 536.0
+offset_right = 328.0
+offset_bottom = 875.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_4w1so")
+
+[node name="01_secpers" type="TextureRect" parent="." unique_id=811110673]
+offset_left = 456.0
+offset_top = 373.0
+offset_right = 706.0
+offset_bottom = 876.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_063xu")
+
+[node name="02_secpers" type="TextureRect" parent="." unique_id=458442044]
+offset_left = 706.0
+offset_top = 368.0
+offset_right = 956.0
+offset_bottom = 876.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_xt0v1")
+
+[node name="03_secpers" type="TextureRect" parent="." unique_id=2063164081]
+offset_left = 956.0
+offset_top = 373.0
+offset_right = 1206.0
+offset_bottom = 876.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_ek6ok")
+
+[node name="04_secpers" type="TextureRect" parent="." unique_id=2038633763]
+offset_left = 1206.0
+offset_top = 368.0
+offset_right = 1456.0
+offset_bottom = 876.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_yv368")
+
+[node name="title" type="Label" parent="." unique_id=1520938463]
+offset_left = 80.0
+offset_top = 62.0
+offset_right = 756.0
+offset_bottom = 131.0
+theme_override_fonts/font = ExtResource("1_5l5t3")
+theme_override_font_sizes/font_size = 60
+text = "SCHEDULE A MEETING"
+vertical_alignment = 1
+
+[node name="subtitle" type="Label" parent="." unique_id=890376252]
+offset_left = 776.0
+offset_top = 62.0
+offset_right = 1438.0
+offset_bottom = 131.0
+theme_override_fonts/font = ExtResource("2_jwokj")
+theme_override_font_sizes/font_size = 50
+text = "this tetris is not for the weak"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="nextpiecetitle" type="Label" parent="." unique_id=1505591641]
+offset_left = 80.0
+offset_top = 566.0
+offset_right = 328.0
+offset_bottom = 627.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 28
+text = "NEXT MEETING TO SCHEDULE:"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="makeitquick" type="Label" parent="." unique_id=960155255]
+offset_left = 80.0
+offset_top = 304.0
+offset_right = 328.0
+offset_bottom = 365.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 28
+text = "MAKE IT QUICK"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="makeitquick_label" type="Label" parent="." unique_id=953766103]
+offset_left = 80.0
+offset_top = 480.0
+offset_right = 328.0
+offset_bottom = 512.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("2_jwokj")
+theme_override_font_sizes/font_size = 20
+text = "limited superpower"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+script = ExtResource("4_40fng")
+
+[node name="piecesleft" type="Label" parent="." unique_id=1153280029]
+offset_left = 80.0
+offset_top = 840.0
+offset_right = 328.0
+offset_bottom = 875.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("2_jwokj")
+theme_override_font_sizes/font_size = 20
+text = "NN left"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+script = ExtResource("4_pacii")
+calendar_tetris_path = NodePath("../grid_container")
+restart_button_path = NodePath("../restartbtn")
+
+[node name="datetext" type="Label" parent="." unique_id=1824845824]
+offset_left = 80.0
+offset_top = 210.0
+offset_right = 953.0
+offset_bottom = 246.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 35
+text = "Today, NN Worktober 2026"
+autowrap_mode = 2
+script = ExtResource("19_dtxt")
+
+[node name="grid_container" type="Node2D" parent="." unique_id=144483308]
+z_index = 4
+position = Vector2(456, 376)
+script = ExtResource("3_sriha")
+
+[node name="calchars" type="Node2D" parent="grid_container" unique_id=1730432560]
+position = Vector2(-456, -376)
+
+[node name="reg1_char" type="Sprite2D" parent="grid_container/calchars" unique_id=1280111830]
+position = Vector2(577, 321)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
+
+[node name="reg2_char" type="Sprite2D" parent="grid_container/calchars" unique_id=1050161660]
+position = Vector2(832, 322)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
+
+[node name="reg3_char" type="Sprite2D" parent="grid_container/calchars" unique_id=99780633]
+position = Vector2(1088, 322)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
+
+[node name="reg4_char" type="Sprite2D" parent="grid_container/calchars" unique_id=748199201]
+position = Vector2(1344, 322)
+scale = Vector2(0.3232419, 0.3232419)
+texture = ExtResource("15_hhkx1")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
+
+[node name="tetromino_lib" type="Node2D" parent="." unique_id=1185507880]
+script = ExtResource("4_ek6ok")
+
+[node name="shape_o_area" type="Area2D" parent="tetromino_lib" unique_id=1124557357]
+position = Vector2(-712, 60)
+
+[node name="shape_o_img" type="Sprite2D" parent="tetromino_lib/shape_o_area" unique_id=618418232]
+texture = ExtResource("4_ay14k")
+
+[node name="shape_o_col" type="CollisionShape2D" parent="tetromino_lib/shape_o_area" unique_id=1631266568]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_4w1so")
+
+[node name="shape_i_area" type="Area2D" parent="tetromino_lib" unique_id=802704956]
+position = Vector2(-587, 108)
+
+[node name="shape_i_img" type="Sprite2D" parent="tetromino_lib/shape_i_area" unique_id=355730925]
+texture = ExtResource("5_063xu")
+
+[node name="shape_i_col" type="CollisionShape2D" parent="tetromino_lib/shape_i_area" unique_id=1478855269]
+shape = SubResource("RectangleShape2D_sriha")
+
+[node name="shape_s_area" type="Area2D" parent="tetromino_lib" unique_id=555822906]
+position = Vector2(-424, 108)
+
+[node name="shape_s_img" type="Sprite2D" parent="tetromino_lib/shape_s_area" unique_id=1142109158]
+texture = ExtResource("6_bwdfo")
+
+[node name="shape_s_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_s_area" unique_id=363727420]
+polygon = PackedVector2Array(-25, -50, 75, -50, 75, 0, 25, 0, 26, 50, -76, 51, -76, -1, -26, -1)
+
+[node name="shape_z_area" type="Area2D" parent="tetromino_lib" unique_id=1006151970]
+position = Vector2(-225, 108)
+
+[node name="shape_z_img" type="Sprite2D" parent="tetromino_lib/shape_z_area" unique_id=80417114]
+texture = ExtResource("7_xt0v1")
+
+[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_z_area" unique_id=1537516587]
+position = Vector2(-3.000002, 1.9073486e-06)
+scale = Vector2(0.94592327, -0.9342187)
+polygon = PackedVector2Array(-24.31488, -53.52066, 83.51628, -53.52066, 82.45911, 0, 29.600708, 0, 29.600708, 53.520653, -75.05893, 53.520653, -75.05893, 0, -24.31488, -1.0704117)
+
+[node name="shape_l_area" type="Area2D" parent="tetromino_lib" unique_id=396737088]
+position = Vector2(-712, 331)
+
+[node name="shape_l_img" type="Sprite2D" parent="tetromino_lib/shape_l_area" unique_id=278525897]
+texture = ExtResource("8_xt0v1")
+
+[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_l_area" unique_id=1644981029]
+position = Vector2(-3.000002, 1.9073486e-06)
+scale = Vector2(0.94592327, -0.9342187)
+polygon = PackedVector2Array(-49.68689, -79.21057, 57.087082, -80.28099, 57.087082, -26.76033, 4.228668, -26.76033, 3.1715088, 81.351395, -49.68689, 81.351395)
+
+[node name="shape_j_area" type="Area2D" parent="tetromino_lib" unique_id=424442293]
+position = Vector2(-549, 331)
+
+[node name="shape_j_img" type="Sprite2D" parent="tetromino_lib/shape_j_area" unique_id=1674764351]
+texture = ExtResource("9_sriha")
+
+[node name="shape_z_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_j_area" unique_id=991552925]
+position = Vector2(-3.000002, 1.9073486e-06)
+rotation = 3.1415927
+scale = Vector2(1.0156913, 0.9910609)
+polygon = PackedVector2Array(-52.181244, -74.66742, 46.273865, -74.66745, 46.273865, -25.225494, -2.9536743, -25.225494, -2.9536743, 75.67648, -52.181244, 75.67651)
+
+[node name="shape_t_area" type="Area2D" parent="tetromino_lib" unique_id=1998812457]
+position = Vector2(-361, 322)
+
+[node name="shape_t_img" type="Sprite2D" parent="tetromino_lib/shape_t_area" unique_id=843819129]
+texture = ExtResource("10_sriha")
+
+[node name="shape_t_col" type="CollisionPolygon2D" parent="tetromino_lib/shape_t_area" unique_id=923549228]
+position = Vector2(-3.000002, 1.9073486e-06)
+rotation = 3.1415927
+scale = Vector2(1.0156913, 0.9910609)
+polygon = PackedVector2Array(-76.79498, 1.0090332, -27.567444, 0, -27.567505, -49.441956, 21.660034, -50.45099, 21.660095, 1.0090332, 70.887695, 1.0090332, 70.887695, 50.45099, -76.79501, 51.460052)
+
+[node name="spawn_slot_0" type="Node2D" parent="tetromino_lib" unique_id=1397780773]
+position = Vector2(200, 728)
+
+[node name="quickshapepack" type="Node2D" parent="." unique_id=1875822199]
+position = Vector2(-8, 8)
+script = ExtResource("13_uq6hu")
+
+[node name="quickshape" type="Node2D" parent="quickshapepack" unique_id=1553301594]
+position = Vector2(136, 365)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape" unique_id=1530743556]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="quickshape2" type="Node2D" parent="quickshapepack" unique_id=669114111]
+position = Vector2(208, 365)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape2" unique_id=630627697]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="quickshape3" type="Node2D" parent="quickshapepack" unique_id=1479706139]
+position = Vector2(280, 365)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape3" unique_id=1650103411]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="quickshape4" type="Node2D" parent="quickshapepack" unique_id=1553664117]
+position = Vector2(136, 432)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape4" unique_id=644815235]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="quickshape5" type="Node2D" parent="quickshapepack" unique_id=71561657]
+position = Vector2(208, 432)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape5" unique_id=1250192509]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="quickshape6" type="Node2D" parent="quickshapepack" unique_id=448891436]
+position = Vector2(280, 432)
+
+[node name="qshape_img" type="Sprite2D" parent="quickshapepack/quickshape6" unique_id=1233438144]
+texture = ExtResource("13_yv368")
+region_enabled = true
+region_rect = Rect2(0, 0, 51, 51)
+
+[node name="meeting_lib" type="Node2D" parent="." unique_id=127807202]
+position = Vector2(-631, 536)
+
+[node name="1rowmeeting" type="Sprite2D" parent="meeting_lib" unique_id=1404232816]
+texture = ExtResource("16_c63xa")
+
+[node name="2rowmeeting" type="Sprite2D" parent="meeting_lib" unique_id=1062957630]
+texture = ExtResource("17_kt4bn")
+
+[node name="3rowmeeting" type="Sprite2D" parent="meeting_lib" unique_id=1404297883]
+texture = ExtResource("18_w0kg2")
+
+[node name="timeline" type="Line2D" parent="." unique_id=63386075]
+top_level = true
+position = Vector2(1200.063, 301.38)
+scale = Vector2(0.99212605, 1)
+points = PackedVector2Array(-750, 96, 258, 96)
+width = 4.0
+default_color = Color(1, 0.21568628, 0, 0.85490197)
+script = ExtResource("20_w0kg2")
+
+[node name="timescale" type="Node2D" parent="." unique_id=2095761498]
+
+[node name="09" type="Label" parent="timescale" unique_id=1430802931]
+offset_left = 392.0
+offset_top = 383.0
+offset_right = 432.0
+offset_bottom = 429.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "09"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="10" type="Label" parent="timescale" unique_id=1135834557]
+offset_left = 392.0
+offset_top = 429.0
+offset_right = 432.0
+offset_bottom = 477.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "10"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="11" type="Label" parent="timescale" unique_id=859251546]
+offset_left = 392.0
+offset_top = 477.0
+offset_right = 432.0
+offset_bottom = 525.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "11"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="12" type="Label" parent="timescale" unique_id=670917275]
+offset_left = 392.0
+offset_top = 525.0
+offset_right = 432.0
+offset_bottom = 573.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "12"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="13" type="Label" parent="timescale" unique_id=1025290633]
+offset_left = 392.0
+offset_top = 576.0
+offset_right = 432.0
+offset_bottom = 624.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "13"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="14" type="Label" parent="timescale" unique_id=21697479]
+offset_left = 392.0
+offset_top = 632.0
+offset_right = 432.0
+offset_bottom = 680.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "14"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="15" type="Label" parent="timescale" unique_id=1195965320]
+offset_left = 392.0
+offset_top = 680.0
+offset_right = 432.0
+offset_bottom = 728.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "15"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="16" type="Label" parent="timescale" unique_id=1262723714]
+offset_left = 392.0
+offset_top = 728.0
+offset_right = 432.0
+offset_bottom = 776.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "16"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="17" type="Label" parent="timescale" unique_id=580996626]
+offset_left = 392.0
+offset_top = 776.0
+offset_right = 432.0
+offset_bottom = 824.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "17"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="18" type="Label" parent="timescale" unique_id=80319507]
+offset_left = 392.0
+offset_top = 824.0
+offset_right = 432.0
+offset_bottom = 872.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.5411765)
+theme_override_fonts/font = ExtResource("2_5beks")
+theme_override_font_sizes/font_size = 30
+text = "18"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="borders" type="Node2D" parent="." unique_id=1502087538]
+
+[node name="cal_border" type="Line2D" parent="borders" unique_id=1734831251]
+top_level = true
+position = Vector2(706, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
+
+[node name="cal_border5" type="Line2D" parent="borders" unique_id=837515707]
+top_level = true
+position = Vector2(454.285, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
+
+[node name="cal_border2" type="Line2D" parent="borders" unique_id=938284024]
+top_level = true
+position = Vector2(956, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
+
+[node name="cal_border3" type="Line2D" parent="borders" unique_id=1507249782]
+top_level = true
+position = Vector2(1206, 280)
+points = PackedVector2Array(0, 596, 0, 0)
+width = 3.0
+
+[node name="cal_border4" type="Line2D" parent="borders" unique_id=1807989735]
+top_level = true
+position = Vector2(1173.4513, 276.985)
+scale = Vector2(1.095331, 1)
+points = PackedVector2Array(-750, 96, 258, 96)
+
+[node name="exitbtn" type="TextureButton" parent="." unique_id=192077378]
+offset_left = 39.0
+offset_top = 972.0
+offset_right = 204.0
+offset_bottom = 1062.0
+texture_normal = SubResource("AtlasTexture_67i7u")
+script = ExtResource("17_yy0dq")
+
+[node name="restartbtn" type="TextureButton" parent="." unique_id=1092848075]
+offset_left = 204.0
+offset_top = 972.0
+offset_right = 369.0
+offset_bottom = 1062.0
+texture_normal = SubResource("AtlasTexture_c63xa")
+script = ExtResource("17_yy0dq")
+
+[node name="winlostmsg" type="Node2D" parent="." unique_id=994630684]
+position = Vector2(242, 858)
+script = ExtResource("24_spl0c")
+
+[node name="winlostmsgbg" type="Sprite2D" parent="winlostmsg" unique_id=1699634692]
+position = Vector2(775.8625, 130.68)
+scale = Vector2(0.64797443, 0.785)
+texture = ExtResource("24_noytd")
+
+[node name="gg_tetris" type="Sprite2D" parent="winlostmsg" unique_id=1872944943]
+position = Vector2(1061, -82)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("25_nhd1v")
+
+[node name="glost_tetris" type="Sprite2D" parent="winlostmsg" unique_id=912273527]
+position = Vector2(548.925, -82)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("26_b75ga")
+
+[node name="gg_text" type="Label" parent="winlostmsg" unique_id=1371793008]
+offset_left = 354.0
+offset_top = 28.0
+offset_right = 907.0
+offset_bottom = 223.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("27_spl0c")
+theme_override_font_sizes/font_size = 32
+text = "Fantastic! 
+Thank you for helping out!"
+vertical_alignment = 1
+
+[node name="glost_text" type="Label" parent="winlostmsg" unique_id=213178407]
+offset_left = 716.0
+offset_top = 28.0
+offset_right = 1239.0
+offset_bottom = 225.0
+theme_override_colors/font_color = Color(0, 0.27058825, 0.47058824, 0.8235294)
+theme_override_fonts/font = ExtResource("27_spl0c")
+theme_override_font_sizes/font_size = 32
+text = "Well, this is not ideal...
+But I will figure something out. As I always do."
+vertical_alignment = 1
+autowrap_mode = 2

@@ -1,0 +1,275 @@
+[gd_scene format=3 uid="uid://lrhho2uoixru"]
+
+[ext_resource type="Script" uid="uid://cwtdw3hukate3" path="res://main_backlogarkanoid.gd" id="1_7afv6"]
+[ext_resource type="FontFile" uid="uid://72opr2tj16ch" path="res://fonts/Helvetica-Bold.ttf" id="1_u1qfo"]
+[ext_resource type="FontFile" uid="uid://crhysmfg7mn73" path="res://fonts/Helvetica-Oblique.ttf" id="2_2qx1n"]
+[ext_resource type="Texture2D" uid="uid://njex5bdrw0jq" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/keyboard_def.png" id="3_2qx1n"]
+[ext_resource type="Script" uid="uid://x8bg1dlp680v" path="res://backloggridgenerator.gd" id="3_n4sgu"]
+[ext_resource type="Texture2D" uid="uid://cppheeihxeb37" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/bricks_atlas.png" id="4_facmc"]
+[ext_resource type="Texture2D" uid="uid://ctgf464eioxks" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/ball_img.png" id="4_n0iij"]
+[ext_resource type="Texture2D" uid="uid://c6s7i80ilubn4" path="res://ui_buttons/calendartetris/tetris_ui_atlas.png" id="5_djpl0"]
+[ext_resource type="Script" uid="uid://dntcmvvn6xo4c" path="res://ball_char.gd" id="6_7afv6"]
+[ext_resource type="Script" uid="uid://cthnwkgja4w3y" path="res://animbttn.gd" id="6_n4sgu"]
+[ext_resource type="Texture2D" uid="uid://c2tdkscl63ujn" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/keyboard_pressed.png" id="7_o1l3h"]
+[ext_resource type="Texture2D" uid="uid://wa2lfcxynxf5" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/mug_atlas.png" id="9_qovi6"]
+[ext_resource type="Texture2D" uid="uid://dyay3bbq4tuoo" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/pauseimg.png" id="12_7qgsj"]
+[ext_resource type="Script" uid="uid://b6vpfbirj0xb3" path="res://pause_input_handler.gd" id="13_pausein"]
+[ext_resource type="Texture2D" uid="uid://4e4l3nk00tpi" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/arkanoidsuccess.png" id="15_t0557"]
+[ext_resource type="Texture2D" uid="uid://8bo7xwvr4f2j" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/arkanoidfail.png" id="16_u80fe"]
+
+[sub_resource type="Gradient" id="Gradient_k6kum"]
+colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n0iij"]
+gradient = SubResource("Gradient_k6kum")
+
+[sub_resource type="Gradient" id="Gradient_hlmdn"]
+colors = PackedColorArray(1, 1, 1, 0.6666667, 1, 1, 1, 0.6666667)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qovi6"]
+gradient = SubResource("Gradient_hlmdn")
+
+[sub_resource type="Gradient" id="Gradient_7qgsj"]
+colors = PackedColorArray(1, 1, 1, 0.6666667, 1, 1, 1, 0.6666667)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4uiv1"]
+gradient = SubResource("Gradient_7qgsj")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n0iij"]
+size = Vector2(161.80478, 19.447716)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n0iij"]
+radius = 9.621445
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_facmc"]
+atlas = ExtResource("5_djpl0")
+region = Rect2(16, 19, 155, 77)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7afv6"]
+atlas = ExtResource("5_djpl0")
+region = Rect2(16, 111, 155, 77)
+
+[node name="main_backlogarkanoid" type="Node2D" unique_id=1372382565]
+script = ExtResource("1_7afv6")
+
+[node name="bg" type="Node2D" parent="." unique_id=330567833]
+
+[node name="bg_color" type="TextureRect" parent="bg" unique_id=567311458]
+offset_right = 1504.0
+offset_bottom = 1105.0
+texture = SubResource("GradientTexture2D_n0iij")
+
+[node name="bg_tiles" type="TextureRect" parent="bg" unique_id=468958868]
+visible = false
+offset_left = 72.0
+offset_top = 248.0
+offset_right = 1464.0
+offset_bottom = 1050.0
+texture = SubResource("GradientTexture2D_qovi6")
+
+[node name="bg_tiles_visual" type="TextureRect" parent="bg" unique_id=339751930]
+offset_left = 72.0
+offset_top = 248.0
+offset_right = 1464.0
+offset_bottom = 888.0
+texture = SubResource("GradientTexture2D_4uiv1")
+
+[node name="title" type="Label" parent="bg" unique_id=1727008019]
+offset_left = 72.0
+offset_top = 62.0
+offset_right = 756.0
+offset_bottom = 131.0
+theme_override_fonts/font = ExtResource("1_u1qfo")
+theme_override_font_sizes/font_size = 60
+text = "BACKLOG SURVIVOR"
+vertical_alignment = 1
+
+[node name="subtitle" type="Label" parent="bg" unique_id=1276248157]
+offset_left = 756.0
+offset_top = 62.0
+offset_right = 1382.0
+offset_bottom = 131.0
+theme_override_fonts/font = ExtResource("2_2qx1n")
+theme_override_font_sizes/font_size = 50
+text = "finish them tasks"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="env" type="Node2D" parent="." unique_id=9009023]
+
+[node name="grid" type="Node2D" parent="env" unique_id=45948306]
+position = Vector2(200, 296)
+script = ExtResource("3_n4sgu")
+columns = 8
+rows = 7
+brick_atlas = ExtResource("4_facmc")
+brick_display_size = Vector2(154.159, 71.941)
+brick_gap = Vector2(9, 9)
+empty_probability = 0.3
+variant0_probability = 0.7
+variant1_probability = 0.3
+
+[node name="player" type="Node2D" parent="." unique_id=1610125567]
+
+[node name="playctrl" type="Node2D" parent="player" unique_id=1701516269]
+position = Vector2(756, 1024)
+scale = Vector2(0.2, 0.2)
+
+[node name="play_char" type="CharacterBody2D" parent="player/playctrl" unique_id=1286823422]
+visible = false
+
+[node name="play_img" type="Sprite2D" parent="player/playctrl/play_char" unique_id=637106822]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("3_2qx1n")
+
+[node name="play_coll" type="CollisionShape2D" parent="player/playctrl/play_char" unique_id=1317528701]
+scale = Vector2(12.854998, 12.854998)
+shape = SubResource("RectangleShape2D_n0iij")
+
+[node name="play_char_pressed" type="CharacterBody2D" parent="player/playctrl" unique_id=1224536583]
+
+[node name="playpressed_img" type="Sprite2D" parent="player/playctrl/play_char_pressed" unique_id=231617932]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("7_o1l3h")
+
+[node name="playpressed_coll" type="CollisionShape2D" parent="player/playctrl/play_char_pressed" unique_id=1895988526]
+position = Vector2(0, 5)
+scale = Vector2(12.854997, 12.854997)
+shape = SubResource("RectangleShape2D_n0iij")
+
+[node name="ball" type="Node2D" parent="." unique_id=630147723]
+
+[node name="ballctrl" type="Node2D" parent="ball" unique_id=687998390]
+position = Vector2(758, 967.04)
+rotation = 1.8483037
+scale = Vector2(0.244, 0.244)
+
+[node name="ball_char" type="CharacterBody2D" parent="ball/ballctrl" unique_id=775356162]
+position = Vector2(-4.0991387, 1.1676702)
+scale = Vector2(0.99999994, 0.99999994)
+script = ExtResource("6_7afv6")
+ball_speed = 600.0
+brick_speed_boost = 5.0
+max_ball_speed = 1500.0
+paddle_path = NodePath("../../../player/playctrl/play_char")
+paddle_collision_path = NodePath("../../../player/playctrl/play_char/play_coll")
+paddle_pressed_path = NodePath("../../../player/playctrl/play_char_pressed")
+paddle_pressed_collision_path = NodePath("../../../player/playctrl/play_char_pressed/playpressed_coll")
+bounds_path = NodePath("../../../bg/bg_tiles")
+
+[node name="ball_img" type="Sprite2D" parent="ball/ballctrl/ball_char" unique_id=1378949881]
+position = Vector2(-5.531311e-05, -5.0000553)
+rotation = -0.49218285
+scale = Vector2(1.2031252, 1.2031252)
+texture = ExtResource("4_n0iij")
+
+[node name="ball_coll" type="CollisionShape2D" parent="ball/ballctrl/ball_char" unique_id=955069382]
+scale = Vector2(13.75, 13.75)
+shape = SubResource("CircleShape2D_n0iij")
+debug_color = Color(0, 0.6, 0.69803923, 0.4392157)
+
+[node name="health" type="Node2D" parent="." unique_id=572188888]
+
+[node name="03_heathcup" type="Node2D" parent="health" unique_id=6384622]
+position = Vector2(1232, 88)
+scale = Vector2(0.205, 0.205)
+
+[node name="03_healthcupimg" type="Sprite2D" parent="health/03_heathcup" unique_id=1528352656]
+texture = ExtResource("9_qovi6")
+region_enabled = true
+region_rect = Rect2(76, 74, 395, 381)
+
+[node name="02_heathcup" type="Node2D" parent="health" unique_id=601012356]
+position = Vector2(1328, 88)
+scale = Vector2(0.205, 0.205)
+
+[node name="02_healthcupimg" type="Sprite2D" parent="health/02_heathcup" unique_id=204800706]
+texture = ExtResource("9_qovi6")
+region_enabled = true
+region_rect = Rect2(76, 74, 395, 381)
+
+[node name="01_heathcup" type="Node2D" parent="health" unique_id=660931817]
+position = Vector2(1424, 88)
+scale = Vector2(0.205, 0.205)
+
+[node name="01_healthcupimg" type="Sprite2D" parent="health/01_heathcup" unique_id=1895412749]
+texture = ExtResource("9_qovi6")
+region_enabled = true
+region_rect = Rect2(76, 74, 395, 381)
+
+[node name="powerups" type="Node2D" parent="." unique_id=1707368126]
+
+[node name="exitbtn" type="TextureButton" parent="." unique_id=1714687720]
+offset_left = 72.0
+offset_top = 152.0
+offset_right = 237.0
+offset_bottom = 242.0
+texture_normal = SubResource("AtlasTexture_facmc")
+script = ExtResource("6_n4sgu")
+
+[node name="restartbtn" type="TextureButton" parent="." unique_id=1384337421]
+offset_left = 232.0
+offset_top = 152.0
+offset_right = 397.0
+offset_bottom = 242.0
+texture_normal = SubResource("AtlasTexture_7afv6")
+script = ExtResource("6_n4sgu")
+
+[node name="pause" type="Node2D" parent="." unique_id=1480605835]
+position = Vector2(776, 536)
+script = ExtResource("13_pausein")
+
+[node name="Sprite2D" type="Sprite2D" parent="pause" unique_id=988406068]
+texture = ExtResource("12_7qgsj")
+
+[node name="gamewon" type="Node2D" parent="." unique_id=837410383]
+visible = false
+position = Vector2(768, 576)
+
+[node name="gamewonbg" type="ColorRect" parent="gamewon" unique_id=445900523]
+offset_left = -696.0
+offset_top = -328.0
+offset_right = 696.0
+offset_bottom = 312.0
+color = Color(0.5764706, 0.7294118, 0.5019608, 1)
+
+[node name="gamewontitle" type="Label" parent="gamewon" unique_id=1271439693]
+offset_left = -696.0
+offset_top = -280.0
+offset_right = 696.0
+offset_bottom = -103.0
+theme_override_fonts/font = ExtResource("1_u1qfo")
+theme_override_font_sizes/font_size = 176
+text = "WELL DONE"
+horizontal_alignment = 1
+
+[node name="gamewonimg" type="Sprite2D" parent="gamewon" unique_id=1398512408]
+position = Vector2(-46.00006, 4)
+scale = Vector2(0.6015625, 0.6015625)
+texture = ExtResource("15_t0557")
+
+[node name="gamelost" type="Node2D" parent="." unique_id=1052505775]
+visible = false
+position = Vector2(768, 576)
+
+[node name="gamelostbg" type="ColorRect" parent="gamelost" unique_id=442558015]
+offset_left = -696.0
+offset_top = -328.0
+offset_right = 696.0
+offset_bottom = 312.0
+color = Color(0.76862746, 0.08235294, 0.03137255, 0.92941177)
+
+[node name="gamelosttitle" type="Label" parent="gamelost" unique_id=118161630]
+offset_left = -696.0
+offset_top = -280.0
+offset_right = 696.0
+offset_bottom = -103.0
+theme_override_fonts/font = ExtResource("1_u1qfo")
+theme_override_font_sizes/font_size = 176
+text = "YOU FAILED"
+horizontal_alignment = 1
+
+[node name="gamelostimg" type="Sprite2D" parent="gamelost" unique_id=1492509213]
+position = Vector2(-44, 4)
+scale = Vector2(0.6015625, 0.6015625)
+texture = ExtResource("16_u80fe")
