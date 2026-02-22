@@ -9,6 +9,12 @@ signal paddle_bounced
 @export var max_ball_speed: float = 0.0
 const MAX_PADDLE_BOUNCE_ANGLE := deg_to_rad(60.0)
 const MIN_VERTICAL_ANGLE := deg_to_rad(10.0) # minimum angle away from horizontal
+# Emergence (scale-up + pop): avoid scale 0 and zero duration so tween always runs
+const EMERGE_SCALE_START := Vector2(0.001, 0.001)
+const EMERGE_SCALE_UP_DURATION := 0.10
+const EMERGE_POP_DURATION := 0.08
+const EMERGE_SETTLE_DURATION := 0.1
+const EMERGE_POP_OVERSHOOT := 1.18
 
 @export var paddle_path: NodePath
 @export var paddle_collision_path: NodePath
@@ -75,6 +81,7 @@ func reset_ball() -> void:
 	current_speed = ball_speed
 	velocity = Vector2.ZERO
 	_bottom_hit_emitted_this_frame = false
+	ball_img.scale = Vector2.ONE
 	show()
 	set_physics_process(true)
 	_stick_to_paddle()
@@ -86,7 +93,7 @@ func stick_to_paddle() -> void:
 	_bottom_hit_emitted_this_frame = false
 	_stick_to_paddle()
 
-## Call after ball hit bottom and a life was lost: hide ball, wait delay_sec, then stick to paddle and long fade-in; emits emergence_finished when done.
+## Call after ball hit bottom and a life was lost: hide ball, wait delay_sec, then stick to paddle and scale-up + pop animation; emits emergence_finished when done.
 func return_to_paddle_after_delay(delay_sec: float) -> void:
 	attached = true
 	current_speed = ball_speed
@@ -101,11 +108,21 @@ func _emerge_on_paddle() -> void:
 	_stick_to_paddle()
 	show()
 	set_physics_process(true)
-	ball_img.modulate.a = 0.0
+	var base_scale := Vector2.ONE
+	ball_img.scale = EMERGE_SCALE_START
 	var tween := create_tween()
-	tween.tween_property(ball_img, "modulate:a", 1.0, 1.0)  # Long fade-in only
+	tween.set_parallel(false)
+	tween.tween_property(ball_img, "scale", base_scale, EMERGE_SCALE_UP_DURATION)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(ball_img, "scale", base_scale * EMERGE_POP_OVERSHOOT, EMERGE_POP_DURATION)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(ball_img, "scale", base_scale, EMERGE_SETTLE_DURATION)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_callback(func() -> void:
-		ball_img.modulate.a = 1.0
+		ball_img.scale = base_scale
 		emergence_finished.emit()
 	)
 
