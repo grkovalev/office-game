@@ -46,6 +46,15 @@ var _pause_base_scale: Vector2 = Vector2.ONE
 var _paddle_pressed_timer: float = 0.0
 const PADDLE_PRESSED_DURATION := 0.12
 var _game_ended: bool = false
+# Blink (same as health cups): 3 cycles then fade out; pause before popup; popup scale burst
+const BLINK_LOW_A := 0.35
+const BLINK_PHASE_DURATION := 0.08
+const BLINK_FADEOUT_DURATION := 0.25
+const POPUP_PAUSE_AFTER_BLINK := 0.3
+const POPUP_SCALE_START := 0.3
+const POPUP_SCALE_BURST := 1.18
+const POPUP_BURST_DURATION := 0.12
+const POPUP_SETTLE_DURATION := 0.15
 
 func _ready() -> void:
 	_initial_player_position = player_ctrl.position
@@ -162,15 +171,54 @@ func _check_bricks_cleared() -> void:
 
 func _show_game_won() -> void:
 	_game_ended = true
-	ball_node.hide()
-	player_node.hide()
-	gamewon_node.show()
+	_stop_ball_without_hiding()
+	_run_game_end_blink_then_show(gamewon_node)
 
 func _show_game_lost() -> void:
 	_game_ended = true
-	ball_node.hide()
-	player_node.hide()
-	gamelost_node.show()
+	_stop_ball_without_hiding()
+	_run_game_end_blink_then_show(gamelost_node)
+
+func _stop_ball_without_hiding() -> void:
+	ball_char.velocity = Vector2.ZERO
+	ball_char.set_physics_process(false)
+
+func _run_game_end_blink_then_show(popup_node: Node2D) -> void:
+	ball_node.show()
+	player_node.show()
+	ball_node.modulate.a = 1.0
+	player_node.modulate.a = 1.0
+	var tween := create_tween()
+	for _i in range(3):
+		tween.tween_property(ball_node, "modulate:a", BLINK_LOW_A, BLINK_PHASE_DURATION)
+		tween.tween_property(player_node, "modulate:a", BLINK_LOW_A, BLINK_PHASE_DURATION)
+		tween.tween_property(ball_node, "modulate:a", 1.0, BLINK_PHASE_DURATION)
+		tween.tween_property(player_node, "modulate:a", 1.0, BLINK_PHASE_DURATION)
+	tween.tween_property(ball_node, "modulate:a", 0.0, BLINK_FADEOUT_DURATION)
+	tween.tween_property(player_node, "modulate:a", 0.0, BLINK_FADEOUT_DURATION)
+	tween.tween_callback(func() -> void:
+		ball_node.hide()
+		player_node.hide()
+		ball_char.hide()
+		ball_node.modulate.a = 1.0
+		player_node.modulate.a = 1.0
+		var timer := get_tree().create_timer(POPUP_PAUSE_AFTER_BLINK)
+		timer.timeout.connect(func() -> void:
+			_show_popup_with_anim(popup_node)
+		, CONNECT_ONE_SHOT)
+	)
+
+func _show_popup_with_anim(popup_node: Node2D) -> void:
+	popup_node.show()
+	popup_node.scale = Vector2(POPUP_SCALE_START, POPUP_SCALE_START)
+	var tween := popup_node.create_tween()
+	tween.set_parallel(false)
+	tween.tween_property(popup_node, "scale", Vector2(POPUP_SCALE_BURST, POPUP_SCALE_BURST), POPUP_BURST_DURATION)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(popup_node, "scale", Vector2.ONE, POPUP_SETTLE_DURATION)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
 
 func _on_exitbtn_pressed() -> void:
 	queue_free()
@@ -187,7 +235,6 @@ func _on_ball_hit_bottom() -> void:
 		lives_remaining -= 1
 		ball_char.return_to_paddle_after_delay(1.0)
 	else:
-		ball_char.disappear()
 		_show_game_lost()
 
 func _lose_health_cup(cup_index: int) -> void:
@@ -246,8 +293,12 @@ func _restart_game() -> void:
 	_game_ended = false
 	gamewon_node.hide()
 	gamelost_node.hide()
+	gamewon_node.scale = Vector2.ONE
+	gamelost_node.scale = Vector2.ONE
 	ball_node.show()
 	player_node.show()
+	ball_node.modulate.a = 1.0
+	player_node.modulate.a = 1.0
 	lives_remaining = 3
 	_health_animation_running = false
 	_pending_blink_cup_index = -1
