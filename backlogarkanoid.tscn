@@ -39,6 +39,7 @@ gradient = SubResource("Gradient_7qgsj")
 size = Vector2(161.80478, 19.447716)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n0iij"]
+radius = 9.621445
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_facmc"]
 atlas = ExtResource("5_djpl0")
@@ -139,13 +140,17 @@ shape = SubResource("RectangleShape2D_n0iij")
 [node name="ball" type="Node2D" parent="." unique_id=630147723]
 
 [node name="ballctrl" type="Node2D" parent="ball" unique_id=687998390]
-position = Vector2(756, 967)
+position = Vector2(758, 967.04)
+rotation = 1.8483037
 scale = Vector2(0.244, 0.244)
 
 [node name="ball_char" type="CharacterBody2D" parent="ball/ballctrl" unique_id=775356162]
+position = Vector2(-4.0991387, 1.1676702)
 scale = Vector2(0.99999994, 0.99999994)
 script = ExtResource("6_7afv6")
 ball_speed = 600.0
+brick_speed_boost = 5.0
+max_ball_speed = 1500.0
 paddle_path = NodePath("../../../player/playctrl/play_char")
 paddle_collision_path = NodePath("../../../player/playctrl/play_char/play_coll")
 paddle_pressed_path = NodePath("../../../player/playctrl/play_char_pressed")
@@ -154,6 +159,7 @@ bounds_path = NodePath("../../../bg/bg_tiles")
 
 [node name="ball_img" type="Sprite2D" parent="ball/ballctrl/ball_char" unique_id=1378949881]
 position = Vector2(-5.531311e-05, -5.0000553)
+rotation = -0.49218285
 scale = Vector2(1.2031252, 1.2031252)
 texture = ExtResource("4_n0iij")
 
