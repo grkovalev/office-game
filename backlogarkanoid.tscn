@@ -139,8 +139,8 @@ shape = SubResource("RectangleShape2D_n0iij")
 [node name="ball" type="Node2D" parent="." unique_id=630147723]
 
 [node name="ballctrl" type="Node2D" parent="ball" unique_id=687998390]
-position = Vector2(756, 968)
-scale = Vector2(0.2, 0.2)
+position = Vector2(756, 966.99994)
+scale = Vector2(0.244, 0.244)
 
 [node name="ball_char" type="CharacterBody2D" parent="ball/ballctrl" unique_id=775356162]
 scale = Vector2(0.99999994, 0.99999994)
@@ -153,7 +153,8 @@ paddle_pressed_collision_path = NodePath("../../../player/playctrl/play_char_pre
 bounds_path = NodePath("../../../bg/bg_tiles")
 
 [node name="ball_img" type="Sprite2D" parent="ball/ballctrl/ball_char" unique_id=1378949881]
-scale = Vector2(1.0000002, 1.0000002)
+position = Vector2(-5.531311e-05, -5.0000553)
+scale = Vector2(1.2031252, 1.2031252)
 texture = ExtResource("4_n0iij")
 
 [node name="ball_coll" type="CollisionShape2D" parent="ball/ballctrl/ball_char" unique_id=955069382]
