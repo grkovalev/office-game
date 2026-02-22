@@ -139,7 +139,7 @@ shape = SubResource("RectangleShape2D_n0iij")
 [node name="ball" type="Node2D" parent="." unique_id=630147723]
 
 [node name="ballctrl" type="Node2D" parent="ball" unique_id=687998390]
-position = Vector2(756, 966.99994)
+position = Vector2(756, 967)
 scale = Vector2(0.244, 0.244)
 
 [node name="ball_char" type="CharacterBody2D" parent="ball/ballctrl" unique_id=775356162]

@@ -46,6 +46,9 @@ var _prev_global_position: Vector2
 var _bottom_hit_emitted_this_frame: bool = false
 ## True while the ball is playing the emerge-on-paddle scale animation; false before and after.
 var emergence_playing: bool = false
+## Rolling: angular speed = linear speed / radius. Impact spin scale on bounces.
+const ROLL_SIGN_X := -1.0  # moving right -> rotate clockwise (negative in Godot)
+const BOUNCE_SPIN_SCALE := 0.15
 
 func _ready() -> void:
 	var p_shape := paddle_coll.shape as RectangleShape2D
@@ -151,9 +154,11 @@ func _physics_process(delta: float) -> void:
 		paddle_ignore_time -= delta
 
 	velocity = _ensure_not_too_flat(velocity, current_speed)
+	var vel_before_move: Vector2 = velocity
 	move_and_slide()
 
 	var hit_paddle := false
+	var paddle_bounce_normal := Vector2.ZERO
 	var first_bounce_normal := Vector2.ZERO
 	var bricks_hit: Array[Node] = []
 
@@ -172,6 +177,7 @@ func _physics_process(delta: float) -> void:
 		var is_paddle := (collider == paddle) or (paddle_pressed != null and collider == paddle_pressed)
 		if is_paddle and paddle_ignore_time <= 0.0:
 			hit_paddle = true
+			paddle_bounce_normal = normal
 			_last_paddle_collider = collider
 		else:
 			var brick_node: Node = _get_brick_node(collider)
@@ -187,6 +193,7 @@ func _physics_process(delta: float) -> void:
 		first_bounce_normal = path_normal
 
 	if hit_paddle:
+		_add_bounce_spin(paddle_bounce_normal if paddle_bounce_normal != Vector2.ZERO else Vector2.UP, vel_before_move)
 		_bounce_on_paddle()
 		paddle_bounced.emit()
 	elif bricks_hit.size() > 0:
@@ -200,6 +207,7 @@ func _physics_process(delta: float) -> void:
 		velocity = -velocity
 		velocity = _ensure_not_too_flat(velocity, current_speed)
 
+		_add_bounce_spin(brick_normal if brick_normal != Vector2.ZERO else -vel_before_move.normalized(), vel_before_move)
 		if is_instance_valid(brick):
 			# Speed boost logic stays as before
 			if brick_speed_boost > 0.0:
@@ -219,6 +227,7 @@ func _physics_process(delta: float) -> void:
 			if brick_normal != Vector2.ZERO:
 				global_position += brick_normal * (ball_radius * 2.5)
 	elif first_bounce_normal != Vector2.ZERO:
+		_add_bounce_spin(first_bounce_normal, vel_before_move)
 		velocity = velocity.bounce(first_bounce_normal)
 		velocity = _ensure_not_too_flat(velocity, current_speed)
 
@@ -227,6 +236,7 @@ func _physics_process(delta: float) -> void:
 
 	velocity = _ensure_not_too_flat(velocity, current_speed)
 
+	_update_roll_rotation(delta)
 	_prev_global_position = global_position
 	_bottom_hit_emitted_this_frame = false
 
@@ -281,6 +291,25 @@ func _get_brick_node(collider: Node) -> Node:
 		return parent
 	return null
 
+func _add_bounce_spin(normal: Vector2, vel_before: Vector2) -> void:
+	if ball_radius <= 0.0 or vel_before.length_squared() < 1.0:
+		return
+	# Impact spin: cross(normal, velocity) in 2D gives sense of "which way the ball was grazing"
+	var cross_val: float = normal.x * vel_before.y - normal.y * vel_before.x
+	ball_img.rotation += cross_val * BOUNCE_SPIN_SCALE / ball_radius
+
+func _update_roll_rotation(delta: float) -> void:
+	if velocity.length_squared() < 1.0:
+		return
+	var dist: float = velocity.length() * delta
+	var angle_delta: float = dist / ball_radius
+	# Moving right -> rotate clockwise (negative in Godot)
+	if abs(velocity.x) >= abs(velocity.y):
+		angle_delta *= ROLL_SIGN_X * sign(velocity.x)
+	else:
+		angle_delta *= -sign(velocity.y)
+	ball_img.rotation += angle_delta
+
 func _stick_to_paddle() -> void:
 	var p := paddle.global_position
 	var half_h := paddle_pressed_half_height if paddle_pressed_coll != null else paddle_half_height
@@ -289,6 +318,7 @@ func _stick_to_paddle() -> void:
 		p.y - half_h - ball_radius - 2.0
 	)
 	velocity = Vector2.ZERO
+	ball_img.rotation = 0.0
 
 func _bounce_on_paddle() -> void:
 	var paddle_pos: Vector2 = paddle.global_position
