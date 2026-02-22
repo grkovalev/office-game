@@ -16,6 +16,10 @@ const HEALTHCUP_REGION_FRAME_1 := Rect2(500, 0, 500, 500)
 @onready var ball_char: CharacterBody2D = $ball/ballctrl/ball_char
 @onready var player_ctrl: Node2D = $player/playctrl
 @onready var health_node: Node2D = $health
+@onready var ball_node: Node2D = $ball
+@onready var player_node: Node2D = $player
+@onready var gamewon_node: Node2D = $gamewon
+@onready var gamelost_node: Node2D = $gamelost
 # Order: first life lost = 01, then 02, then 03 (scene has typo "heathcup")
 @onready var health_cup_sprites: Array[Sprite2D] = [
 	get_node("health/01_heathcup/01_healthcupimg"),
@@ -41,6 +45,7 @@ var is_paused: bool = false
 var _pause_base_scale: Vector2 = Vector2.ONE
 var _paddle_pressed_timer: float = 0.0
 const PADDLE_PRESSED_DURATION := 0.12
+var _game_ended: bool = false
 
 func _ready() -> void:
 	_initial_player_position = player_ctrl.position
@@ -51,6 +56,8 @@ func _ready() -> void:
 	ball_char.paddle_bounced.connect(_on_ball_paddle_bounced)
 	_pause_base_scale = pause_node.scale
 	pause_node.hide()
+	gamewon_node.hide()
+	gamelost_node.hide()
 	# Restart/exit only on left click, not Space/Enter
 	exitbtn.focus_mode = Control.FOCUS_NONE
 	restartbtn.focus_mode = Control.FOCUS_NONE
@@ -121,6 +128,8 @@ func _unpause_game() -> void:
 func _physics_process(delta: float) -> void:
 	if is_paused:
 		return
+	if not _game_ended and not ball_char.attached:
+		_check_bricks_cleared()
 	_update_paddle(delta)
 
 func _update_paddle(_delta: float) -> void:
@@ -146,6 +155,23 @@ func _update_paddle(_delta: float) -> void:
 		_paddle_pressed_timer -= _delta
 	_update_paddle_visual(ball_char.attached or _paddle_pressed_timer > 0.0)
 
+func _check_bricks_cleared() -> void:
+	if get_tree().get_nodes_in_group("brick").size() > 0:
+		return
+	_show_game_won()
+
+func _show_game_won() -> void:
+	_game_ended = true
+	ball_node.hide()
+	player_node.hide()
+	gamewon_node.show()
+
+func _show_game_lost() -> void:
+	_game_ended = true
+	ball_node.hide()
+	player_node.hide()
+	gamelost_node.show()
+
 func _on_exitbtn_pressed() -> void:
 	queue_free()
 
@@ -162,6 +188,7 @@ func _on_ball_hit_bottom() -> void:
 		ball_char.return_to_paddle_after_delay(1.0)
 	else:
 		ball_char.disappear()
+		_show_game_lost()
 
 func _lose_health_cup(cup_index: int) -> void:
 	if cup_index < 0 or cup_index >= health_cup_sprites.size():
@@ -216,6 +243,11 @@ func _restart_game() -> void:
 		is_paused = false
 		get_tree().paused = false
 		pause_node.hide()
+	_game_ended = false
+	gamewon_node.hide()
+	gamelost_node.hide()
+	ball_node.show()
+	player_node.show()
 	lives_remaining = 3
 	_health_animation_running = false
 	_pending_blink_cup_index = -1
