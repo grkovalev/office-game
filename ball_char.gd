@@ -44,6 +44,8 @@ var current_speed: float = 900.0
 var paddle_ignore_time: float = 0.0
 var _prev_global_position: Vector2
 var _bottom_hit_emitted_this_frame: bool = false
+## True while the ball is playing the emerge-on-paddle scale animation; false before and after.
+var emergence_playing: bool = false
 
 func _ready() -> void:
 	var p_shape := paddle_coll.shape as RectangleShape2D
@@ -105,6 +107,7 @@ func return_to_paddle_after_delay(delay_sec: float) -> void:
 	timer.timeout.connect(_emerge_on_paddle, CONNECT_ONE_SHOT)
 
 func _emerge_on_paddle() -> void:
+	emergence_playing = true
 	_stick_to_paddle()
 	show()
 	set_physics_process(true)
@@ -123,6 +126,7 @@ func _emerge_on_paddle() -> void:
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_callback(func() -> void:
 		ball_img.scale = base_scale
+		emergence_playing = false
 		emergence_finished.emit()
 	)
 

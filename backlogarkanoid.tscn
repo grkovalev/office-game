@@ -216,6 +216,7 @@ script = ExtResource("13_pausein")
 texture = ExtResource("12_7qgsj")
 
 [node name="gamewon" type="Node2D" parent="." unique_id=837410383]
+visible = false
 position = Vector2(768, 576)
 
 [node name="gamewonbg" type="ColorRect" parent="gamewon" unique_id=445900523]
@@ -241,6 +242,7 @@ scale = Vector2(0.6015625, 0.6015625)
 texture = ExtResource("15_t0557")
 
 [node name="gamelost" type="Node2D" parent="." unique_id=1052505775]
+visible = false
 position = Vector2(768, 576)
 
 [node name="gamelostbg" type="ColorRect" parent="gamelost" unique_id=442558015]

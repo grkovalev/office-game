@@ -100,11 +100,17 @@ func _update_paddle_visual(use_pressed: bool) -> void:
 
 func _input(event: InputEvent) -> void:
 	# Only runs when game is not paused; when paused, PauseInputHandler handles Space
+	# Disable pause on Space while game-over popup (gamewon/gamelost) is showing until new game starts
+	if _game_ended:
+		return
 	if event is InputEventKey:
 		var key_ev: InputEventKey = event
 		if key_ev.pressed and not key_ev.echo and key_ev.keycode == KEY_SPACE:
 			_toggle_pause()
 			get_viewport().set_input_as_handled()
+
+func is_game_ended() -> bool:
+	return _game_ended
 
 func _toggle_pause() -> void:
 	if is_paused:
@@ -162,7 +168,11 @@ func _update_paddle(_delta: float) -> void:
 	paddle_pressed.global_position = p
 	if _paddle_pressed_timer > 0.0:
 		_paddle_pressed_timer -= _delta
-	_update_paddle_visual(ball_char.attached or _paddle_pressed_timer > 0.0)
+	if _game_ended:
+		_update_paddle_visual(false)
+	else:
+		var use_pressed: bool = (ball_char.attached or _paddle_pressed_timer > 0.0) and not ball_char.emergence_playing
+		_update_paddle_visual(use_pressed)
 
 func _check_bricks_cleared() -> void:
 	if get_tree().get_nodes_in_group("brick").size() > 0:
@@ -176,6 +186,8 @@ func _show_game_won() -> void:
 
 func _show_game_lost() -> void:
 	_game_ended = true
+	_paddle_pressed_timer = 0.0  # Stop showing pressed from last bounce
+	_update_paddle_visual(false)  # Show normal paddle (play_char), not pressed
 	_stop_ball_without_hiding()
 	ball_char.hide()
 	ball_node.hide()
