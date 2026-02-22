@@ -177,11 +177,31 @@ func _show_game_won() -> void:
 func _show_game_lost() -> void:
 	_game_ended = true
 	_stop_ball_without_hiding()
-	_run_game_end_blink_then_show(gamelost_node)
+	ball_char.hide()
+	ball_node.hide()
+	_run_player_blink_then_show(gamelost_node)
 
 func _stop_ball_without_hiding() -> void:
 	ball_char.velocity = Vector2.ZERO
 	ball_char.set_physics_process(false)
+
+func _run_player_blink_then_show(popup_node: Node2D) -> void:
+	player_node.show()
+	player_node.modulate.a = 1.0
+	var tween := create_tween()
+	tween.set_parallel(false)
+	for _i in range(3):
+		tween.tween_property(player_node, "modulate:a", BLINK_LOW_A, BLINK_PHASE_DURATION)
+		tween.tween_property(player_node, "modulate:a", 1.0, BLINK_PHASE_DURATION)
+	tween.tween_property(player_node, "modulate:a", 0.0, BLINK_FADEOUT_DURATION)
+	tween.tween_callback(func() -> void:
+		player_node.hide()
+		player_node.modulate.a = 1.0
+		var timer := get_tree().create_timer(POPUP_PAUSE_AFTER_BLINK)
+		timer.timeout.connect(func() -> void:
+			_show_popup_with_anim(popup_node)
+		, CONNECT_ONE_SHOT)
+	)
 
 func _run_game_end_blink_then_show(popup_node: Node2D) -> void:
 	ball_node.show()
