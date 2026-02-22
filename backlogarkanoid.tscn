@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://wa2lfcxynxf5" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/mug_atlas.png" id="9_qovi6"]
 [ext_resource type="Texture2D" uid="uid://dyay3bbq4tuoo" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/pauseimg.png" id="12_7qgsj"]
 [ext_resource type="Script" uid="uid://b6vpfbirj0xb3" path="res://pause_input_handler.gd" id="13_pausein"]
+[ext_resource type="Texture2D" uid="uid://4e4l3nk00tpi" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/arkanoidsuccess.png" id="15_t0557"]
+[ext_resource type="Texture2D" uid="uid://8bo7xwvr4f2j" path="res://ui_buttons/backlogarkanoid/ui_backlogarkanoid/arkanoidfail.png" id="16_u80fe"]
 
 [sub_resource type="Gradient" id="Gradient_k6kum"]
 colors = PackedColorArray(0.2901961, 0.44313726, 0.5568628, 1, 0.2901961, 0.44313726, 0.5568628, 1)
@@ -212,3 +214,47 @@ script = ExtResource("13_pausein")
 
 [node name="Sprite2D" type="Sprite2D" parent="pause" unique_id=988406068]
 texture = ExtResource("12_7qgsj")
+
+[node name="gamewon" type="Node2D" parent="." unique_id=837410383]
+position = Vector2(72, 248)
+
+[node name="gamewonbg" type="ColorRect" parent="gamewon" unique_id=445900523]
+offset_right = 1392.0
+offset_bottom = 640.0
+color = Color(0.5764706, 0.7294118, 0.5019608, 1)
+
+[node name="gamewontitle" type="Label" parent="gamewon" unique_id=1271439693]
+offset_top = 48.0
+offset_right = 1392.0
+offset_bottom = 225.0
+theme_override_fonts/font = ExtResource("1_u1qfo")
+theme_override_font_sizes/font_size = 176
+text = "WELL DONE"
+horizontal_alignment = 1
+
+[node name="gamewonimg" type="Sprite2D" parent="gamewon" unique_id=1398512408]
+position = Vector2(649.99994, 332)
+scale = Vector2(0.6015625, 0.6015625)
+texture = ExtResource("15_t0557")
+
+[node name="gamelost" type="Node2D" parent="." unique_id=1052505775]
+position = Vector2(72, 248)
+
+[node name="gamelostbg" type="ColorRect" parent="gamelost" unique_id=442558015]
+offset_right = 1392.0
+offset_bottom = 640.0
+color = Color(0.76862746, 0.08235294, 0.03137255, 0.92941177)
+
+[node name="gamelosttitle" type="Label" parent="gamelost" unique_id=118161630]
+offset_top = 48.0
+offset_right = 1392.0
+offset_bottom = 225.0
+theme_override_fonts/font = ExtResource("1_u1qfo")
+theme_override_font_sizes/font_size = 176
+text = "YOU FAILED"
+horizontal_alignment = 1
+
+[node name="gamelostimg" type="Sprite2D" parent="gamelost" unique_id=1492509213]
+position = Vector2(652, 332)
+scale = Vector2(0.6015625, 0.6015625)
+texture = ExtResource("16_u80fe")
